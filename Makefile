@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/15 19:07:24 by eunskim          ###   ########.fr        #
+#    Updated: 2023/05/18 13:44:01 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,3 +29,13 @@ $(NAME)	: $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(READLINE_INC) -c $< -o $@
+
+clean:
+	@rm -f $(OBJS) 
+
+fclean:	clean
+	@rm -f $(NAME) 
+	
+re: fclean all
+
+.PHONY: all, clean, fclean, re
