@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/24 17:34:49 by tmarts           ###   ########.fr        #
+#    Updated: 2023/05/24 19:54:44 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ BREW_PATH := $(shell $(WHEREIS_BREW))
 READLINE_LIB := -lreadline -L $(BREW_PATH)/opt/readline/lib
 READLINE_INC := -I $(BREW_PATH)/opt/readline/include/readline
 
-SRCS	:= testfuncts.c
+SRC_DIR	= ./src/
+SRCS	= $(addprefix $(SRC_DIR), \
+main.c)
 
 OBJS	:= ${SRCS:.c=.o}
 
