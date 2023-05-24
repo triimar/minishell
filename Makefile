@@ -6,21 +6,27 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/18 13:44:01 by tmarts           ###   ########.fr        #
+#    Updated: 2023/05/24 17:34:49 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := minishell
-CFLAGS := -Werror -Wall -Wextra
+NAME 	:= minishell
+CC		:= cc
+CFLAGS 	:= -Wall -Wextra -Werror
 
-WHEREIS_BREW := if test -d $(HOME)/.brew; then echo $(HOME)/.brew; \
-				elif test -d $(HOME)/goinfre/.brew; then echo $(HOME)/goinfre/.brew; \
+WHEREIS_BREW := if test -d $(HOME)/.brew/opt/readline; then echo $(HOME)/.brew; \
+				elif test -d $(HOME)/goinfre/.brew/opt/readline; then echo $(HOME)/goinfre/.brew; \
+				elif test -d $(HOME)/homebrew/opt/readline; then echo $(HOME)/homebrew; \
 				else echo ""; fi
-
+				
 BREW_PATH := $(shell $(WHEREIS_BREW))
 
 READLINE_LIB := -lreadline -L $(BREW_PATH)/opt/readline/lib
-READLINE_INC := -I $(BREW_PATH)/opt/readline/include
+READLINE_INC := -I $(BREW_PATH)/opt/readline/include/readline
+
+SRCS	:= testfuncts.c
+
+OBJS	:= ${SRCS:.c=.o}
 
 all : $(NAME)
 
