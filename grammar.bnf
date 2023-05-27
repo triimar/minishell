@@ -1,0 +1,77 @@
+/*	------------------------------------
+	TOKENS
+	------------------------------------ */
+
+%token WORD
+%token ASSIGNMENT_WORD
+
+/* WORD : a sequence of character											*/
+/* ASSIGNMENT_WORD : variable_name=value									*/
+
+%token DLESS '<<' DGREAT '>>' LESS '<' GREAT '>'
+%token PIPE '|'
+
+/* LESS should redirect input 												*/
+/* GREAT should redirect output 											*/
+/* DLESS should be given a delimiter for here_doc 							*/
+/* DGREAT should redirect output in append mode 							*/
+
+%token EOF '\0'
+%token WHITESPACE
+
+
+/*	------------------------------------
+	GRAMMAR
+	------------------------------------ */
+
+%start complete_command
+%%
+complete_command : command PIPE complete_command
+				 | command
+				 ;
+command			 : [cmd_prefix] cmd_word [cmd_suffix]
+				 | cmd_prefix
+				 ;
+cmd_word		 : WORD							    /* Apply rule 7b */
+				 ;
+cmd_prefix		 :			  io_redirect
+				 | cmd_prefix io_redirect
+				 |			  ASSIGNMENT_WORD
+				 | cmd_prefix ASSIGNMENT_WORD
+				 ;
+cmd_suffix		 :			  io_redirect
+				 | cmd_suffix io_redirect
+				 |			  cmd_arg
+				 | cmd_suffix cmd_arg
+				 ;
+cmd_arg			 : WORD
+				 ;
+io_redirect    	 : io_file
+				 | io_here
+				 ;
+io_file			 : LESS filename
+				 | GREAT filename
+				 | DGREAT filename
+				 ;
+filename		 : WORD								/* Apply rule 2 */
+				 ;
+io_here			 : DLESS here_end
+				 ;
+here_end 		 : WORD								/* Apply rule 3 */
+				 ;
+
+
+/* rule 7b */
+If the TOKEN contains the equal sign character:
+If it begins with '=', the token WORD shall be returned.
+If all the characters preceding '=' form a valid name (name starts with _ or a letter),
+the token ASSIGNMENT_WORD shall be returned. (Quoted characters cannot participate in forming a valid name.)
+
+/* rule 2 */
+The expansions specified in Redirection shall occur.
+As specified there, exactly one field can result (or the result is unspecified),
+and there are additional requirements on pathname expansion.
+
+/* rule 3 */
+Quote removal shall be applied to the word to determine the delimiter
+that is used to find the end of the here-document that begins after the next <newline>.
