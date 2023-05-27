@@ -1,20 +1,20 @@
 /*	------------------------------------
 	TOKENS
-	------------------------------------ */
+	------------------------------------	*/
 
 %token WORD
 %token ASSIGNMENT_WORD
 
-/* WORD : a sequence of character											*/
-/* ASSIGNMENT_WORD : variable_name=value									*/
+/* WORD : a sequence of character                                           */
+/* ASSIGNMENT_WORD : variable_name=value                                    */
 
 %token DLESS '<<' DGREAT '>>' LESS '<' GREAT '>'
 %token PIPE '|'
 
-/* LESS should redirect input 												*/
-/* GREAT should redirect output 											*/
-/* DLESS should be given a delimiter for here_doc 							*/
-/* DGREAT should redirect output in append mode 							*/
+/* LESS should redirect input                                               */
+/* GREAT should redirect output                                             */
+/* DLESS should be given a delimiter for here_doc                           */
+/* DGREAT should redirect output in append mode                             */
 
 %token EOF '\0'
 %token WHITESPACE
@@ -22,43 +22,43 @@
 
 /*	------------------------------------
 	GRAMMAR
-	------------------------------------ */
+	------------------------------------	*/
 
 %start complete_command
 %%
 complete_command : command PIPE complete_command
-				 | command
-				 ;
-command			 : [cmd_prefix] cmd_word [cmd_suffix]
-				 | cmd_prefix
-				 ;
-cmd_word		 : WORD							    /* Apply rule 7b */
-				 ;
-cmd_prefix		 :			  io_redirect
-				 | cmd_prefix io_redirect
-				 |			  ASSIGNMENT_WORD
-				 | cmd_prefix ASSIGNMENT_WORD
-				 ;
-cmd_suffix		 :			  io_redirect
-				 | cmd_suffix io_redirect
-				 |			  cmd_arg
-				 | cmd_suffix cmd_arg
-				 ;
-cmd_arg			 : WORD
-				 ;
+                 | command
+                 ;
+command          : [cmd_prefix] cmd_word [cmd_suffix]
+                 | cmd_prefix
+                 ;
+cmd_word         : WORD                                       /* Apply rule 7b */
+                 ;
+cmd_prefix       :            io_redirect
+                 | cmd_prefix io_redirect
+                 |            ASSIGNMENT_WORD
+                 | cmd_prefix ASSIGNMENT_WORD
+                 ;
+cmd_suffix       :            io_redirect
+                 | cmd_suffix io_redirect
+                 |            cmd_arg
+                 | cmd_suffix cmd_arg
+                 ;
+cmd_arg          : WORD
+                 ;
 io_redirect    	 : io_file
-				 | io_here
-				 ;
-io_file			 : LESS filename
-				 | GREAT filename
-				 | DGREAT filename
-				 ;
-filename		 : WORD								/* Apply rule 2 */
-				 ;
-io_here			 : DLESS here_end
-				 ;
-here_end 		 : WORD								/* Apply rule 3 */
-				 ;
+                 | io_here
+                 ;
+io_file          : LESS filename
+                 | GREAT filename
+                 | DGREAT filename
+                 ;
+filename         : WORD                                       /* Apply rule 2 */
+                 ;
+io_here          : DLESS here_end
+                 ;
+here_end         : WORD                                       /* Apply rule 3 */
+                 ;
 
 
 /* rule 7b */
