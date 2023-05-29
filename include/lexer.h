@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/28 20:56:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:54:52 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,27 @@
 # include <stdbool.h>
 
 # define REDIRECTIONS "><"
-# define WHITESPACES "\t\n\v\f\r "
+# define WHITESPACES "\t\v\f\r "
 # define QUOTES "\"\'"
+
+typedef enum e_lexer_exit_code
+{
+	LEXER_SUCCESS,
+	MALLOC_ERROR,
+	UNCLOSED_QUOTE
+}	t_lexer_exit_code;
 
 typedef enum e_token_type
 {
-	TOKEN_EOF, //
+	TOKEN_EOF,
 	TOKEN_WORD,
 	TOKEN_ASSIGNMENT_WORD,
-	TOKEN_GREAT, //
-	TOKEN_DGREAT, //
-	TOKEN_LESS, //
-	TOKEN_DLESS, //
-	TOKEN_PIPE, //
+	TOKEN_GREAT,
+	TOKEN_DGREAT,
+	TOKEN_LESS,
+	TOKEN_DLESS,
+	TOKEN_PIPE,
 	TOKEN_ERROR
-	// TOKEN_WHITESPACE
 }	t_token_type;
 
 typedef struct s_scanner

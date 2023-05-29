@@ -17,7 +17,6 @@
 /* DGREAT should redirect output in append mode                             */
 
 %token EOF '\0'
-/* %token WHITESPACE */
 
 
 /*	------------------------------------
