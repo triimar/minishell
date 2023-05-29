@@ -6,52 +6,56 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 14:40:55 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/29 16:27:46 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "lexer.h"
 #include "../include/lexer.h"
 
-// peek, peek_next, match
-
-bool	check_if_assignment_word()
-{
-	
-}
-
-t_token	scan_word(t_scanner scanner, char c)
-{
-	
-}
-
-// error check function
-// if (token.type == TOKEN_ERROR)
+// void	check_if_assignment_word(t_token *token)
 // {
-// 	ft_putstr_fd(token.start, 2); // need to be edited later
-// 	free_token_list(&data);
-// 	return (UNCLOSED_QUOTE); // unclosed quote error during lexing
+// 	char	*equal_sign;
+// 	char	*word;
+
+// 	if (token->type != TOKEN_WORD)
+// 		return ;
+// 	else
+// 	{
+// 		// word = ft_strdup();
+// 		// equal_sign = ft_strchr();
+// 	}
 // }
 
-t_token scan_quoted_word(t_scanner scanner, char c)
+t_token	scan_word(t_scanner *scanner, char c)
 {
-	if (c == '\"')
+	char	quote;
+	int		quote_cnt;
+
+	quote_cnt = 0;
+	while (ft_strchr(WHITESPACES, c) == 0 && c != '\0')
 	{
-		c = advance(scanner);
-		while (c != '\0' || c == '\"')
+		if (ft_strchr(QUOTES, c) != 0)
+		{
+			quote = c;
+			quote_cnt++;
 			c = advance(scanner);
-		if (c == '\"')
-			return (make_token(TOKEN_WORD, scanner));	
+			while (ft_strchr(WHITESPACES, c) == 0 && c != '\0')
+			{
+				if (c == quote)
+				{
+					quote_cnt++;
+					break;
+				}
+				c = advance(scanner);
+			}
+		}
+		c = advance(scanner);
 	}
+	if (quote_cnt % 2 == 0)
+		return (make_token(TOKEN_WORD, scanner));
 	else
-	{
-		c = advance(scanner);
-		while (c != '\0' || c == '\'')
-			c = advance(scanner);
-		if (c == '\'')
-			return (make_token(TOKEN_WORD, scanner));
-	}
-	return (make_error_token("unclosed quote syntax error")); // should be edited later
+		return (make_error_token("syntax error unclosed quote"));
 }
 
 t_token	scan_redirections(t_scanner *scanner, char c)
@@ -92,24 +96,22 @@ t_token	scan_token(t_scanner *scanner)
 		return (make_token(TOKEN_PIPE, scanner));
 	else if (ft_strchr(REDIRECTIONS, c) != 0)
 		return (scan_redirection(scanner, c));
-	else if (ft_strchr(QUOTES, c) != 0)
-		return (scan_quoted_word(scanner, c));
 	else
 		return (scan_word(scanner, c));
 }
 
 t_lexer_exit_code	lexer(const char *source)
 {
-	t_lexer			data;
+	t_lexer			data; // should be given as a parameter later
 	t_scanner		scanner;
-	t_token			token;
+	t_token			*token;
 	t_token_list	*tmp_token_node;
 
 	init_lexer_data(&data);
 	init_scanner(&scanner, source);
 	while (true)
 	{
-		token = scan_token(&scanner);
+		*token = scan_token(&scanner);
 		tmp_token_node = make_token_node(token);
 		if (tmp_token_node == NULL)
 		{
@@ -120,8 +122,14 @@ t_lexer_exit_code	lexer(const char *source)
 		update_lexer_data(&data, tmp_token_node);
 		if (token.type == TOKEN_EOF)
 			break;
+		if (token.type == TOKEN_ERROR)
+		{
+			ft_putstr_fd(token.start, 2); // need to be edited later
+			free_token_list(&data);
+			return (UNCLOSED_QUOTE);
+		}
 	}
-	// error checker
-	// assignment_word checker
-	return (0);
+	// iter_token_list(&data, check_if_assignment_word);
+	lexer_test(&data); // printing and freeing for testing
+	return (LEXER_SUCCESS);
 }
