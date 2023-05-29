@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 13:54:52 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/29 16:02:02 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_token
 
 typedef struct s_token_list
 {
-	t_token			token;
+	t_token			*token;
 	t_token_list	*next;
 }	t_token_list;
 
@@ -64,6 +64,7 @@ typedef struct s_lexer
 {
 	t_token_list	*head;
 	t_token_list	*tail;
+	int				unclosed_quote_error_flag;
 }	t_lexer;
 
 #endif LEXER_H
