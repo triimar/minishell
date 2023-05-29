@@ -6,13 +6,11 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/05/24 20:33:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/05/29 15:08:59 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdlib.h>
+#include "minishell.h"
 
 static int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -35,7 +33,6 @@ int	main(int argc, char **argv)
 	if (argc != 1)
 		return (0);
 	(void)argv;
-	using_history();
 	while (1)
 	{
 		p_input = readline("eunskim-tmarts-m_sh % ");
@@ -44,12 +41,16 @@ int	main(int argc, char **argv)
 		if (ft_strcmp(p_input, "exit"))
 		{
 			free(p_input);
-			break ;
+			rl_clear_history();
+			builtin_exit(0);
+			// we should be taking the exit_code from the p_input, 
+			// instead of this 'if' the exit should be parsed and run as any other cmmand
 		}
+		ft_putendl_fd(p_input, STDOUT_FILENO);
 		if (p_input && *p_input)
 			add_history(p_input);
 		free (p_input);
 	}
-	clear_history ();
+	rl_clear_history();
 	return (0);
 }
