@@ -1,0 +1,11 @@
+*.o
+*.a
+practice/
+backup/
+memo.txt
+a.out
+test
+test.txt
+.vscode/
+.DS_Store
+main.c
