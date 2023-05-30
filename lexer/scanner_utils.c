@@ -6,12 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:35:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 14:39:12 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:35:52 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "lexer.h"
-#include "../include/lexer.h"
+#include "lexer.h"
 
 char	advance(t_scanner *scanner)
 {

@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   for_text.c                                         :+:      :+:    :+:   */
+/*   for_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 16:33:15 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:42:13 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "lexer.h"
-#include "../include/lexer.h"
+#include "lexer.h"
 
-void	print_token_type(t_lexer *data)
+void	print_token(t_lexer *data)
 {
+	int				i;
 	t_token_list	*tmp;
 
+	i = 0;
 	tmp = data->head;
 	if (tmp)
 	{
@@ -36,23 +37,26 @@ void	print_token_type(t_lexer *data)
 			printf("TOKEN_PIPE\n");
 		else if (tmp->token->type == TOKEN_ERROR)
 			printf("TOKEN_ERROR\n");
+		write(1, "  |  [", 6);
+			write(1, tmp->token->start, tmp->token->length);
+		write(1, "]  |  \n", 7);
 		tmp = tmp->next;
 	}
 }
 
 void	lexer_test(t_lexer *data)
 {
-	print_token_type(data);
+	print_token(data);
 	free_token_list(data);
 }
 
 int	main(int argc, char **argv)
 {
-	int	lexer_exit_code;
-
 	if (argc != 2)
-		printf("invalid input");
+	{
+		printf("Invalid input.");
+		return (INVALID_ARGUMENT);
+	}
 	else
-		lexer_exit_code = lexer(argv[1]);
-	return (lexer_exit_code);
+		return lexer(argv[1]);
 }

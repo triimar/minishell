@@ -6,12 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:34:57 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 15:37:40 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:35:31 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "lexer.h"
-#include "../include/lexer.h"
+#include "lexer.h"
 
 t_token make_error_token(const char *message)
 {

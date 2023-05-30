@@ -6,12 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:04:28 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 16:05:04 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:35:59 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "lexer.h"
-#include "../include/lexer.h"
+#include "lexer.h"
 
 char	*ft_strchr(const char *s, int c)
 {

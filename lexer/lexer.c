@@ -6,12 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/29 16:27:46 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:43:32 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "lexer.h"
-#include "../include/lexer.h"
+#include "lexer.h"
 
 // void	check_if_assignment_word(t_token *token)
 // {
@@ -88,14 +87,14 @@ t_token	scan_token(t_scanner *scanner)
 
 	scanner->start = scanner->current;
 	c = advance(scanner);
-	while (ft_strchr(WHITESPACES, c) != 0)
+	while (ft_strchr(WHITESPACES, c) != 0 && c != '\0')
 		c = advance(scanner);
 	if (c == '\0')
 		return (make_token(TOKEN_EOF, scanner));
 	else if (c == '|')
 		return (make_token(TOKEN_PIPE, scanner));
 	else if (ft_strchr(REDIRECTIONS, c) != 0)
-		return (scan_redirection(scanner, c));
+		return (scan_redirections(scanner, c));
 	else
 		return (scan_word(scanner, c));
 }
@@ -107,6 +106,7 @@ t_lexer_exit_code	lexer(const char *source)
 	t_token			*token;
 	t_token_list	*tmp_token_node;
 
+	token = NULL;
 	init_lexer_data(&data);
 	init_scanner(&scanner, source);
 	while (true)
@@ -120,11 +120,11 @@ t_lexer_exit_code	lexer(const char *source)
 		}
 		add_token_node_back(&data.head, tmp_token_node);
 		update_lexer_data(&data, tmp_token_node);
-		if (token.type == TOKEN_EOF)
+		if (token->type == TOKEN_EOF)
 			break;
-		if (token.type == TOKEN_ERROR)
+		if (token->type == TOKEN_ERROR)
 		{
-			ft_putstr_fd(token.start, 2); // need to be edited later
+			ft_putstr_fd((char *) token->start, 2); // need to be edited later
 			free_token_list(&data);
 			return (UNCLOSED_QUOTE);
 		}
