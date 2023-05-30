@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/30 13:07:44 by eunskim          ###   ########.fr        #
+#    Updated: 2023/05/30 14:44:38 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ libft:
 
 $(NAME)	: $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) && \
-	echo "$(MAGENTA)>> Mandatory part - Minishell $(RESET)" && \
+	echo "$(MAGENTA)>> Mandatory part - Minishell <<$(RESET)" && \
 	echo "$(GREEN)Compilation successful!$(RESET)"
 
 %.o: %.c
