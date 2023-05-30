@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/30 14:44:29 by eunskim          ###   ########.fr        #
+#    Updated: 2023/05/30 14:53:37 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= lexer
-CFLAGS 			:= -Wall -Wextra -Werror
-# -g3 -fsanitze=address
+CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 INCLUDE_DIR		:= ../include
 

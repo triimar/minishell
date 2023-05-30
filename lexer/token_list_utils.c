@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:32:25 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 14:09:01 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:28:17 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,26 @@ void	free_token_list(t_lexer *data)
 		tmp_to_free = tmp;
 	}
 	data->head = NULL;
-	data->tail = NULL;
-}
-
-void	update_lexer_data(t_lexer *data, t_token_list *token_node)
-{
-	if (data->head == NULL)
-	{
-		data->head = token_node;
-		data->tail = token_node;
-	}
-	else
-		data->tail = token_node;
 }
 
 void	add_token_node_back(t_token_list **head, t_token_list *new)
 {
 	t_token_list	*last;
 
-	if (head == NULL || *head == NULL || new == NULL)
+	if (head == NULL || new == NULL)
 		return ;
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
 	last = *head;
 	while (last->next != NULL)
 		last = last->next;
 	last->next = new;
 }
 
-t_token_list	*make_token_node(t_token *token)
+t_token_list	*make_token_node(t_token token)
 {
 	t_token_list	*token_node;
 

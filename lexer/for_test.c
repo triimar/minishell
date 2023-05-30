@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 14:42:13 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:38:56 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,26 @@ void	print_token(t_lexer *data)
 
 	i = 0;
 	tmp = data->head;
-	if (tmp)
+	while (tmp)
 	{
-		if (tmp->token->type == TOKEN_EOF)
+		if (tmp->token.type == TOKEN_EOF)
 			printf("TOKEN_EOF\n");
-		else if (tmp->token->type == TOKEN_WORD)
+		else if (tmp->token.type == TOKEN_WORD)
 			printf("TOKEN_WORD\n");
-		else if (tmp->token->type == TOKEN_GREAT)
+		else if (tmp->token.type == TOKEN_GREAT)
 			printf("TOKEN_GREAT\n");
-		else if (tmp->token->type == TOKEN_DGREAT)
+		else if (tmp->token.type == TOKEN_DGREAT)
 			printf("TOKEN_DGREAT\n");
-		else if (tmp->token->type == TOKEN_LESS)
+		else if (tmp->token.type == TOKEN_LESS)
 			printf("TOKEN_LESS\n");
-		else if (tmp->token->type == TOKEN_DLESS)
+		else if (tmp->token.type == TOKEN_DLESS)
 			printf("TOKEN_DLESS\n");
-		else if (tmp->token->type == TOKEN_PIPE)
+		else if (tmp->token.type == TOKEN_PIPE)
 			printf("TOKEN_PIPE\n");
-		else if (tmp->token->type == TOKEN_ERROR)
+		else if (tmp->token.type == TOKEN_ERROR)
 			printf("TOKEN_ERROR\n");
 		write(1, "  |  [", 6);
-			write(1, tmp->token->start, tmp->token->length);
+		write(1, tmp->token.start, tmp->token.length);
 		write(1, "]  |  \n", 7);
 		tmp = tmp->next;
 	}
@@ -50,13 +50,7 @@ void	lexer_test(t_lexer *data)
 	free_token_list(data);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	if (argc != 2)
-	{
-		printf("Invalid input.");
-		return (INVALID_ARGUMENT);
-	}
-	else
-		return lexer(argv[1]);
+	return (lexer("3\"\"\"\"\'\'  |<hi hi>    "));
 }

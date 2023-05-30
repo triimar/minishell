@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/30 14:44:38 by eunskim          ###   ########.fr        #
+#    Updated: 2023/05/30 14:53:48 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RESET	:= \033[0m
 NAME			:= minishell
 # CC				:= cc # ($(CC) is by default cc in makefile)
 CFLAGS 			:= -Wall -Wextra -Werror
-# -g3 -fsanitze=address # added sanitizer flag for testing
+# -g3 -fsanitize=address # added sanitizer flag for testing
 
 WHEREIS_BREW	:= if test -d $(HOME)/.brew/opt/readline; then echo $(HOME)/.brew; \
 					elif test -d $(HOME)/goinfre/.brew/opt/readline; then echo $(HOME)/goinfre/.brew; \

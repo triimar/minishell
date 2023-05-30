@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner_utils.c                                    :+:      :+:    :+:   */
+/*   working_on.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/29 14:35:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 19:35:25 by eunskim          ###   ########.fr       */
+/*   Created: 2023/05/30 15:12:51 by eunskim           #+#    #+#             */
+/*   Updated: 2023/05/30 15:12:55 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+// need peek, peek_next, is_at_end function to prevent memory problem
 
-char	advance(t_scanner *scanner)
-{
-	char	c;
+// void	check_if_assignment_word(t_token *token)
+// {
+// 	char	*equal_sign;
+// 	char	*word;
 
-	c = *scanner->current;
-	if (c != '\0')
-		scanner->current++;
-	return (c);
-}
-
-void	init_scanner(t_scanner *scanner, const char *source)
-{
-	scanner->start = source;
-	scanner->current = source;
-}
+// 	if (token->type != TOKEN_WORD)
+// 		return ;
+// 	else
+// 	{
+// 		// word = ft_strdup();
+// 		// equal_sign = ft_strchr();
+// 	}
+// }
