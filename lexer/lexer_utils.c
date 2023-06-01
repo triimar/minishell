@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:34:57 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 19:35:19 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/01 15:01:48 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ t_token	make_token(t_token_type type, t_scanner *scanner)
 	token.start = scanner->start;
 	token.length = (int)(scanner->current - scanner->start);
 	return (token);
+}
+
+void	init_scanner(t_scanner *scanner, const char *source)
+{
+	scanner->start = source;
+	scanner->current = source;
 }
 
 void	init_lexer_data(t_lexer *data)

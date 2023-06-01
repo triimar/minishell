@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:32:25 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 19:28:17 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/01 15:56:43 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	free_token_list(t_lexer *data)
 	t_token_list	*tmp;
 	t_token_list	*tmp_to_free;
 
+	if (data->head == NULL)
+		return ;
 	tmp = data->head;
 	tmp_to_free = tmp;
 	while (tmp)
