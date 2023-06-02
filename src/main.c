@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/05/29 15:08:59 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/06/02 16:32:43 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv)
 		ft_putendl_fd(p_input, STDOUT_FILENO);
 		if (p_input && *p_input)
 			add_history(p_input);
-		free (p_input);
+		free(p_input);
 	}
 	rl_clear_history();
 	return (0);

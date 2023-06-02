@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:50:49 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 16:29:06 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include "libft.h"
 
 # define WHITESPACES " \t\v\f\r"
 # define WORD_DELIMITER " \t\v\f\r><|"
@@ -94,15 +95,6 @@ t_token_list		*make_token_node(t_token token);
 void				add_token_node_back(t_token_list **head, t_token_list *new);
 void				free_token_list(t_lexer *data);
 void				iter_token_list(t_lexer *data, void (*f)(t_token *));
-
-/* libft_utils.c */
-int					ft_isdigit(int c);
-int					ft_isalpha(int c);
-size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char				*ft_strdup(const char *s1);
-size_t				ft_strlen(const char *s);
-void				ft_putstr_fd(char *s, int fd);
-char				*ft_strchr(const char *s, int c);
 
 /* for_test.c */
 void				lexer_test(t_lexer *data);

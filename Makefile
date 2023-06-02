@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/05/30 14:53:48 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/02 16:22:53 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= minishell
-# CC				:= cc # ($(CC) is by default cc in makefile)
+# CC			:= cc # ($(CC) is by default cc in makefile)
 CFLAGS 			:= -Wall -Wextra -Werror
 # -g3 -fsanitize=address # added sanitizer flag for testing
 
@@ -45,9 +45,8 @@ SRCS	:= \
 	src/builtin_exit.c
 
 # LEXER_SRC := \
-# 	lexer/for_test.c \
-# 	lexer/lexer_utils.c \
 # 	lexer/lexer.c \
+# 	lexer/lexer_utils.c \
 # 	lexer/scanner_utils.c \
 # 	lexer/token_list_utils.c
 
