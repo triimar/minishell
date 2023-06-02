@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:07:47 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:50:49 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_token_list
 typedef struct s_lexer
 {
 	t_token_list	*head;
-	int				unclosed_quote_error_flag;
 }	t_lexer;
 
 /* lexer.c */
@@ -75,6 +74,7 @@ t_lexer_exit_code	lexer(const char *source);
 t_token				scan_token(t_scanner *scanner);
 t_token				scan_redirections(t_scanner *scanner, char c);
 t_token				scan_word(t_scanner *scanner, char c);
+void				check_if_assignment_word(t_token *token);
 
 /* lexer_utils.c */
 void				init_lexer_data(t_lexer *data);
@@ -93,9 +93,11 @@ char				peek(t_scanner *scanner);
 t_token_list		*make_token_node(t_token token);
 void				add_token_node_back(t_token_list **head, t_token_list *new);
 void				free_token_list(t_lexer *data);
-// void				iter_token_list(t_lexer *data, void (*f)(void *));
+void				iter_token_list(t_lexer *data, void (*f)(t_token *));
 
 /* libft_utils.c */
+int					ft_isdigit(int c);
+int					ft_isalpha(int c);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char				*ft_strdup(const char *s1);
 size_t				ft_strlen(const char *s);

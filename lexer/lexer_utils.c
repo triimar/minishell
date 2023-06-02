@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:34:57 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/01 15:01:48 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:42:04 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,4 @@ void	init_scanner(t_scanner *scanner, const char *source)
 void	init_lexer_data(t_lexer *data)
 {
 	data->head = NULL;
-	data->unclosed_quote_error_flag = 0;
 }

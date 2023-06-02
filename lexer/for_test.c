@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:08:05 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:57:26 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	print_token(t_lexer *data)
 			printf("TOKEN_EOF\n");
 		else if (tmp->token.type == TOKEN_WORD)
 			printf("TOKEN_WORD\n");
+		else if (tmp->token.type == TOKEN_ASSIGNMENT_WORD)
+			printf("TOKEN_ASSIGHMENT_WORD\n");
 		else if (tmp->token.type == TOKEN_GREAT)
 			printf("TOKEN_GREAT\n");
 		else if (tmp->token.type == TOKEN_DGREAT)

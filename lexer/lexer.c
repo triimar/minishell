@@ -6,11 +6,34 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:20:24 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:56:33 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+void	check_if_assignment_word(t_token *token)
+{
+	int			i;
+	const char	*word;
+
+	i = 0;
+	if (token->type != TOKEN_WORD)
+		return ;
+	else
+	{
+		word = token->start;
+		if (!ft_isalpha(*word) && *word != '_')
+			return ;
+		while (++i < token->length && word[i] != '=')
+		{
+			if (!ft_isalpha(word[i]) && word[i] != '_' && !ft_isdigit(word[i]))
+				return ;
+		}
+		if (word[i] == '=')
+			token->type = TOKEN_ASSIGNMENT_WORD;
+	}
+}
 
 t_token	scan_word(t_scanner *scanner, char c)
 {
@@ -104,7 +127,7 @@ t_lexer_exit_code	lexer(const char *source)
 		}
 		add_token_node_back(&data.head, tmp_token_node);
 	}
-	// iter_token_list(&data, check_if_assignment_word);
+	iter_token_list(&data, &check_if_assignment_word);
 	lexer_test(&data); // printing and freeing for testing
 	// system("leaks lexer");
 	return (LEXER_SUCCESS);

@@ -6,11 +6,27 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 20:04:28 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 14:57:15 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:39:13 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_isalpha(int c)
+{
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	else
+		return (0);
+}
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
