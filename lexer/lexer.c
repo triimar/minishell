@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:03:57 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:20:24 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_token	scan_word(t_scanner *scanner, char c)
 	{
 		if (quote == '\"' || quote == '\'')
 		{
-			while (peek(scanner) != quote && peek(scanner) != '\0')
+			while (peek(scanner) != quote && !is_at_end(scanner))
 				advance(scanner);
-			if (peek(scanner) == '\0')
+			if (is_at_end(scanner))
 				return (make_error_token("syntax error unclosed quote\n"));
 			advance(scanner);
 			if (ft_strchr(WORD_DELIMITER, peek(scanner)) != 0)
@@ -106,5 +106,6 @@ t_lexer_exit_code	lexer(const char *source)
 	}
 	// iter_token_list(&data, check_if_assignment_word);
 	lexer_test(&data); // printing and freeing for testing
+	// system("leaks lexer");
 	return (LEXER_SUCCESS);
 }

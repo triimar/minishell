@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:35:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/01 18:19:19 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:18:42 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	advance(t_scanner *scanner)
 	char	c;
 
 	c = *scanner->current;
-	if (c != '\0')
-		scanner->current++;
+	scanner->current++;
 	return (c);
 }

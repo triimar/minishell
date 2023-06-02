@@ -6,23 +6,23 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:32:25 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/01 15:56:43 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:13:06 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-// void	iter_token_list(t_lexer *data, void (*f)(void *))
-// {
-// 	t_token_list	*tmp;
+void	iter_token_list(t_lexer *data, void (*f)(void *))
+{
+	t_token_list	*tmp;
 
-// 	tmp = data->head;
-// 	while (tmp)
-// 	{
-// 		f((void *) tmp->token);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = data->head;
+	while (tmp)
+	{
+		f((void *) &tmp->token);
+		tmp = tmp->next;
+	}
+}
 
 void	free_token_list(t_lexer *data)
 {
