@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/05/30 19:41:11 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:07:47 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-# define REDIRECTIONS "><"
-# define WHITESPACES "\t\v\f\r "
-# define QUOTES "\"\'"
-# define WORD_DELIMITER "><|\t\v\f\r "
+# define WHITESPACES " \t\v\f\r"
+# define WORD_DELIMITER " \t\v\f\r><|"
 
 typedef enum e_lexer_exit_code
 {
 	LEXER_SUCCESS,
-	MALLOC_ERROR,
-	UNCLOSED_QUOTE
+	INVALID_ARGUMENT,
+	NOTHING_TO_SCAN,
+	UNCLOSED_QUOTE,
+	MALLOC_ERROR
 }	t_lexer_exit_code;
 
 typedef enum e_token_type
@@ -78,12 +78,16 @@ t_token				scan_word(t_scanner *scanner, char c);
 
 /* lexer_utils.c */
 void				init_lexer_data(t_lexer *data);
+void				init_scanner(t_scanner *scanner, const char *source);
 t_token				make_token(t_token_type type, t_scanner *scanner);
 t_token 			make_error_token(const char *message);
 
 /* scanner_utils.c */
-void				init_scanner(t_scanner *scanner, const char *source);
 char				advance(t_scanner *scanner);
+void				skip_whitespaces(t_scanner *scanner);
+bool				is_at_end(t_scanner *scanner);
+bool				match(t_scanner *scanner, char expected);
+char				peek(t_scanner *scanner);
 
 /* token_list_utils */
 t_token_list		*make_token_node(t_token token);

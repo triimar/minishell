@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/01 18:33:56 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:08:05 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	lexer_test(t_lexer *data)
 	free_token_list(data);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	return (lexer("d\"hh\"i\"   \"hi\">\">\"hi|>><<<h \"i<h   ihi"));
+	if (argc != 2)
+		return (INVALID_ARGUMENT);
+	return (lexer(argv[1]));
 }

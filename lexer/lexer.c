@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/01 18:31:35 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/02 15:03:57 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ t_token	scan_word(t_scanner *scanner, char c)
 		if (quote == '\"' || quote == '\'')
 		{
 			while (peek(scanner) != quote && peek(scanner) != '\0')
-				c = advance(scanner);
+				advance(scanner);
 			if (peek(scanner) == '\0')
 				return (make_error_token("syntax error unclosed quote\n"));
-			c = advance(scanner);
+			advance(scanner);
 			if (ft_strchr(WORD_DELIMITER, peek(scanner)) != 0)
 				return (make_token(TOKEN_WORD, scanner));
-			quote = c;		
+			quote = advance(scanner);		
 		}
 		else
 		{
 			if (ft_strchr(WORD_DELIMITER, peek(scanner)) != 0)
 				return (make_token(TOKEN_WORD, scanner));
-			c = advance(scanner);
-			quote = c;
+			quote = advance(scanner);
 		}
 	}
 }
