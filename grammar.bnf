@@ -33,15 +33,15 @@ command          : [cmd_prefix] cmd_word [cmd_suffix]
                  ;
 cmd_word         : WORD                                       /* Apply rule 7b */
                  ;
-cmd_prefix       :            io_redirect
-                 | cmd_prefix io_redirect
-                 |            ASSIGNMENT_WORD
-                 | cmd_prefix ASSIGNMENT_WORD
+cmd_prefix       : io_redirect
+                 | io_redirect cmd_prefix
+                 | ASSIGNMENT_WORD
+                 | ASSIGNMENT_WORD cmd_prefix
                  ;
-cmd_suffix       :            io_redirect
-                 | cmd_suffix io_redirect
-                 |            cmd_arg
-                 | cmd_suffix cmd_arg
+cmd_suffix       : io_redirect
+                 | io_redirect cmd_suffix
+                 | cmd_arg
+                 | cmd_arg cmd_suffix
                  ;
 cmd_arg          : WORD
                  ;
