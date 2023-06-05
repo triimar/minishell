@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 16:29:28 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/05 15:14:25 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_token	scan_word(t_scanner *scanner, char c)
 			advance(scanner);
 			if (ft_strchr(WORD_DELIMITER, peek(scanner)) != 0)
 				return (make_token(TOKEN_WORD, scanner));
-			quote = advance(scanner);		
+			quote = advance(scanner);
 		}
 		else
 		{
