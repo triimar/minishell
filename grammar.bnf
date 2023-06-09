@@ -26,10 +26,13 @@
 %start complete_command
 %%
 complete_command : command PIPE complete_command
-                 | command
+                 | command EOF
                  ;
-command          : [cmd_prefix] cmd_word [cmd_suffix]
-                 | cmd_prefix
+command          : cmd_prefix cmd_word cmd_suffix
+                 | cmd_prefix cmd_word
+				 | cmd_prefix
+                 | cmd_word cmd_suffix
+				 | cmd_word
                  ;
 cmd_word         : WORD                                       /* Apply rule 7b */
                  ;
@@ -43,7 +46,7 @@ cmd_suffix       : io_redirect
                  | cmd_arg
                  | cmd_arg cmd_suffix
                  ;
-cmd_arg          : WORD
+cmd_arg          : WORD (ASSIGNMENT_WORD)
                  ;
 io_redirect    	 : io_file
                  | io_here
@@ -52,11 +55,11 @@ io_file          : LESS filename
                  | GREAT filename
                  | DGREAT filename
                  ;
-filename         : WORD                                       /* Apply rule 2 */
-                 ;
+filename         : WORD (ASSIGNMENT_WORD)                    /* Apply rule 2 */
+				 ;
 io_here          : DLESS here_end
                  ;
-here_end         : WORD                                       /* Apply rule 3 */
+here_end         : WORD (ASSIGNMENT_WORD)                    /* Apply rule 3 */
                  ;
 
 

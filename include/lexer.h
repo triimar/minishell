@@ -6,12 +6,12 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 16:29:06 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/09 20:14:27 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
-#define LEXER_H
+# define LEXER_H
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -81,7 +81,7 @@ void				check_if_assignment_word(t_token *token);
 void				init_lexer_data(t_lexer *data);
 void				init_scanner(t_scanner *scanner, const char *source);
 t_token				make_token(t_token_type type, t_scanner *scanner);
-t_token 			make_error_token(const char *message);
+t_token				make_error_token(const char *message);
 
 /* scanner_utils.c */
 char				advance(t_scanner *scanner);

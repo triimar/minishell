@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 16:29:28 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/09 19:49:17 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ t_lexer_exit_code	lexer(const char *source)
 	while (true)
 	{
 		token = scan_token(&scanner);
-		if (token.type == TOKEN_EOF)
-			break ;
 		if (token.type == TOKEN_ERROR)
 		{
 			ft_putstr_fd((char *) token.start, 2); // need to be edited later
@@ -126,6 +124,8 @@ t_lexer_exit_code	lexer(const char *source)
 			return (MALLOC_ERROR);
 		}
 		add_token_node_back(&data.head, tmp_token_node);
+		if (token.type == TOKEN_EOF)
+			break ;
 	}
 	iter_token_list(&data, &check_if_assignment_word);
 	lexer_test(&data); // printing and freeing for testing

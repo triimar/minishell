@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:35:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:18:42 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/09 20:31:55 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ bool	is_at_end(t_scanner *scanner)
 {
 	if (*scanner->current == '\0')
 		return (true);
-	else
-		return (false);
+	return (false);
 }
 
 void	skip_whitespaces(t_scanner *scanner)
