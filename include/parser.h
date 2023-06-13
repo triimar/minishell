@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/09 20:13:16 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/13 20:44:30 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_parser
 {
 	t_ast				*ast_root;
 	t_ast				*ast_current;
+	bool				malloc_failed;
+	t_token_scanner		*scanner;
 }	t_parser;
 
 #endif

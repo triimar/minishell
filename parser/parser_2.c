@@ -6,13 +6,13 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:58:04 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/13 17:23:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/13 18:27:59 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
 
-t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner)
+t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
 	if (peek_token(scanner) == TOKEN_PIPE)
 	{
@@ -23,7 +23,7 @@ t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner)
 		return (PARSER_FAILURE);
 }
 
-t_parser_exit_code	parse_redirection(t_parser *data, t_token_scanner *scanner)
+t_parser_exit_code	parse_redirection(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
 	if (peek_token(scanner) == TOKEN_GREAT \
 	|| peek_token(scanner) == TOKEN_DGREAT)
@@ -34,7 +34,7 @@ t_parser_exit_code	parse_redirection(t_parser *data, t_token_scanner *scanner)
 	return (PARSER_SUCCESS);
 }
 
-t_parser_exit_code	parse_cmd_suffix(t_parser *data, t_token_scanner *scanner)
+t_parser_exit_code	parse_cmd_suffix(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
 	t_parser_exit_code	ret;
 
@@ -62,7 +62,7 @@ t_parser_exit_code	parse_cmd_suffix(t_parser *data, t_token_scanner *scanner)
 	return (ret);
 }
 
-t_parser_exit_code	parse_cmd_word(t_parser *data, t_token_scanner *scanner)
+t_parser_exit_code	parse_cmd_word(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
 	if (peek_token(scanner) == TOKEN_WORD)
 	{
@@ -73,7 +73,7 @@ t_parser_exit_code	parse_cmd_word(t_parser *data, t_token_scanner *scanner)
 		return (PARSER_FAILURE);
 }
 
-t_parser_exit_code	parse_cmd_prefix(t_parser *data, t_token_scanner *scanner)
+t_parser_exit_code	parse_cmd_prefix(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
 	t_parser_exit_code	ret;
 
