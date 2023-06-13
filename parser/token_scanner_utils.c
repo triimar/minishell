@@ -6,11 +6,21 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:15:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/09 20:54:57 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/13 17:07:54 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
+
+bool	token_is_redirection(t_token_scanner *scanner)
+{
+	if (peek_token(scanner) == TOKEN_GREAT \
+	|| peek_token(scanner) == TOKEN_DGREAT \
+	|| peek_token(scanner) == TOKEN_LESS \
+	|| peek_token(scanner) == TOKEN_DLESS)
+		return (true);
+	return (false);
+}
 
 t_token_type	peek_next_token(t_token_scanner *scanner)
 {
