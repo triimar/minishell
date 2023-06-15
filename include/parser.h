@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/13 20:44:30 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/15 21:09:43 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_redirect
 
 typedef struct s_assignment
 {
-	char			*assignment_word;
+	char			*word;
 	t_assignment	*next;
 }	t_assignment;
 
@@ -52,9 +52,9 @@ typedef struct s_ast_content
 
 typedef struct s_ast
 {
-	void		*content;
-	t_ast		*left;
-	t_ast		*right;
+	t_ast_content	*content;
+	t_ast			*left;
+	t_ast			*right;
 }	t_ast;
 
 typedef struct s_token_scanner

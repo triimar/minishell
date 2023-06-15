@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/13 20:46:55 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/15 20:45:12 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ t_parser_exit_code	parse_command(t_parser *data, t_token_scanner *scanner)
 {
 	t_parser_exit_code	ret;
 	t_ast				*cmd_node;
+	t_ast_content		cmd_content;
 
 	cmd_node = (t_ast *) ft_calloc(1, sizeof(t_ast));
 	if (cmd_node == NULL)
 	{
-		data->malloc_failed = 1;
+		data->malloc_failed = true;
 		return (PARSER_FAILURE);
 	}
-	// add node to tree
+	cmd_node->content = &cmd_content;
+	add_new_ast_node_cmd(data, cmd_node);
 	ret = parse_cmd_prefix(data, scanner, cmd_node);
 	if (ret == PARSER_FAILURE)
 	{
