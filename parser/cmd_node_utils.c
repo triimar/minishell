@@ -6,15 +6,40 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:18:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/15 21:19:17 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/15 21:53:28 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
 
-t_parser_exit_code	add_cmd_and_cmd_args(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
+t_parser_exit_code	add_cmd_args(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
-	
+	int	word_cnt;
+
+	word_cnt = 0;
+	if (cmd_node->content->cmd == NULL)
+		return (PARSER_FAILURE);
+	while (cmd_node->content->cmd + word_cnt != NULL)
+		word_cnt++;
+}
+
+t_parser_exit_code	add_command(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
+{
+	if (cmd_node->content->cmd != NULL)
+		return (PARSER_FAILURE);
+	cmd_node->content->cmd = (char **) ft_calloc(2, sizeof(char *));
+	if (cmd_node->content->cmd == NULL)
+	{
+		data->malloc_failed = true;
+		return (PARSER_FAILURE);
+	}
+	cmd_node->content->cmd[0] = produce_dup_string(scanner->token_current->token.start, scanner->token_current->token.length);
+	if (cmd_node->content->cmd[0] == NULL)
+	{
+		data->malloc_failed = true;
+		return (PARSER_FAILURE);
+	}
+	return (PARSER_SUCCESS);
 }
 
 t_parser_exit_code	add_assignment_word(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
