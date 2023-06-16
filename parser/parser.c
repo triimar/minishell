@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/15 20:45:12 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/16 12:36:42 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,21 @@ t_parser_exit_code	parse_complete_command(t_parser *data, t_token_scanner *scann
 	return (PARSER_SUCCESS);
 }
 
-t_parser_exit_code	parser(t_token_list *head)
+t_parser_exit_code	parser(t_lexer *lexer_data)
 {
 	t_parser			data; // should be given as a parameter later
 	t_token_scanner		scanner;
 	t_parser_exit_code	parser_ret;
 
-	if (head->token.type == TOKEN_EOF)
+	if (lexer_data->head->token.type == TOKEN_EOF)
 	{
-		// free token list
+		free_token_list(lexer_data);
 		return (PARSER_FAILURE);
 	}
-	init_token_scanner(&scanner, head);
+	init_token_scanner(&scanner, lexer_data->head);
 	init_parser_data(&data, &scanner);
 	parser_ret = parse_complete_command(&data, &scanner);
-	// free token list
+	free_token_list(lexer_data);
 	if (data.malloc_failed == true)
 	{
 		// free tree

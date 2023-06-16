@@ -6,17 +6,27 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:58:04 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/15 21:17:06 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/16 13:29:14 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
 
-t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
+t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner)
 {
+	t_ast	*cmd_node;
+
+	if (data->malloc_failed == true)
+		return (PARSER_FAILURE);
+	cmd_node = (t_ast *) ft_calloc(1, sizeof(t_ast));
+	if (cmd_node == NULL)
+	{
+		data->malloc_failed = true;
+		return (PARSER_FAILURE);
+	}
 	if (peek_token(scanner) == TOKEN_PIPE)
 	{
-		// add pipe (advance once)
+		add_new_ast_node_pipe(data, cmd_node);
 		return (PARSER_SUCCESS);
 	}
 	else
@@ -42,7 +52,7 @@ t_parser_exit_code	parse_cmd_suffix(t_parser *data, t_token_scanner *scanner, t_
 		else if (peek_token(scanner) == TOKEN_WORD \
 		|| peek_token(scanner) == TOKEN_ASSIGNMENT_WORD)
 		{
-			// add cmd arg (advance once)
+			add_cmd_and_cmd_args(data, scanner, cmd_node);
 			ret = PARSER_SUCCESS;
 			continue;
 		}
@@ -54,9 +64,11 @@ t_parser_exit_code	parse_cmd_suffix(t_parser *data, t_token_scanner *scanner, t_
 
 t_parser_exit_code	parse_cmd_word(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {
+	if (data->malloc_failed == true)
+			return (PARSER_FAILURE);
 	if (peek_token(scanner) == TOKEN_WORD)
 	{
-		// add cmd word (advance once)
+		add_cmd_and_cmd_args(data, scanner, cmd_node);
 		return (PARSER_SUCCESS);
 	}
 	else
@@ -69,9 +81,9 @@ t_parser_exit_code	parse_redirection(t_parser *data, t_token_scanner *scanner, t
 		return (add_redirection(data, scanner, cmd_node, REDIRECT_STDIN));
 	else if (peek_token(scanner) == TOKEN_DLESS)
 		return (add_redirection(data, scanner, cmd_node, REDIRECT_HERE_DOC));
-	else if (peek_token(scanner) == TOKEN_LESS)
+	else if (peek_token(scanner) == TOKEN_GREAT)
 		return (add_redirection(data, scanner, cmd_node, REDIRECT_STDOUT));
-	else if (peek_token(scanner) == TOKEN_DLESS)
+	else if (peek_token(scanner) == TOKEN_DGREAT)
 		return (add_redirection(data, scanner, cmd_node, REDIRECT_STDOUT_APPEND));
 }
 
