@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/09 20:14:27 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:51:36 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_lexer
 }	t_lexer;
 
 /* lexer.c */
-t_lexer_exit_code	lexer(const char *source);
+t_lexer_exit_code	lexer(t_lexer *data, const char *source);
 t_token				scan_token(t_scanner *scanner);
 t_token				scan_redirections(t_scanner *scanner, char c);
 t_token				scan_word(t_scanner *scanner, char c);

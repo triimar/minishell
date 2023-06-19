@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:57:26 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:56:50 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	print_token(t_lexer *data)
 {
-	int				i;
 	t_token_list	*tmp;
 
-	i = 0;
 	tmp = data->head;
 	while (tmp)
 	{
@@ -49,12 +47,12 @@ void	print_token(t_lexer *data)
 void	lexer_test(t_lexer *data)
 {
 	print_token(data);
-	free_token_list(data);
+	// free_token_list(data);
 }
 
-int	main(int argc, char **argv)
-{
-	if (argc != 2)
-		return (INVALID_ARGUMENT);
-	return (lexer(argv[1]));
-}
+// int	main(int argc, char **argv)
+// {
+// 	if (argc != 2)
+// 		return (INVALID_ARGUMENT);
+// 	return (lexer(argv[1]));
+// }

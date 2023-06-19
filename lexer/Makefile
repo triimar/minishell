@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/02 16:28:14 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/19 14:30:43 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ WHITE	:= \033[37;1m
 RESET	:= \033[0m
 
 #//= Mandatory part =//#
-NAME			:= lexer
-CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
+NAME			:= lexer.a
+CFLAGS 			:= -Wall -Wextra -Werror
 
 LIBFT_DIR		:= ../libft
 INCLUDE_DIR		:= ../include
@@ -33,11 +33,11 @@ HEADERS 		:= -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
 LIBFT			:= $(LIBFT_DIR)/libft.a
 
 LEXER_SRCS := \
-	for_test.c \
-	lexer_utils.c \
 	lexer.c \
+	lexer_utils.c \
 	scanner_utils.c \
-	token_list_utils.c
+	token_list_utils.c \
+	for_test.c
 
 OBJS := $(LEXER_SRCS:.c=.o)
 
@@ -48,9 +48,9 @@ libft:
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME)	: $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) && \
-	echo "$(MAGENTA)>> Unit testing - lexer <<$(RESET)" && \
-	echo "$(GREEN)Compilation successful!$(RESET)"
+	@ar rcs $(NAME) $(OBJS)
+	@mv $(LIBFT) $(NAME) && \
+	echo "$(YELLOW)>> library - $(NAME) compiled <<$(RESET)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@

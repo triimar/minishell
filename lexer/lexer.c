@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/09 19:49:17 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:57:17 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,15 @@ t_token	scan_token(t_scanner *scanner)
 		return (scan_word(scanner, c));
 }
 
-t_lexer_exit_code	lexer(const char *source)
+t_lexer_exit_code	lexer(t_lexer *data, const char *source)
 {
-	t_lexer			data; // should be given as a parameter later
 	t_scanner		scanner;
 	t_token			token;
 	t_token_list	*tmp_token_node;
 
 	if (!source)
 		return (NOTHING_TO_SCAN);
-	init_lexer_data(&data);
+	init_lexer_data(data);
 	init_scanner(&scanner, source);
 	while (true)
 	{
@@ -114,21 +113,21 @@ t_lexer_exit_code	lexer(const char *source)
 		if (token.type == TOKEN_ERROR)
 		{
 			ft_putstr_fd((char *) token.start, 2); // need to be edited later
-			free_token_list(&data);
+			free_token_list(data);
 			return (UNCLOSED_QUOTE);
 		}
 		tmp_token_node = make_token_node(token);
 		if (tmp_token_node == NULL)
 		{
-			free_token_list(&data);
+			free_token_list(data);
 			return (MALLOC_ERROR);
 		}
-		add_token_node_back(&data.head, tmp_token_node);
+		add_token_node_back(&data->head, tmp_token_node);
 		if (token.type == TOKEN_EOF)
 			break ;
 	}
-	iter_token_list(&data, &check_if_assignment_word);
-	lexer_test(&data); // printing and freeing for testing
+	iter_token_list(data, &check_if_assignment_word);
+	lexer_test(data);
 	// system("leaks lexer");
 	return (LEXER_SUCCESS);
 }
