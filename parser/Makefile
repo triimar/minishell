@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/19 14:32:56 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/19 16:45:22 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/19 18:30:15 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= parser
-CFLAGS 			:= -Wall -Wextra -Werror
-# -g3 -fsanitize=address
+CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 LIBFT_DIR		:= ../libft
 LIBFT			:= $(LIBFT_DIR)/libft.a

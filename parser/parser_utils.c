@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:40:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:43:32 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 19:10:34 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ char	*produce_dup_string(const char *start, int length)
 	return (str);
 }
 
-void	init_token_scanner(t_token_scanner *scanner, t_token_list *head)
+void	init_cmd_content(t_ast_content *cmd_content)
 {
-	scanner->token_head = head;
-	scanner->token_current = head;
+	cmd_content->stdin_redirect = NULL;
+	cmd_content->stdout_redirect = NULL;
+	cmd_content->assignments = NULL;
+	cmd_content->cmd = NULL;
 }
 
 void	init_parser_data(t_parser *data, t_token_scanner *scanner)
@@ -61,4 +63,10 @@ void	init_parser_data(t_parser *data, t_token_scanner *scanner)
 	data->ast_current = NULL;
 	data->malloc_failed = false;
 	data->scanner = scanner;
+}
+
+void	init_token_scanner(t_token_scanner *scanner, t_token_list *head)
+{
+	scanner->token_head = head;
+	scanner->token_current = head;
 }

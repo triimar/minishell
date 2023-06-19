@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 16:19:34 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 19:12:34 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_parser_exit_code	parse_command(t_parser *data, t_token_scanner *scanner)
 		data->malloc_failed = true;
 		return (PARSER_FAILURE);
 	}
+	init_cmd_content(&cmd_content);
 	cmd_node->content = &cmd_content;
 	add_new_ast_node_cmd(data, cmd_node);
 	ret = parse_cmd_prefix(data, scanner, cmd_node);
@@ -68,18 +69,18 @@ t_parser_exit_code	parser(t_parser *data, t_lexer *lexer_data)
 	init_token_scanner(&scanner, lexer_data->head);
 	init_parser_data(data, &scanner);
 	parser_ret = parse_complete_command(data, &scanner);
-	// free_token_list(lexer_data);
-	// clean_parser_data(data);
+	free_token_list(lexer_data);
+	clean_parser_data(data);
 	if (data->malloc_failed == true)
 	{
-		free_ast(data);
 		ft_putstr_fd("malloc failed", 2);
+		free_ast(data);
 		return (PARSER_FAILURE);
 	}
 	if (parser_ret == PARSER_FAILURE)
 	{
-		free_ast(data);
 		ft_putstr_fd("syntax error", 2);
+		free_ast(data);
 		return (PARSER_FAILURE);
 	}
 	return (PARSER_SUCCESS);
@@ -97,8 +98,6 @@ int	main(int argc, char **argv)
 	if (parser(&parser_data, &lexer_data) == PARSER_FAILURE)
 		return (EXIT_FAILURE);
 	// parser_test(&parser_data); // testing and freeing
-	free_token_list(&lexer_data);
-	clean_parser_data(&parser_data);
 	free_ast(&parser_data);
 	return (EXIT_SUCCESS);
 }

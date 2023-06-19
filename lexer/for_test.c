@@ -6,17 +6,17 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:56:50 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:28:06 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	print_token(t_lexer *data)
+void	print_token(t_token_list *token_head)
 {
 	t_token_list	*tmp;
 
-	tmp = data->head;
+	tmp = token_head;
 	while (tmp)
 	{
 		if (tmp->token.type == TOKEN_EOF)
@@ -46,7 +46,7 @@ void	print_token(t_lexer *data)
 
 void	lexer_test(t_lexer *data)
 {
-	print_token(data);
+	print_token(data->head);
 	// free_token_list(data);
 }
 

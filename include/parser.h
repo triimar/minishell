@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 16:15:36 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 19:10:22 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,12 @@ t_parser_exit_code	parse_cmd_suffix(t_parser *data, t_token_scanner *scanner, t_
 t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner);
 
 /* parser_utils.c */
-void				init_parser_data(t_parser *data, t_token_scanner *scanner);
 void				init_token_scanner(t_token_scanner *scanner, t_token_list *head);
+void				init_parser_data(t_parser *data, t_token_scanner *scanner);
+void				init_cmd_content(t_ast_content *cmd_content);
 char				*produce_dup_string(const char *start, int length);
 char				**extend_string_array(char **param, int word_cnt);
+
 
 /* parser_linked_list_utils.c */
 void				add_redirect_node_back(t_redirect **io_redirect, t_redirect *new_redirect);
@@ -119,8 +121,8 @@ void				add_new_ast_node_pipe(t_parser *data, t_ast *cmd_node);
 void				free_p(char	*p);
 void				free_str_arr(char **arr);
 void				free_ast_content(t_ast_content *content);
-void				free_redirect_list(t_redirect *io_redirect);
-void				free_assignment_list(t_assignment *assignments);
+void				free_redirect_list(t_redirect **io_redirect);
+void				free_assignment_list(t_ast_content *content);
 void				free_ast(t_parser *data);
 void				clean_parser_data(t_parser *data);
 

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:51:36 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:10:05 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ void				iter_token_list(t_lexer *data, void (*f)(t_token *));
 
 /* for_test.c */
 void				lexer_test(t_lexer *data);
-void				print_token(t_lexer *data);
+void				print_token(t_token_list *token_head);
 
 #endif
