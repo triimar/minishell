@@ -6,15 +6,15 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:10:27 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:43:46 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:16:06 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	add_assignment_node_back(t_redirect **assignments, t_redirect *new_assignment)
+void	add_assignment_node_back(t_assignment **assignments, t_assignment *new_assignment)
 {
-	t_redirect	*last;
+	t_assignment	*last;
 
 	if (assignments == NULL || new_assignment == NULL)
 		return ;

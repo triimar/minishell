@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/19 14:32:56 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/19 14:45:51 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/19 16:45:22 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ CFLAGS 			:= -Wall -Wextra -Werror
 # -g3 -fsanitize=address
 
 LIBFT_DIR		:= ../libft
-INCLUDE_DIR		:= ../include
+LIBFT			:= $(LIBFT_DIR)/libft.a
 
+INCLUDE_DIR		:= ../include
 HEADERS 		:= -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
 
 LEXER_DIR		:= ../lexer
@@ -43,19 +44,19 @@ PARSER_SRCS := \
 	token_scanner_utils.c \
 	cmd_node_utils.c \
 	ast_utils.c \
-	parser_free.c \
-	parser_test.c
+	parser_free.c
+	# parser_test.c
 
 OBJS := $(PARSER_SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : lexer $(NAME)
+all : $(NAME)
 
-lexer:
+$(LEXER):
 	@$(MAKE) -C $(LEXER_DIR)
 
-$(NAME)	: $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LEXER) -o $(NAME) && \
+$(NAME)	: $(LEXER) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) $(LEXER) && \
 	echo "$(BLUE)>> Unit testing - parser <<$(RESET)" && \
 	echo "$(GREEN)Compilation successful!$(RESET)"
 
@@ -69,7 +70,8 @@ clean:
 fclean:	clean
 	@rm -f $(NAME)
 	@rm -f $(LEXER)
-	
+	@rm -f $(LIBFT)
+
 re: fclean all
 
 .PHONY: all, clean, fclean, re, lexer

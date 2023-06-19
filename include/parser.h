@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 16:02:51 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:15:36 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ typedef enum e_redirect_type
 	REDIRECT_STDOUT_APPEND
 }	t_redirect_type;
 
+typedef struct s_redirect	t_redirect;
+
 typedef struct s_redirect
 {
 	t_redirect_type	type;
 	char			*word;
 	t_redirect		*next;
 }	t_redirect;
+
+typedef struct s_assignment	t_assignment;
 
 typedef struct s_assignment
 {
@@ -49,6 +53,8 @@ typedef struct s_ast_content
 	t_assignment	*assignments;
 	char			**cmd;
 }	t_ast_content;
+
+typedef struct s_ast	t_ast;
 
 typedef struct s_ast
 {
@@ -91,7 +97,7 @@ char				**extend_string_array(char **param, int word_cnt);
 
 /* parser_linked_list_utils.c */
 void				add_redirect_node_back(t_redirect **io_redirect, t_redirect *new_redirect);
-void				add_assignment_node_back(t_redirect **assignments, t_redirect *new_assignment);
+void				add_assignment_node_back(t_assignment **assignments, t_assignment *new_assignment);
 
 /* token_scanner_utils.c */
 void				advance_token_list(t_token_scanner *scanner);
@@ -119,7 +125,7 @@ void				free_ast(t_parser *data);
 void				clean_parser_data(t_parser *data);
 
 /* parser_test.c */
-void				parser_test(t_parser *data);
-void				print_ast(data);
+// void				parser_test(t_parser *data);
+// void				print_ast(data);
 
 #endif

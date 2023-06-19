@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 16:02:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:19:34 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ t_parser_exit_code	parser(t_parser *data, t_lexer *lexer_data)
 	init_token_scanner(&scanner, lexer_data->head);
 	init_parser_data(data, &scanner);
 	parser_ret = parse_complete_command(data, &scanner);
-	free_token_list(lexer_data);
-	clean_parser_data(data);
+	// free_token_list(lexer_data);
+	// clean_parser_data(data);
 	if (data->malloc_failed == true)
 	{
 		free_ast(data);
@@ -96,6 +96,9 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (parser(&parser_data, &lexer_data) == PARSER_FAILURE)
 		return (EXIT_FAILURE);
-	parser_test(&parser_data); // testing and freeing
+	// parser_test(&parser_data); // testing and freeing
+	free_token_list(&lexer_data);
+	clean_parser_data(&parser_data);
+	free_ast(&parser_data);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:58:04 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:43:56 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:14:28 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_parser_exit_code	parse_redirection(t_parser *data, t_token_scanner *scanner, t
 		return (add_redirection(data, scanner, cmd_node, REDIRECT_STDOUT));
 	else if (peek_token(scanner) == TOKEN_DGREAT)
 		return (add_redirection(data, scanner, cmd_node, REDIRECT_STDOUT_APPEND));
+	return (PARSER_FAILURE);
 }
 
 t_parser_exit_code	parse_cmd_prefix(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)

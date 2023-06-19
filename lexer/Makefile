@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/19 14:30:43 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/19 16:44:21 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,10 @@ NAME			:= lexer.a
 CFLAGS 			:= -Wall -Wextra -Werror
 
 LIBFT_DIR		:= ../libft
-INCLUDE_DIR		:= ../include
-
-HEADERS 		:= -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
 LIBFT			:= $(LIBFT_DIR)/libft.a
+
+INCLUDE_DIR		:= ../include
+HEADERS 		:= -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
 
 LEXER_SRCS := \
 	lexer.c \
@@ -48,8 +48,7 @@ libft:
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME)	: $(OBJS)
-	@ar rcs $(NAME) $(OBJS)
-	@mv $(LIBFT) $(NAME) && \
+	@ar rcs $(NAME) $(OBJS) && \
 	echo "$(YELLOW)>> library - $(NAME) compiled <<$(RESET)"
 
 %.o: %.c
