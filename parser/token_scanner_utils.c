@@ -6,11 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:15:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/13 17:07:54 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:43:26 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "parser.h"
 
 bool	token_is_redirection(t_token_scanner *scanner)
 {

@@ -6,11 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:18:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/16 13:15:21 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:44:03 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "parser.h"
 
 t_parser_exit_code	add_cmd_and_cmd_args(t_parser *data, t_token_scanner *scanner, t_ast *cmd_node)
 {

@@ -6,11 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:30:53 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/16 13:30:03 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:44:07 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "parser.h"
 
 // possible cases for new pipe node
 // 1) root != null, content != null -> pipe node should be the root

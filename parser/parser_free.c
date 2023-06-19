@@ -6,11 +6,18 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 12:53:09 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/16 16:34:15 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:01:16 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "parser.h"
+
+void	clean_parser_data(t_parser *data)
+{
+	data->scanner->token_head = NULL;
+	data->scanner->token_current = NULL;
+	data->scanner = NULL;
+}
 
 void	free_ast(t_parser *data)
 {

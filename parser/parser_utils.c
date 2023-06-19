@@ -6,11 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:40:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 14:46:57 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:43:32 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "parser.h"
 
 char	**extend_string_array(char **param, int word_cnt)
 {
