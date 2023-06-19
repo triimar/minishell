@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/16 12:36:42 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/16 16:38:55 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_parser_exit_code	parse_complete_command(t_parser *data, t_token_scanner *scann
 
 t_parser_exit_code	parser(t_lexer *lexer_data)
 {
-	t_parser			data; // should be given as a parameter later
+	t_parser			data;
 	t_token_scanner		scanner;
 	t_parser_exit_code	parser_ret;
 
@@ -72,13 +72,14 @@ t_parser_exit_code	parser(t_lexer *lexer_data)
 	free_token_list(lexer_data);
 	if (data.malloc_failed == true)
 	{
-		// free tree
+		free_ast(data);
+		ft_putstr_fd("malloc failed", 2);
 		return (PARSER_FAILURE);
 	}
 	if (parser_ret == PARSER_FAILURE)
 	{
-		// free tree
-		// print syntax error message
+		free_ast(data);
+		ft_putstr_fd("syntax error", 2);
 		return (PARSER_FAILURE);
 	}
 	return (PARSER_SUCCESS);
