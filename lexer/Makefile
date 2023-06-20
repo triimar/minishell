@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/19 16:44:21 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/20 18:51:04 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ libft:
 
 $(NAME)	: $(OBJS)
 	@ar rcs $(NAME) $(OBJS) && \
-	echo "$(YELLOW)>> library - $(NAME) compiled <<$(RESET)"
+	echo "$(BLUE)>> library - $(NAME) compiled <<$(RESET)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 14:28:34 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:37:36 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,5 @@ void				free_ast(t_parser *data);
 
 /* parser_test.c */
 void				parser_test(t_parser *data);
-void				print_ast(t_parser *data);
-void				print_ast_content(t_ast_content *content);
 
 #endif

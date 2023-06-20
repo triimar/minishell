@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:22:15 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 17:28:06 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:50:31 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	print_token(t_token_list *token_head)
 	t_token_list	*tmp;
 
 	tmp = token_head;
+	printf("\n------------ TOKEN LIST -----------\n\n");
 	while (tmp)
 	{
 		if (tmp->token.type == TOKEN_EOF)

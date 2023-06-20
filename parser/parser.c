@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 15:17:18 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:38:25 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,22 @@ t_parser_exit_code	parser(t_parser *data, t_lexer *lexer_data)
 	free_token_list(lexer_data);
 	if (data->malloc_failed == true)
 	{
-		ft_putstr_fd("malloc failed", 2);
+		ft_putstr_fd("malloc failed\n", 2);
 		free_ast(data);
 		return (PARSER_FAILURE);
 	}
 	if (parser_ret == PARSER_FAILURE)
 	{
-		ft_putstr_fd("syntax error", 2);
-		// print_ast(data);
+		ft_putstr_fd("syntax error\n", 2);
 		free_ast(data);
 		return (PARSER_FAILURE); 
 	}
 	return (PARSER_SUCCESS);
+}
+
+void	check_leaks(void)
+{
+	system("leaks parser");	
 }
 
 int	main(int argc, char **argv)
@@ -95,12 +99,13 @@ int	main(int argc, char **argv)
 	t_lexer		lexer_data;
 	t_parser	parser_data;
 
+	atexit(check_leaks);
 	if (argc != 2)
 		return (EXIT_FAILURE);
 	if (lexer(&lexer_data, argv[1]) != LEXER_SUCCESS)
 		return (EXIT_FAILURE);
 	if (parser(&parser_data, &lexer_data) == PARSER_FAILURE)
 		return (EXIT_FAILURE);
-	parser_test(&parser_data); // testing and freeing
+	parser_test(&parser_data);
 	return (EXIT_SUCCESS);
 }

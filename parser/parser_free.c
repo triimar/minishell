@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 12:53:09 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 16:17:46 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:08:42 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,16 @@ void	free_ast(t_parser *data)
 		if (data->ast_current->right != NULL)
 		{
 			free_ast_content(data->ast_current->right->content);
+			free(data->ast_current->right->content);
 			free(data->ast_current->right);
 			data->ast_current->right = NULL;
 		}
 	}
 	else if (data->ast_current->content != NULL)
+	{
 		free_ast_content(data->ast_current->content);
+		free(data->ast_current->content);
+	}
 	data->ast_root = data->ast_current->left;
 	data->ast_current->left = NULL;
 	free(data->ast_current);
@@ -79,7 +83,6 @@ void	free_ast_content(t_ast_content *content)
 	free_redirect_list(&content->stdout_redirect);
 	free_assignment_list(content);
 	free_str_arr(content->cmd);
-	free(content);
 }
 
 void	free_str_arr(char **arr)

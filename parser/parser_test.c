@@ -6,67 +6,103 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:43:34 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 16:26:32 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:56:28 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	print_ast_content(t_ast_content *content)
+typedef enum e_branch {
+	LEFT,
+	RIGHT
+}	t_branch;
+
+static t_ast	*from_identifier_to_tree(t_ast *node, t_branch branch)
+{
+	if (branch == LEFT)
+		return (node->left);
+	else
+		return (node->right);
+}
+
+static void	print_ast_content(t_ast_content *content)
 {
 	t_redirect		*tmp_redirect;
 	t_assignment	*tmp_assignment;
 
+	if (content == NULL)
+	{
+		printf("     .");
+		printf("\n>> Ceci n'est pas une pipe. <<\n");
+		return ;
+	}
 	printf("\n>> This is a command node. <<\n");
 
+	int i = 1;
 	tmp_redirect = content->stdin_redirect;
 	while (tmp_redirect)
 	{
-		printf("redirect type: %d, word: %s\n", tmp_redirect->type, tmp_redirect->word);
+		printf("stdin redirect #%d type: %d, word: %s\n", i, tmp_redirect->type, tmp_redirect->word);
 		tmp_redirect = tmp_redirect->next;
+		i++;
 	}
+	i = 1;
 	tmp_redirect = content->stdout_redirect;
 	while (tmp_redirect)
 	{
-		printf("redirect type: %d, word: %s\n", tmp_redirect->type, tmp_redirect->word);
+		printf("stdout redirect #%d type: %d, word: %s\n", i, tmp_redirect->type, tmp_redirect->word);
 		tmp_redirect = tmp_redirect->next;
+		i++;
 	}
+	i = 1;
 	tmp_assignment = content->assignments;
 	while (tmp_assignment)
 	{
-		printf("assignment word: %s\n", tmp_assignment->word);
+		printf("assignment word #%d: %s\n", i, tmp_assignment->word);
 		tmp_assignment = tmp_assignment->next;
+		i++;
 	}
 	if (content->cmd == NULL)
 		return ;
 	if (content->cmd[0] != NULL)
 		printf("cmd word: %s\n", content->cmd[0]);
-	for (int i = 1; content->cmd[i] != NULL; i++)
+	for (i = 1; content->cmd[i] != NULL; i++)
 	{
-		printf("cmd arg %d: ", i);
+		printf("cmd arg #%d: ", i);
 		printf("%s\n", content->cmd[i]);	
 	}
 }
-
-void	print_ast(t_parser *data)
+static void	print_ast_recursive(t_ast *node, int level, t_branch branch)
 {
-	if (data->ast_root == NULL)
+	if (node == NULL)
 		return ;
-	data->ast_current = data->ast_root;
-	if (data->ast_current->content == NULL)
+
+	int i = 0;
+	// print the right subtree
+	print_ast_recursive(from_identifier_to_tree(node, branch), level + 1, branch);
+	// print the current node
+	while (i < level)
 	{
-		printf("\n>> Ceci n'est pas une pipe. <<\n");
-		if (data->ast_current->right != NULL)
-			print_ast_content(data->ast_current->right->content);
+		printf("     .");
+		i++;
 	}
-	else if (data->ast_current->content != NULL)
-		print_ast_content(data->ast_current->content);
-	data->ast_root = data->ast_current->left;
-	print_ast(data);
+	print_ast_content(node->content);
+	printf("\n");
+	// print the left subtree
+	print_ast_recursive(from_identifier_to_tree(node, !branch), level + 1, branch);
+}
+
+static void	print_ast(t_ast *ast_root)
+{
+	printf("\n------- Abstract Syntax Tree -------\n\n");
+	if (ast_root == NULL)
+		printf("... no content\n");
+	print_ast_recursive(ast_root, 0, LEFT);
+	printf("--------------------------------\n");
 }
 
 void	parser_test(t_parser *data)
 {
-	print_ast(data);
-	free_ast(data);
+	print_ast(data->ast_root);
+	free_ast(data); 
 }
