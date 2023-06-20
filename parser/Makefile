@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/19 14:32:56 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/20 18:51:15 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/20 20:07:03 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= parser
-CFLAGS 			:= -Wall -Wextra -Werror
-# -g3 -fsanitize=address
+CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 LIBFT_DIR		:= ../libft
 LIBFT			:= $(LIBFT_DIR)/libft.a
@@ -38,12 +37,12 @@ LEXER			:= $(LEXER_DIR)/lexer.a
 
 PARSER_SRCS := \
 	parser.c \
-	parser_2.c \
+	parser_subfunc.c \
 	parser_utils.c \
-	parser_linked_list_utils.c \
 	token_scanner_utils.c \
-	cmd_node_utils.c \
+	parser_linked_list_utils.c \
 	ast_utils.c \
+	ast_content_utils.c \
 	parser_free.c \
 	parser_test.c
 

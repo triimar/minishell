@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:15:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:43:26 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:41:26 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ bool	token_is_redirection(t_token_scanner *scanner)
 	return (false);
 }
 
+bool	token_list_is_at_end(t_token_scanner *scanner)
+{
+	if (scanner->token_current->token.type == TOKEN_EOF)
+		return (true);
+	return (false);
+}
+
 t_token_type	peek_next_token(t_token_scanner *scanner)
 {
 	return (scanner->token_current->next->token.type);
@@ -30,13 +37,6 @@ t_token_type	peek_next_token(t_token_scanner *scanner)
 t_token_type	peek_token(t_token_scanner *scanner)
 {
 	return (scanner->token_current->token.type);
-}
-
-bool	token_list_is_at_end(t_token_scanner *scanner)
-{
-	if (scanner->token_current->token.type == TOKEN_EOF)
-		return (true);
-	return (false);
 }
 
 void	advance_token_list(t_token_scanner *scanner)
