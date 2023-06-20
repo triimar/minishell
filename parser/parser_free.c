@@ -6,18 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 12:53:09 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 19:05:56 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:17:46 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-void	clean_parser_data(t_parser *data)
-{
-	data->scanner->token_head = NULL;
-	data->scanner->token_current = NULL;
-	data->scanner = NULL;
-}
 
 void	free_ast(t_parser *data)
 {
@@ -86,7 +79,7 @@ void	free_ast_content(t_ast_content *content)
 	free_redirect_list(&content->stdout_redirect);
 	free_assignment_list(content);
 	free_str_arr(content->cmd);
-	content = NULL;
+	free(content);
 }
 
 void	free_str_arr(char **arr)
@@ -102,12 +95,10 @@ void	free_str_arr(char **arr)
 		i++;
 	}
 	free(arr);
-	arr = NULL;
 }
 
 void	free_p(char	*p)
 {
 	if (p)
 		free(p);
-	p = NULL;
 }

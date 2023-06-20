@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/19 14:32:56 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/19 18:30:15 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/20 16:18:12 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,8 @@ PARSER_SRCS := \
 	token_scanner_utils.c \
 	cmd_node_utils.c \
 	ast_utils.c \
-	parser_free.c
-	# parser_test.c
+	parser_free.c \
+	parser_test.c
 
 OBJS := $(PARSER_SRCS:.c=.o)
 

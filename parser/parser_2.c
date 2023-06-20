@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:58:04 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 17:48:49 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:59:03 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_parser_exit_code	parse_pipe(t_parser *data, t_token_scanner *scanner)
 	if (peek_token(scanner) == TOKEN_PIPE)
 	{
 		add_new_ast_node_pipe(data, cmd_node);
+		advance_token_list(scanner);
 		return (PARSER_SUCCESS);
 	}
 	else

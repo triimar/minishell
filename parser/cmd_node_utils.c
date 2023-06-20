@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:18:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 15:44:03 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:21:35 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_parser_exit_code	add_cmd_and_cmd_args(t_parser *data, t_token_scanner *scanner
 	int	word_cnt;
 
 	word_cnt = 0;
-	while (cmd_node->content->cmd + word_cnt != NULL)
+	while (cmd_node->content->cmd != NULL && *(cmd_node->content->cmd + word_cnt) != NULL)
 		word_cnt++;
 	cmd_node->content->cmd = extend_string_array(cmd_node->content->cmd, word_cnt);
 	if (cmd_node->content->cmd == NULL)

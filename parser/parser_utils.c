@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 18:40:52 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/19 19:10:34 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:20:18 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ char	**extend_string_array(char **param, int word_cnt)
 	str_arr = (char **) ft_calloc(word_cnt + 2, sizeof(char *));
 	while (i < word_cnt)
 	{
-		**(str_arr + i) = **(param + i);
+		*(str_arr + i) = *(param + i);
 		i++;
 	}
 	if (param != NULL)
-		free_str_arr(param);
+		free(param);
 	return (str_arr);
 }
 
@@ -47,14 +47,6 @@ char	*produce_dup_string(const char *start, int length)
 	}
 	str[length] = '\0';
 	return (str);
-}
-
-void	init_cmd_content(t_ast_content *cmd_content)
-{
-	cmd_content->stdin_redirect = NULL;
-	cmd_content->stdout_redirect = NULL;
-	cmd_content->assignments = NULL;
-	cmd_content->cmd = NULL;
 }
 
 void	init_parser_data(t_parser *data, t_token_scanner *scanner)
