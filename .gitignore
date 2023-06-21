@@ -8,5 +8,3 @@ test
 test.txt
 .vscode/
 .DS_Store
-main.c
-parser
