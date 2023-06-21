@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/06/02 16:32:43 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/11 23:04:25 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,54 @@ static int	ft_strcmp(const char *s1, const char *s2)
 	return (1);
 }
 
+void restore_signal_handling()
+{
+    signal(SIGINT, SIG_DFL); // Reset signal handling for SIGINT to default
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
 int	main(int argc, char **argv)
 {
-	char	*p_input;
+	char				*p_input;
 
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	set_termios(1);
+	signal_ctrl_c();
 	if (argc != 1)
 		return (0);
 	(void)argv;
 	while (1)
 	{
-		p_input = readline("eunskim-tmarts-m_sh % ");
-		if (!p_input)
-			break ;
+		p_input = readline(BLUE "eunskim_tmarts minishell % " RESET);
+		if (p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
+		{
+			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 
+			//free everything, stop everything
+			
+			// break;
+			rl_redisplay();
+			ft_putendl_fd("exit", STDOUT_FILENO);
+			// free(p_input);
+			rl_clear_history();
+			
+			builtin_exit(0);
+		}
 		if (ft_strcmp(p_input, "exit"))
 		{
 			free(p_input);
 			rl_clear_history();
 			builtin_exit(0);
-			// we should be taking the exit_code from the p_input, 
-			// instead of this 'if' the exit should be parsed and run as any other cmmand
 		}
-		ft_putendl_fd(p_input, STDOUT_FILENO);
 		if (p_input && *p_input)
 			add_history(p_input);
 		free(p_input);
 	}
+	restore_signal_handling();
 	rl_clear_history();
+	set_termios(0);
+	/*free stuff*/
 	return (0);
 }
