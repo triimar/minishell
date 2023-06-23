@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:58:04 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 19:55:46 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:21:24 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ t_token_scanner *scanner, t_ast *cmd_node)
 		else if (peek_token(scanner) == TOKEN_WORD \
 		|| peek_token(scanner) == TOKEN_ASSIGNMENT_WORD)
 		{
-			add_cmd_and_cmd_args(data, scanner, cmd_node);
-			ret = PARSER_SUCCESS;
+			ret = add_cmd_and_cmd_args(data, scanner, cmd_node);
 			continue ;
 		}
 		else
