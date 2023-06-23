@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/20 18:51:04 by eunskim          ###   ########.fr        #
+#    Updated: 2023/06/23 11:49:56 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ RESET	:= \033[0m
 #//= Mandatory part =//#
 NAME			:= lexer.a
 CFLAGS 			:= -Wall -Wextra -Werror
+# -g3 -fsanitize=address
 
 LIBFT_DIR		:= ../libft
 LIBFT			:= $(LIBFT_DIR)/libft.a

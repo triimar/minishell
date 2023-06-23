@@ -4,7 +4,11 @@ practice/
 backup/
 memo.txt
 a.out
+test/
 test
 test.txt
 .vscode/
 .DS_Store
+parser
+expander/
+expander.h

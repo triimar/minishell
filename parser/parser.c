@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 20:06:55 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:15:16 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,23 @@ t_token_scanner *scanner)
 	return (PARSER_SUCCESS);
 }
 
-t_parser_exit_code	parser(t_parser *data, t_lexer *lexer_data)
+t_parser_exit_code	parser(t_parser *data, const char *source)
 {
+	t_lexer				lexer_data;
 	t_token_scanner		scanner;
 	t_parser_exit_code	parser_ret;
 
-	if (lexer_data->head->token.type == TOKEN_EOF)
+	if (lexer(&lexer_data, source) != LEXER_SUCCESS)
+		return (EXIT_FAILURE);
+	if (lexer_data.head->token.type == TOKEN_EOF)
 	{
-		free_token_list(lexer_data);
+		free_token_list(&lexer_data);
 		return (PARSER_FAILURE);
 	}
-	init_token_scanner(&scanner, lexer_data->head);
+	init_token_scanner(&scanner, lexer_data.head);
 	init_parser_data(data, &scanner);
 	parser_ret = parse_complete_command(data, &scanner);
-	free_token_list(lexer_data);
+	free_token_list(&lexer_data);
 	if (data->malloc_failed == true)
 	{
 		ft_putstr_fd("\nmalloc failed!\n\n", 2);
@@ -117,25 +120,4 @@ t_parser_exit_code	parser(t_parser *data, t_lexer *lexer_data)
 		return (PARSER_FAILURE);
 	}
 	return (PARSER_SUCCESS);
-}
-
-// void	check_leaks(void)
-// {
-// 	system("leaks parser");	
-// }
-
-int	main(int argc, char **argv)
-{
-	t_lexer		lexer_data;
-	t_parser	parser_data;
-
-	// atexit(check_leaks);
-	if (argc != 2)
-		return (EXIT_FAILURE);
-	if (lexer(&lexer_data, argv[1]) != LEXER_SUCCESS)
-		return (EXIT_FAILURE);
-	if (parser(&parser_data, &lexer_data) == PARSER_FAILURE)
-		return (EXIT_FAILURE);
-	parser_test(&parser_data);
-	return (EXIT_SUCCESS);
 }

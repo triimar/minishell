@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 20:01:45 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:19:43 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_parser
 }	t_parser;
 
 /* parser.c */
-t_parser_exit_code	parser(t_parser *data, t_lexer *lexer_data);
+t_parser_exit_code	parser(t_parser *data, const char *source);
 t_parser_exit_code	parse_complete_command(t_parser *data, \
 t_token_scanner *scanner);
 t_parser_exit_code	parse_command(t_parser *data, t_token_scanner *scanner);

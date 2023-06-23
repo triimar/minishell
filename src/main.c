@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/06/11 23:04:25 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/06/23 12:30:09 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 static int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -35,7 +36,8 @@ void restore_signal_handling()
 
 int	main(int argc, char **argv)
 {
-	char				*p_input;
+	char		*p_input;
+	t_parser	parser_data;	
 
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
@@ -69,6 +71,8 @@ int	main(int argc, char **argv)
 		}
 		if (p_input && *p_input)
 			add_history(p_input);
+		if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
+			parser_test(&parser_data); // test and free
 		free(p_input);
 	}
 	restore_signal_handling();
