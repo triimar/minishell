@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:43:34 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 20:05:24 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:49:47 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	print_ast(t_ast *ast_root)
 	if (ast_root == NULL)
 		printf("... no content\n");
 	print_ast_recursive(ast_root, 0, LEFT);
-	printf("--------------------------------\n");
+	printf("------------------------------------------\n");
 }
 
 void	parser_test(t_parser *data)

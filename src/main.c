@@ -6,12 +6,13 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/06/23 12:30:09 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:01:19 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// lexer/parser TODO : error handling (error message, exit code), more testing
 
 static int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -69,10 +70,12 @@ int	main(int argc, char **argv)
 			rl_clear_history();
 			builtin_exit(0);
 		}
-		if (p_input && *p_input)
+		if (*p_input)
+		{
 			add_history(p_input);
-		if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
-			parser_test(&parser_data); // test and free
+			if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
+				parser_test(&parser_data); // test and free
+		}
 		free(p_input);
 	}
 	restore_signal_handling();
