@@ -6,11 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/23 11:25:14 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:19:31 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	expander(char *str)
+int	parameter_expander(char *str)
 {
 	
 }
