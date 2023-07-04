@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/04 23:24:49 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/04 23:53:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,16 @@ typedef struct s_minishell
 }	t_minishell;
 
 void	builtin_exit(int exit_code);
-void	handle_ctrlc(int signum);
-void	signal_ctrl_c(void);
-void	set_termios(int mode);
+
+int		initiate_var_list(t_var_list **var_list);
+void	free_var_list(t_var_list *var_list);
+void	print_var_list(t_var_list *var_list);
+
+char	*ft_strdup_pt(const char *start, char *delimiter);
+void	ft_lstadd_back_mini(t_var_list **var_list, t_var_list *new);
+
+// void	handle_ctrlc(int signum);
+// void	signal_ctrl_c(void);
+// void	set_termios(int mode);
 
 #endif
