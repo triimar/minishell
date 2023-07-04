@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/04 20:06:52 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/04 23:24:49 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 # define BLUE	"\033[34;1m\002"
 # define RESET	"\001\e[0m\002"
 
-extern char	**environ;
+extern char					**environ;
+
+typedef struct s_var_list	t_var_list;
 
 typedef struct s_var_list
 {
