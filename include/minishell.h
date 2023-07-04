@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/04 16:25:00 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/04 20:06:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,18 @@
 
 extern char	**environ;
 
-
-typedef struct s_vars
-{
-	char	*str;
-	int		malloc_flag;
-	int		env_flag;
-}	t_vars;
-
 typedef struct s_var_list
 {
-	t_vars		*var_node;
+	char		*key;
+	char		*value;
+	int			env_flag;
 	t_var_list	*next;
 }	t_var_list;
+
+typedef struct s_minishell
+{
+	t_var_list	*var_head;
+}	t_minishell;
 
 void	builtin_exit(int exit_code);
 void	handle_ctrlc(int signum);
