@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/04 21:19:05 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:43:43 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,24 @@ char	*get_value_for_key(t_var_list *var_head, const char *key)
 	return (value);
 }
 
-
-t_expander_exit_code	execute_on_content(t_ast_node *node)
+t_expander_exit_code	execute_on_content(t_ast *node)
 {
-	
-	execute_on_redirect_list();
-	execute_on_redirect_list();
-	execute_on_assignments();
-	execute_on_string_array();
+	t_expander_exit_code	ret;
+
+	ret = execute_on_redirect_list();
+	ret = execute_on_redirect_list();
+	ret = execute_on_assignments();
+	ret = execute_on_string_array();
 }
 
-void	execute_on_tree(t_ast_node *node, bool *malloc_failed)
+void	execute_on_tree(t_ast *node, bool *malloc_failed)
 {
 	if (node == NULL)
 		return ;
 	if (malloc_failed == true)
 		return ;
-	execute_on_tree(node->left);
-	execute_on_tree(node->right);
+	execute_on_tree(node->left, malloc_failed);
+	execute_on_tree(node->right, malloc_failed);
 	if (node->content)
-		*malloc_failed = (bool) execute_on_content();
+		*malloc_failed = (bool) execute_on_content(node);
 }

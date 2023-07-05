@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   expander_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/05 17:46:47 by eunskim          ###   ########.fr       */
+/*   Created: 2023/07/05 17:36:35 by eunskim           #+#    #+#             */
+/*   Updated: 2023/07/05 17:44:29 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int remove_quotes(char *str)
 	}
 }
 
-
-
-int	expander(t_parser *parser_data, t_var_list *var_head)
+int	expander(char *str, char **envp)
 {
 	int	i;
 
@@ -55,4 +53,17 @@ int	expander(t_parser *parser_data, t_var_list *var_head)
 			i++;
 		}
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	*to_expand;
+
+	if (argc != 2)
+		return (EXIT_FAILURE);
+	to_expand = ft_strdup((const char *) argv[1]);
+	printf("Before expansion: %s\n", to_expand);
+	expander(to_expand, envp);
+	printf("After expansion: %s\n", to_expand);
+	free(to_expand);
 }
