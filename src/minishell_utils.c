@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 23:29:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/04 23:30:50 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/05 17:12:51 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strdup_pt(const char *start, char *delimiter)
 	return (dst);
 }
 
-void	ft_lstadd_back_mini(t_var_list **var_list, t_var_list *new)
+void	ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new)
 {
 	t_var_list	*last;
 
