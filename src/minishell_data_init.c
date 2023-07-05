@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/05 00:07:02 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/05 17:01:02 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	initiate_var_list(t_var_list **var_list)
 			return (5); //malloc fail!! how to proceed?
 		new_var_node->env_flag = 1;
 		delimiter_pt = ft_strchr(environ[i], '=');
-		new_var_node->key = ft_strdup_pt(environ[i], (delimiter_pt + 1)); // if key==0 is it malloc fail?
+		new_var_node->key = ft_strdup_pt(environ[i], (delimiter_pt)); // if key==0 is it malloc fail?
 		new_var_node->value = ft_strdup(delimiter_pt + 1);
 		ft_lstadd_back_mini(var_list, new_var_node);
 		i++;
