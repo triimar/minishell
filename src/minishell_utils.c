@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 23:29:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/04 23:30:50 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/05 20:22:43 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strdup_pt(const char *start, char *delimiter)
 	return (dst);
 }
 
-void	ft_lstadd_back_mini(t_var_list **var_list, t_var_list *new)
+void	ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new)
 {
 	t_var_list	*last;
 
@@ -46,4 +46,33 @@ void	ft_lstadd_back_mini(t_var_list **var_list, t_var_list *new)
 		last = last->next;
 	last->next = new;
 	return ;
+}
+
+int	ft_lstsize_ms(t_var_list *lst)
+{
+	int			length;
+	t_var_list	*current;
+
+	current = lst;
+	length = 0;
+	while (current != NULL)
+	{
+		current = current->next;
+		length++;
+	}
+	return (length);
+}
+
+t_var_list	*ft_lstlast_ms(t_var_list *lst)
+{
+	t_var_list	*current;
+
+	current = lst;
+	while (current != NULL)
+	{
+		if (current->next == NULL)
+			return (current);
+		current = current->next;
+	}	
+	return (0);
 }

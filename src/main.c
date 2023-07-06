@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/05 17:48:30 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/06 13:37:07 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	data.var_head = NULL;
 	if (initiate_var_list(&data.var_head) != 0)
-		return(EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	while (1)
 	{
 		p_input = readline(BLUE "eunskim_tmarts minishell % " RESET);
@@ -73,6 +73,7 @@ int	main(int argc, char **argv)
 			free(p_input);
 			rl_clear_history();
 			free_var_list(data.var_head);
+			// system("leaks minishell");
 			builtin_exit(0);
 		}
 		if (ft_strcmp(p_input, "var_list"))

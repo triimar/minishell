@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/05 20:52:47 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:40:01 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *mallo
 	i = 0;
 	if (cmd == NULL || *cmd == NULL)
 		return ;
-	while (*(cmd + i) != NULL)
+	while (cmd + i != NULL)
 	{
-		expander(var_head, *(cmd + i), malloc_failed);
+		expander(*(cmd + i), var_head, malloc_failed);
 		i++;
 	}
 }
@@ -35,7 +35,7 @@ void	execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_
 	{
 		if (malloc_failed == true)
 			break ;
-		expander(var_head, tmp->word, malloc_failed);
+		expander(tmp->word, var_head, malloc_failed);
 		tmp = tmp->next;
 	}
 }
@@ -50,9 +50,9 @@ void	execute_expander_on_redirect_list(t_redirect *redirect, t_var_list *var_hea
 		if (malloc_failed == true)
 			break ;
 		if (tmp->type == REDIRECT_HERE_DOC)
-			// only quote removal
+			quote_removal_here_end(tmp->word, var_head, malloc_failed);
 		else
-			expander(var_head, tmp->word, malloc_failed);
+			expander(tmp->word, var_head, malloc_failed);
 		tmp = tmp->next;
 	}
 }
@@ -77,12 +77,12 @@ void	execute_expander_on_tree(t_ast *node, t_var_list *var_head, bool *malloc_fa
 		execute_expander_on_content(node->content, var_head, malloc_failed);
 }
 
-t_expander_exit_code	expander_executor(t_parser *parser_data, t_var_list *var_head)
+t_expander_exit_code	expander_executor(t_ast *ast_root, t_var_list *var_head)
 {
 	bool	malloc_failed;
 
 	malloc_failed = false;
-	execute_expander_on_tree(parser_data->ast_root, var_head, &malloc_failed);
+	execute_expander_on_tree(ast_root, var_head, &malloc_failed);
 	if (malloc_failed == true)
 		return (EXPANDER_FAILURE);
 	return (EXPANDER_SUCCESS);
