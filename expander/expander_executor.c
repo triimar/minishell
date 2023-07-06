@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/06 14:40:01 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/06 20:17:40 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *mallo
 		return ;
 	while (cmd + i != NULL)
 	{
-		expander(*(cmd + i), var_head, malloc_failed);
+		*(cmd + i) = expander(*(cmd + i), var_head, malloc_failed);
 		i++;
 	}
 }
@@ -35,7 +35,7 @@ void	execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_
 	{
 		if (malloc_failed == true)
 			break ;
-		expander(tmp->word, var_head, malloc_failed);
+		tmp->word = expander(tmp->word, var_head, malloc_failed);
 		tmp = tmp->next;
 	}
 }
@@ -50,9 +50,9 @@ void	execute_expander_on_redirect_list(t_redirect *redirect, t_var_list *var_hea
 		if (malloc_failed == true)
 			break ;
 		if (tmp->type == REDIRECT_HERE_DOC)
-			quote_removal_here_end(tmp->word, var_head, malloc_failed);
+			tmp->word = quote_removal_here_end(tmp->word, var_head, malloc_failed);
 		else
-			expander(tmp->word, var_head, malloc_failed);
+			tmp->word = expander(tmp->word, var_head, malloc_failed);
 		tmp = tmp->next;
 	}
 }

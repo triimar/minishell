@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/06 20:01:39 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/06 20:26:41 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,41 @@
 // 	cnt++;
 // tmp2 = ft_strdup_pt((const char *) str + *idx + 1, str + *idx + cnt);
 
-void	quote_removal(char *str, int *idx, bool *malloc_failed)
-{
-	int		cnt;
-	int		strlen;
-	char	quote;
-	char	*result;
-
-	cnt = 1;
-	strlen = (int) ft_strlen(str);
-	quote = *(str + *idx);
-	while (*(str + *idx + cnt) != quote)
-		cnt++;
-	*result = ft_calloc(1, strlen - 2 + 1);
-	if (result == NULL)
-	{
-		*malloc_failed = true;
-		return ;
-	}
-	memmove(result, str, *idx);
-	memmove(result + *idx + 1, str + *idx + 1, cnt - *idx - 1);
-	memmove(result + cnt + 1, str + cnt + 1, strlen - cnt);
-}
-
 // copy everything before the quote
+// copy everything between the quotes
 // copy everything after the quote
 
 // expand string inside the quotes one by one
 // copy everything brfore $
 // copy everything after the key(name)
 
-void	double_quote_expansion(char *str, int *idx, t_var_list *var_head, bool *malloc_failed)
+char	*quote_removal(char *str, int *i, bool *malloc_failed)
+{
+	int		cnt;
+	int		strlen;
+	char	quote;
+	char	*result;
+
+	cnt = 0;
+	strlen = (int) ft_strlen(str);
+	quote = *(str + *i);
+	while (*(str + *i + cnt + 1) != quote)
+		cnt++;
+	result = ft_calloc(1, strlen - 2 + 1);
+	if (result == NULL)
+	{
+		*malloc_failed = true;
+		return (NULL);
+	}
+	memmove(result, str, *i);
+	memmove(result + *i, str + *i + 1, cnt);
+	memmove(result + *i + cnt, str + *i + cnt + 2, strlen - *i - cnt - 2);
+	*i = *i + cnt - 1;
+	free(str);
+	return (result);
+}
+
+char	*double_quote_expansion(char *str, int *idx, t_var_list *var_head, bool *malloc_failed)
 {
 	int		cnt;
 	char	*result;
@@ -62,9 +66,10 @@ void	double_quote_expansion(char *str, int *idx, t_var_list *var_head, bool *mal
 	{
 		cnt++;
 	}
+	return (result);
 }
 
-void	quote_removal_here_end(char *here_end, t_var_list *var_head, bool *malloc_failed)
+char	*quote_removal_here_end(char *here_end, t_var_list *var_head, bool *malloc_failed)
 {
 	int		i;
 
@@ -74,12 +79,13 @@ void	quote_removal_here_end(char *here_end, t_var_list *var_head, bool *malloc_f
 		if (malloc_failed == true)
 			break ;
 		if (*(here_end + i) == '\"' || *(here_end + i) == '\'')
-			quote_removal(here_end, &i, malloc_failed);
+			here_end = quote_removal(here_end, &i, malloc_failed);
 		i++;
 	}
+	return (here_end);
 }
 
-void	expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
+char	*expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 {
 	int	i;
 
@@ -89,9 +95,10 @@ void	expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 		if (malloc_failed == true)
 			break ;
 		if (*(to_expand + i) == '\"')
-			double_quote_expansion(to_expand, &i, var_head, malloc_failed);
+			to_expand = double_quote_expansion(to_expand, &i, var_head, malloc_failed);
 		if (*(to_expand + i) == '\'')
-			quote_removal(to_expand, &i, malloc_failed);
+			to_expand = quote_removal(to_expand, &i, malloc_failed);
 		i++;
 	}
+	return (to_expand);
 }

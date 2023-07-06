@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:36:35 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/06 19:55:47 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/06 20:23:21 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*quote_removal(char *str, int *i, bool *malloc_failed)
 	}
 	memmove(result, str, *i);
 	memmove(result + *i, str + *i + 1, cnt);
-	memmove(result + + *i + cnt, str + *i + cnt + 2, len - *i - cnt - 2);
+	memmove(result + *i + cnt, str + *i + cnt + 2, len - *i - cnt - 2);
 	*i = *i + cnt - 1;
 	free(str);
 	return (result);
@@ -43,7 +43,7 @@ char	*quote_removal(char *str, int *i, bool *malloc_failed)
 
 char	*quote_removal_here_end(char *here_end, bool *malloc_failed)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (*(here_end + i) != '\0')
