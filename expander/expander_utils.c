@@ -6,13 +6,33 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/06 14:06:37 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:05:22 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	ft_strcmp(const char *s1, const char *s2)
+/* char	*ft_strndup_pt(const char *start, char *delimiter)
+Returns a pointer to a null-terminated byte string, which contains 
+copies of at most size bytes from the string pointed to by str */
+char	*ft_strdup_pt(const char *start, char *delimiter)
+{
+	char	*dst;
+	int		len;
+
+	len = 0;
+	if (!start || !delimiter || delimiter < start)
+		return (NULL);
+	while (start + len != delimiter && *(start + len) != '\0')
+		len++;
+	dst = malloc((len + 1) * sizeof(char));
+	if (!dst)
+		return (NULL);
+	ft_strlcpy(dst, start, len + 1);
+	return (dst);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	if (s1 == 0 || s2 == 0)
 		return (0);
@@ -43,30 +63,4 @@ char	*get_value_for_key(t_var_list *var_head, const char *key)
 		tmp = tmp->next;
 	}
 	return (value);
-}
-
-int	double_quote_expansion(char *str)
-{
-	int	i;
-
-	i = 1;
-	while (str[i] != '\"')
-	{
-		if (str[i] == '$')
-		{
-			get_variable_name(str + i);
-		}
-		i++;
-	}
-}
-
-int remove_quotes(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (true)
-	{
-		if (str[i] == '\"' || str)
-	}
 }
