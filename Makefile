@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/05 17:38:09 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/09 17:41:19 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,28 +42,37 @@ LEXER			:= $(LEXER_DIR)/lexer.a
 PARSER_DIR		:= ./parser
 PARSER			:= $(PARSER_DIR)/parser.a
 
+EXECUTION_DIR		:= ./execution
+EXECUTION			:= $(EXECUTION_DIR)/execution.a
+
 INCLUDE_DIR		:= ./include
 HEADERS 		:= -I $(BREW_PATH)/opt/readline/include -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
-LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER)
+LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER) $(EXECUTION)
 
 SRCS	:= \
 	src/main.c \
 	src/builtin_exit.c \
 	src/signals.c \
 	src/minishell_data_init.c \
-	src/minishell_utils.c
+	src/minishell_utils.c \
 
 OBJS := $(SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : libft parser $(NAME)
+all : libft lexer parser execution $(NAME)
 
 libft:
 	@$(MAKE) -C $(LIBFT_DIR)
 
+lexer:
+	@$(MAKE) -C $(LEXER_DIR)
+
 parser:
 	@$(MAKE) -C $(PARSER_DIR)
 
+execution:
+	@$(MAKE) -C $(EXECUTION_DIR)
+	
 $(NAME)	: $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS) && \
 	echo "$(YELLOW)>> Mandatory part - Minishell <<$(RESET)" && \
@@ -75,14 +84,17 @@ $(NAME)	: $(OBJS)
 clean:
 	@rm -f $(OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LEXER_DIR) clean
 	@$(MAKE) -C $(PARSER_DIR) clean
-
+	@$(MAKE) -C $(EXECUTION_DIR) clean
+	
 fclean:	clean
 	@rm -f $(NAME)
+	@rm -f $(EXECUTION)
 	@rm -f $(PARSER)
 	@rm -f $(LEXER)
 	@rm -f $(LIBFT)
 	
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libft, parser
+.PHONY: all clean fclean re libft lexer parser execution

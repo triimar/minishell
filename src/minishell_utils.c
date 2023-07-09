@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 23:29:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/05 20:22:43 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/08 20:45:53 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,28 @@ char	*ft_strdup_pt(const char *start, char *delimiter)
 		return (NULL);
 	ft_strlcpy(dst, start, len + 1);
 	return (dst);
+}
+
+/* ft_strjoin, but adds specified character between the two strings */
+char	*ft_strjoin_sym(const char *s1, const char *s2, char c)
+{
+	char	*test_path;
+	int		s1_len;
+	int		s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	test_path = malloc(s1_len + s2_len + 2);
+	if (!test_path)
+		return (NULL);
+	while (s1 && *s1 != 0)
+		*test_path++ = *s1++;
+	*test_path = c;
+	test_path++;
+	while (*s2 != '\0')
+		*test_path++ = *s2++;
+	*test_path = '\0';
+	return (test_path - s1_len - s2_len - 1);
 }
 
 void	ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new)
