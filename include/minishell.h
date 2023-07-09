@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/05 17:35:08 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/09 21:18:31 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdbool.h>
 # include "libft.h"
 # include "parser.h"
+# include "execution.h"
 
 # define BLUE	"\033[34;1m\002"
 # define RESET	"\001\e[0m\002"
@@ -58,9 +59,6 @@ void				print_var_list(t_var_list *var_list);
 
 char				*ft_strdup_pt(const char *start, char *delimiter);
 void				ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new);
-
-// void	handle_ctrlc(int signum);
-// void	signal_ctrl_c(void);
-// void	set_termios(int mode);
+char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
 
 #endif
