@@ -6,61 +6,61 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/10 21:44:36 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:00:14 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static void	child_middle(t_pipex *s_pipex, int child_nr)
+static void	child_middle(t_piper *piper, int child_nr)
 {
-	close(s_pipex->infile);
-	close(s_pipex->outfile);
+	close(piper->infile);
+	close(piper->outfile);
 	if (child_nr % 2 == 0)
 	{
-		close(s_pipex->pipe1[1]);
-		close(s_pipex->pipe2[0]);
-		redirect(s_pipex->pipe1[0], s_pipex->pipe2[1]);
+		close(piper->pipe1[1]);
+		close(piper->pipe2[0]);
+		redirect(piper->pipe1[0], piper->pipe2[1]);
 	}
 	else
 	{
-		close(s_pipex->pipe1[0]);
-		close(s_pipex->pipe2[1]);
-		redirect(s_pipex->pipe2[0], s_pipex->pipe1[1]);
+		close(piper->pipe1[0]);
+		close(piper->pipe2[1]);
+		redirect(piper->pipe2[0], piper->pipe1[1]);
 	}
 }
 
-static void	child_first(t_pipex *s_pipex)
+static void	child_first(t_piper *piper)
 {
-	if (s_pipex->forks == 1)
-		redirect(s_pipex->infile, s_pipex->outfile);
+	if (piper->fork_count == 1)
+		redirect(piper->infile, piper->outfile);
 	else
 	{
-		close(s_pipex->outfile);
-		close(s_pipex->pipe1[0]);
-		if (s_pipex->infile < 0)
+		close(piper->outfile);
+		close(piper->pipe1[0]);
+		if (piper->infile < 0)
 		{
-			pipex_free(s_pipex);
+			pipex_free(piper);
 			exit(EXIT_FAILURE);
 		}
-		if (s_pipex->here_doc == 1)
+		if (piper->here_doc == 1)
 			here_doc(s_pipex);
-		redirect(s_pipex->infile, s_pipex->pipe1[1]);
+		redirect(piper->infile, piper->pipe1[1]);
 	}
 }
 
-static void	child_last(t_pipex *s_pipex, int child_nr)
+static void	child_last(t_piper *piper, int child_nr)
 {
-	close(s_pipex->infile);
+	close(piper->infile);
 	if (child_nr % 2 == 0)
 	{
-		close(s_pipex->pipe1[1]);
-		redirect(s_pipex->pipe1[0], s_pipex->outfile);
+		close(piper->pipe1[1]);
+		redirect(piper->pipe1[0], piper->outfile);
 	}
 	else
 	{
-		close(s_pipex->pipe2[1]);
-		redirect(s_pipex->pipe2[0], s_pipex->outfile);
+		close(piper->pipe2[1]);
+		redirect(piper->pipe2[0], piper->outfile);
 	}
 }
 
@@ -70,24 +70,34 @@ static void	child_process(t_piper *piper, t_var_list *var_list, int child_nr)
 
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
-	// if (child_nr == 1)
-	// 	child_first(s_pipex);
-	// else if (child_nr == s_pipex->forks)
-	// 	child_last(s_pipex, child_nr);
-	// else
-	// 	child_middle(s_pipex, child_nr);
+	if (child_nr == 1)
+		child_first(piper);
+	else if (child_nr == piper->fork_count)
+		child_last(piper, child_nr);
+	else
+		child_middle(piper, child_nr);
 	if (get_envp(&exec_data, var_list) != 0)
-		return (EXEC_MALLOC_ERROR);
+		EXIT WITH MALLOC ERROR 
 	// right_cmd_node = get_node(s_pipex->s_cmd_lst, child_nr);
-	get_right_path(&exec_data, cont->cmd[0]);
+	if (get_right_path(&exec_data, cont->cmd[0]))
+		EXIT WITH MALLOC ERROR
 	if (!exec_data.path)
-//		return exit code 127 - command not found with command word
+//		free and exit code 127 - command not found with command word
 	else if (access(exec_data.path, X_OK) != 0)
-		// return exit code 126 -  command not executable with command word
+		// free and exit code 126 -  command not executable with command word
 	execve(exec_data.path, right_cmd_node->args, exec_data.envp);
-	execve_error(s_pipex);
+	execve_error(&exec_data);
 }
 
+void	execve_error(t_exec *exec_data)
+{
+	ft_putendl_fd("pipex: execve error: ", STDERR_FILENO);
+	if (exec_data->path)
+		free(exec_data->path);
+	if (exec_data->envp)
+		ft_free_pp(exec_data->envp);
+	exit(EXIT_FAILURE);
+}
 //------the piper-forker-------
 // int	pipex(t_pipex *s_pipex, char *envp[])
 // {
