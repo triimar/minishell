@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/10 19:43:08 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 21:37:01 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ typedef enum e_exec_exit_code
 // 	t_ast			*left;
 // 	t_ast			*right;
 // }	t_ast;
+
+typedef struct s_piper
+{
+	int	infile;
+	int	outfile;
+	int	pipe1[2];
+	int	pipe2[2];
+	int	fork_count;
+	char	*command_data_and_arguments
+}	t_piper;
 
 	// int		infile;
 	// int		outfile;

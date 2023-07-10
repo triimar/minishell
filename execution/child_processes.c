@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/09 19:50:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 21:44:36 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,55 @@ static void	child_last(t_pipex *s_pipex, int child_nr)
 	}
 }
 
-static void	child_process(t_exec *s_exec, t_var_list *var_list, int child_nr)
+static void	child_process(t_piper *piper, t_var_list *var_list, int child_nr)
 {
-	char	*path;
-	t_exec	s_exec;
+	t_exec	exec_data;
 
-	s_exec.envp = get_envp(var_list);
-	if (child_nr == 1)
-		child_first(s_pipex);
-	else if (child_nr == s_pipex->forks)
-		child_last(s_pipex, child_nr);
-	else
-		child_middle(s_pipex, child_nr);
-	right_cmd_node = get_node(s_pipex->s_cmd_lst, child_nr);
-	path = get_right_path(right_cmd_node->cmd, s_pipex->envp_pths);
-	if (!path)
-		path_error(s_pipex, 127, right_cmd_node->cmd);
-	else if (access(path, X_OK) != 0)
-		path_error(s_pipex, 126, right_cmd_node->cmd);
-	execve(path, right_cmd_node->args, envp);
+	exec_data.envp = NULL;
+	exec_data.path = NULL;
+	// if (child_nr == 1)
+	// 	child_first(s_pipex);
+	// else if (child_nr == s_pipex->forks)
+	// 	child_last(s_pipex, child_nr);
+	// else
+	// 	child_middle(s_pipex, child_nr);
+	if (get_envp(&exec_data, var_list) != 0)
+		return (EXEC_MALLOC_ERROR);
+	// right_cmd_node = get_node(s_pipex->s_cmd_lst, child_nr);
+	get_right_path(&exec_data, cont->cmd[0]);
+	if (!exec_data.path)
+//		return exit code 127 - command not found with command word
+	else if (access(exec_data.path, X_OK) != 0)
+		// return exit code 126 -  command not executable with command word
+	execve(exec_data.path, right_cmd_node->args, exec_data.envp);
 	execve_error(s_pipex);
 }
+
+//------the piper-forker-------
+// int	pipex(t_pipex *s_pipex, char *envp[])
+// {
+// 	int		i;
+
+// 	i = 0;
+// 	while (i <= s_pipex->forks - 1)
+// 	{
+// 		if (s_pipex->forks != 1 && i < s_pipex->forks - 1)
+// 		{
+// 			if (make_pipes(s_pipex->pipe1, s_pipex->pipe2, (i + 1)) != 0)
+// 				return (fork_pipe_error(2));
+// 		}
+// 		s_pipex->pids[i] = fork();
+// 		if (s_pipex->pids[i] == -1)
+// 			return (fork_pipe_error(3));
+// 		if (s_pipex->pids[i] == 0)
+// 			child_process(s_pipex, envp, (i + 1));
+// 		if (s_pipex->here_doc)
+// 			waitpid(s_pipex->pids[0], NULL, 0);
+// 		used_pipes(s_pipex, i + 1);
+// 		i++;
+// 	}
+// 	close(s_pipex->infile);
+// 	close(s_pipex->outfile);
+// 	ft_waiting(s_pipex->pids, s_pipex->forks);
+// 	return (0);
+// }
