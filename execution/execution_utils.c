@@ -6,13 +6,29 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 18:07:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/09 18:07:32 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 19:46:50 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	ft_free_ptpt(char **array, int str_count)
+void	ft_free_pp(char **p_p)
+{
+	int	i;
+
+	i = 0;
+	if (!p_p)
+		return ;
+	while (p_p[i])
+	{
+		free(p_p[i]);
+		i++;
+	}
+	free (p_p);
+	return ;
+}
+
+void	ft_free_pp_n(char **array, int str_count)
 {
 	str_count--;
 	while (str_count >= 0)

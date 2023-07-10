@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:05:06 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/09 20:45:38 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 20:25:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list)
 			s_exec->envp[i] = \
 				ft_strjoin_sym(cur_node->key, cur_node->value, '=');
 			if (!s_exec->envp[i])
-				return (ft_free_ptpt(s_exec->envp, i), EXEC_MALLOC_ERROR);
+				return (ft_free_pp_n(s_exec->envp, i), EXEC_MALLOC_ERROR);
 			cur_node = cur_node->next;
 			i++;
 		}
 	}
-	return (EXEC_SUCESS);
+	return (EXEC_SUCCESS);
 }

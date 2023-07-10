@@ -6,36 +6,40 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/09 20:42:55 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 21:14:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-t_exec_exit_code	get_all_paths(t_exec *s_exec, t_var_list *var_list)
+static int	get_all_paths(char ***all_paths, char **envp)
 {
-	t_var_list	*cur_node;
 	int			i;
 
 	i = 0;
-	cur_node = var_list;
-	while (cur_node != NULL)
+	while (envp && envp[i] != 0)
 	{
-		if (ft_strncmp(cur_node->key, "PATH", 4) == 0)
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
-			if (cur_node->value == NULL)
-				return (0); /*no path in env*/
-			s_exec->all_paths = ft_split(cur_node->value, ':');
-			if (!s_exec->all_paths)
-				return (EXEC_MALLOC_ERROR);
+			*all_paths = ft_split((envp[i] + 5), ':');
+			if (!*all_paths)
+				return (1);
+			i = 0;
+			printf("\n\n------- ALL POSSIBLE PATHS ---------\n\n");
+			while (all_paths[0][i] != NULL)
+			{
+				printf("%d - [%s]\n", i, all_paths[0][i]);
+				i++;
+			}
+			printf("\n\n-----------------------------------");
 			return (0);
 		}
-		cur_node = cur_node->next;
+		i++;
 	}
-	return (EXEC_SUCESS);
+	return (0);
 }
 
-static char	*path_find_loop(char *command, char **all_paths) // if returns NULL no path or malloc fail...?
+static t_exec_exit_code	path_find_loop(char **path, char *cmd, char **all_paths)
 {
 	int		i;
 	char	*temp_path;
@@ -43,26 +47,42 @@ static char	*path_find_loop(char *command, char **all_paths) // if returns NULL 
 	i = -1;
 	while (all_paths && all_paths[++i] != NULL)
 	{
-		temp_path = ft_strjoin_sym(all_paths[i], command, '/');
+		temp_path = ft_strjoin_sym(all_paths[i], cmd, '/');
 		if (!temp_path)
-			return (NULL);
+			return (EXEC_MALLOC_ERROR);
 		if (access(temp_path, F_OK) == 0)
-			return (temp_path);
+		{
+			*path = temp_path;
+			return (EXEC_SUCCESS);
+		}
 		free(temp_path);
 	}
-	return (NULL);
+	return (EXEC_SUCCESS);
 }
 
-char	*get_right_path(char *command, char **all_paths)
+
+t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
 {
+	char	**all_paths;
+
+	all_paths = NULL;
 	if (!command)
-		return (NULL);
+		return (EXEC_FAIL); //is it possible to reach this point w/o command?
 	if (access(command, F_OK) == 0 && (command[0] == '.'
 			|| command[0] == '/' || ft_strchr(command + 1, '/')))
-		return (command);
-	if (all_paths)
-		return (path_find_loop(command, all_paths));
-	// if (!all_paths)
-	// 	return (no_env_path(command)); //?
-	return (NULL);
+	{
+		exec_data->path = ft_strdup(command);
+		return (EXEC_SUCCESS);
+	}
+	if (get_all_paths(&all_paths, exec_data->envp) != 0)
+		return (EXEC_MALLOC_ERROR);
+	if (!all_paths) //what happens if path is not in envp?
+	{
+		// (no_env_path(command)); //?
+		return (EXEC_SUCCESS);
+	}
+	if (path_find_loop(&exec_data->path, command, all_paths) != 0)
+		return (ft_free_pp(all_paths), EXEC_MALLOC_ERROR);
+	ft_free_pp(all_paths);
+	return (EXEC_SUCCESS);
 }
