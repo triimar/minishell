@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 17:36:35 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/06 20:23:21 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/11 20:38:50 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*quote_removal(char *str, int *i, bool *malloc_failed)
 	if (result == NULL)
 	{
 		*malloc_failed = true;
+		free(str);
 		return (NULL);
 	}
 	memmove(result, str, *i);
@@ -48,10 +49,11 @@ char	*quote_removal_here_end(char *here_end, bool *malloc_failed)
 	i = 0;
 	while (*(here_end + i) != '\0')
 	{
-		if (*malloc_failed == true)
-			break ;
+
 		if (*(here_end + i) == '\"' || *(here_end + i) == '\'')
 			here_end = quote_removal(here_end, &i, malloc_failed);
+		if (*malloc_failed == true)
+			break ;
 		i++;
 	}
 	return (here_end);
@@ -62,10 +64,12 @@ int	main(int argc, char **argv)
 	char	*here_end;
 	bool	malloc_failed;
 
-	system("leaks a.out");
+	// system("leaks a.out");
 	if (argc != 2)
-		return (EXIT_FAILURE);
+		return (1);
 	here_end = strdup((const char *) argv[1]);
+	if (here_end == NULL)
+		return (1);
 	malloc_failed = false;
 	printf("Before removal: %s\n", here_end);
 	here_end = quote_removal_here_end(here_end, &malloc_failed);
@@ -78,16 +82,3 @@ int	main(int argc, char **argv)
 	free(here_end);
 	return (0);
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	char	*to_expand;
-
-// 	if (argc != 2)
-// 		return (EXIT_FAILURE);
-// 	to_expand = ft_strdup((const char *) argv[1]);
-// 	printf("Before expansion: %s\n", to_expand);
-// 	expander(to_expand, envp);
-// 	printf("After expansion: %s\n", to_expand);
-// 	free(to_expand);
-// }
