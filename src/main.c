@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/09 20:39:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/11 15:45:34 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	main(int argc, char **argv)
 			add_history(p_input);
 			if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
 			{
-				if (ft_strcmp(p_input, "sleep"))
-					test_envp_and_path(data.var_head, parser_data.ast_root->content);
+				if (parser_data.ast_root->content && parser_data.ast_root->content->cmd[0])
+					test_envp_path(data.var_head, parser_data.ast_root->content);
 				parser_test(&parser_data); // test and free
 			}
 		}

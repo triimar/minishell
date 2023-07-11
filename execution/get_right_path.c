@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/10 21:32:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/11 15:21:14 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
 	char	**all_paths;
 
 	all_paths = NULL;
-	if (!command)
+	if (!command) // empty string - result cmd not found exit code 127
 		return (EXEC_FAIL); //is it possible to reach this point w/o command?
 	if (access(command, F_OK) == 0 && (command[0] == '.'
 			|| command[0] == '/' || ft_strchr(command + 1, '/')))
@@ -78,8 +78,8 @@ t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
 		return (EXEC_MALLOC_ERROR);
 	if (!all_paths) //what happens if path is not in envp?
 	{
-		// (no_env_path(command)); //?
-		return (EXEC_SUCCESS);
+		// (no_env_path(command)); //? return exit code 126 for no such file or directory
+		return (EXEC_FAIL);
 	}
 	if (path_find_loop(&exec_data->path, command, all_paths) != 0)
 		return (ft_free_pp(all_paths), EXEC_MALLOC_ERROR); 

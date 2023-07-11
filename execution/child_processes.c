@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/10 22:00:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:04:41 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	execve_error(t_exec *exec_data)
 		ft_free_pp(exec_data->envp);
 	exit(EXIT_FAILURE);
 }
+
 //------the piper-forker-------
 // int	pipex(t_pipex *s_pipex, char *envp[])
 // {

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/10 21:37:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/11 15:03:57 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_piper
 	int	pipe1[2];
 	int	pipe2[2];
 	int	fork_count;
-	char	*command_data_and_arguments
+	// char	*command_data_and_arguments
 }	t_piper;
 
 	// int		infile;
