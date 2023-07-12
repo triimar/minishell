@@ -6,27 +6,13 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/06 13:37:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 18:45:22 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // lexer/parser TODO : error handling (error message, exit code), more testing
-
-static int	ft_strcmp(const char *s1, const char *s2)
-{
-	if (s1 == 0 || s2 == 0)
-		return (0);
-	while (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	if (*s1 || *s2)
-		return (0);
-	return (1);
-}
 
 // void restore_signal_handling()
 // {
@@ -82,7 +68,17 @@ int	main(int argc, char **argv)
 		{
 			add_history(p_input);
 			if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
-				parser_test(&parser_data); // test and free
+			{
+				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
+					parser_test(&parser_data);
+				else
+				{
+					free_ast(&parser_data);
+					return (1);
+				}
+			}
+			else
+				return (1);
 		}
 		free(p_input);
 	}

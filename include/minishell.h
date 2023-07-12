@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/06 13:35:40 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 18:19:45 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdbool.h>
 # include "libft.h"
 # include "parser.h"
+# include "expander.h"
 
 # define BLUE	"\033[34;1m\002"
 # define RESET	"\001\e[0m\002"

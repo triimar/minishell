@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:19:40 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 17:20:52 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 19:01:01 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include "minishell.h"
 # include "parser.h"
+
+typedef struct s_var_list	t_var_list;
 
 typedef enum e_expander_exit_code
 {
