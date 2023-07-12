@@ -10,5 +10,4 @@ test.txt
 .vscode/
 .DS_Store
 parser
-expander/
-expander.h
+minishell
