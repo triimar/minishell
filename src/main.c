@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 19:54:37 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 21:04:56 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 // 	signal(SIGTSTP, SIG_DFL);
 // 	signal(SIGQUIT, SIG_DFL);
 // }
-
 
 int	main(int argc, char **argv)
 {
@@ -69,13 +68,14 @@ int	main(int argc, char **argv)
 			add_history(p_input);
 			if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
 			{
-				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
-					parser_test(&parser_data);
-				else
-				{
-					free_ast(&parser_data);
-					return (1);
-				}
+				// if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
+				piper(&parser_data, data.var_head);
+				parser_test(&parser_data);
+				// else
+				// {
+				// 	free_ast(&parser_data);
+				// 	return (1);
+				// }
 			}
 			else
 				return (1);

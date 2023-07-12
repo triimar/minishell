@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 17:34:30 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 20:27:35 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,6 @@ t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
 	}
 	if (path_find_loop(&exec_data->path, command, all_paths) != 0)
 		return (ft_free_pp(all_paths), EXEC_MALLOC_ERROR); 
-	// if (!exec_data->path)
-		// return exit code 127
-  	// if (access(path, X_OK) != 0)
-	// 	return exit code 126
 	ft_free_pp(all_paths);
 	return (EXEC_SUCCESS);
 }

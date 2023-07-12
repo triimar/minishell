@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 15:56:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 20:58:22 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include "libft.h"
-# include "parser.h"
 # include "minishell.h"
 
 typedef struct s_var_list	t_var_list;
@@ -67,9 +65,7 @@ t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
 
 void				ft_free_pp_n(char **array, int str_count);
 void				ft_free_pp(char **p_p);
-
+char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
 void				child_error(t_exec *exec_data, int exitcode, char *cmd);
-
-t_exec_exit_code	test_envp_path(t_var_list *var_list, t_ast_content *cont);
 
 #endif

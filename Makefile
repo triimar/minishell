@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 19:53:33 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/12 21:02:29 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,12 +41,9 @@ LEXER			:= $(LEXER_DIR)/lexer.a
 PARSER_DIR		:= ./parser
 PARSER			:= $(PARSER_DIR)/parser.a
 
-EXECUTION_DIR		:= ./execution
-EXECUTION			:= $(EXECUTION_DIR)/execution.a
-
 INCLUDE_DIR		:= ./include
 HEADERS 		:= -I $(BREW_PATH)/opt/readline/include -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
-LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER) $(EXECUTION)
+LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER)
 
 SRCS	:= \
 	src/main.c \
@@ -61,11 +58,20 @@ EXPANDER_SRCS := \
 	expander/expander_here_end.c \
 	expander/expander_executor_utils.c
 
+EXECUTION_SRCS := \
+	execution/execution_utils.c \
+	execution/get_envp.c \
+	execution/get_right_path.c \
+	execution/child_processes.c \
+	execution/execution_errors.c \
+	execution/piper.c
+
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
+EXECUTION_OBJS := $(EXECUTION_SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : libft lexer parser execution $(NAME)
+all : libft lexer parser $(NAME)
 
 libft:
 	@$(MAKE) -C $(LIBFT_DIR)
@@ -76,8 +82,8 @@ lexer:
 parser:
 	@$(MAKE) -C $(PARSER_DIR)
 
-$(NAME)	: $(OBJS) $(EXPANDER_OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) -o $(NAME) $(LIBS) && \
+$(NAME)	: $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS) -o $(NAME) $(LIBS) && \
 	echo "$(YELLOW)>> Mandatory part - Minishell <<$(RESET)" && \
 	echo "$(GREEN)Compilation successful!$(RESET)"
 
@@ -85,19 +91,16 @@ $(NAME)	: $(OBJS) $(EXPANDER_OBJS)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS) $(EXPANDER_OBJS)
+	@rm -f $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@$(MAKE) -C $(LEXER_DIR) clean
 	@$(MAKE) -C $(PARSER_DIR) clean
-	@$(MAKE) -C $(EXECUTION_DIR) clean
 	
 fclean:	clean
 	@rm -f $(NAME)
-	@rm -f $(EXECUTION)
 	@rm -f $(PARSER)
 	@rm -f $(LEXER)
 	@rm -f $(LIBFT)
 	
 re: fclean all
 
-.PHONY: all clean fclean re libft lexer parser execution
+.PHONY: all clean fclean re libft lexer parser

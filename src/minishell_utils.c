@@ -6,11 +6,12 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 23:29:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 19:54:58 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 20:18:40 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void	ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new)
 {
