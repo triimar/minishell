@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/04 16:25:00 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/09 21:18:31 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,45 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <termios.h>
+# include <stdbool.h>
 # include "libft.h"
 # include "parser.h"
+# include "execution.h"
 
 # define BLUE	"\033[34;1m\002"
 # define RESET	"\001\e[0m\002"
 
-extern char	**environ;
+extern char					**environ;
 
+typedef struct s_var_list	t_var_list;
 
-typedef struct s_vars
+typedef enum e_ms_exit_code
 {
-	char	*str;
-	int		malloc_flag;
-	int		env_flag;
-}	t_vars;
+	MINISHELL_SUCCESS,
+	MS_MALLOC_ERROR
+}	t_ms_exit_code;
 
 typedef struct s_var_list
 {
-	t_vars		*var_node;
+	char		*key;
+	char		*value;
+	bool		env_flag;
 	t_var_list	*next;
 }	t_var_list;
 
-void	builtin_exit(int exit_code);
-void	handle_ctrlc(int signum);
-void	signal_ctrl_c(void);
-void	set_termios(int mode);
+typedef struct s_minishell
+{
+	t_var_list	*var_head;
+}	t_minishell;
+
+void				builtin_exit(int exit_code);
+
+t_ms_exit_code		initiate_var_list(t_var_list **var_list);
+void				free_var_list(t_var_list *var_list);
+void				print_var_list(t_var_list *var_list);
+
+char				*ft_strdup_pt(const char *start, char *delimiter);
+void				ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new);
+char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
 
 #endif
