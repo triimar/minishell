@@ -6,24 +6,38 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 16:41:11 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 19:00:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
+// static void	redirect(int in_fd, int out_fd)
+// {
+// 	dup2(in_fd, STDIN_FILENO);
+// 	close(in_fd);
+// 	dup2(out_fd, STDOUT_FILENO);
+// 	close(out_fd);
+// }
+
 static void	redirect(int in_fd, int out_fd)
 {
-	dup2(in_fd, STDIN_FILENO);
-	close(in_fd);
-	dup2(out_fd, STDOUT_FILENO);
-	close(out_fd);
+	if (in_fd != STDIN_FILENO)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		close(in_fd);
+	}
+	if (out_fd != STDOUT_FILENO)
+	{
+		dup2(out_fd, STDOUT_FILENO);
+		close(out_fd);
+	}
 }
 
 static void	child_middle(t_piper *piper, int child_nr)
 {
-	close(piper->infile);
-	close(piper->outfile);
+	// close(piper->infile);
+	// close(piper->outfile);
 	if (child_nr % 2 == 0)
 	{
 		close(piper->pipe1[1]);
@@ -40,28 +54,25 @@ static void	child_middle(t_piper *piper, int child_nr)
 
 static void	child_first(t_piper *piper)
 {
-	if (piper->fork_count != 1)
-	// 	redirect(piper->infile, piper->outfile);
-	// else
+	if (piper->fork_count == 1)
+		redirect(piper->infile, piper->outfile);
+	else
 	{
-		close(piper->outfile);
+		// close(piper->outfile);
 		close(piper->pipe1[0]);
 		if (piper->infile < 0)
 		{
-			// pipex_free(piper);
-			free(piper->pids);
 			exit(EXIT_FAILURE);
 		}
 		// if (piper->here_doc == 1)
-		// 	here_doc(s_pipex);
+		// 	here_doc(piper);
 		redirect(piper->infile, piper->pipe1[1]);
-	
 	}
 }
 
 static void	child_last(t_piper *piper, int child_nr)
 {
-	close(piper->infile);
+	// close(piper->infile);
 	if (child_nr % 2 == 0)
 	{
 		close(piper->pipe1[1]);

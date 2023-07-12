@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 16:45:54 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 19:10:25 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ static void	init_child_data(t_parser *parser_data, t_piper *piper, int index)
 static int	init_piper_data(t_parser *parser_data, t_piper *piper_data)
 {
 	piper_data->fork_count = get_fork_count(parser_data);
-	piper_data->fork_count = 1;
 	piper_data->pids = (int *)ft_calloc(piper_data->fork_count, sizeof(int));
 	if (!piper_data->pids)
 		return (1);
 	return (0);
 }
 
-static int	make_pipes(int pipe1[2], int pipe2[2], int child_nr)
+static int	make_pipes(int *pipe1, int *pipe2, int child_nr)
 {
 	if (child_nr % 2 == 0)
 	{
@@ -81,7 +80,7 @@ static void	ft_waiting(int *pids, int nr_of_forks)
 	{
 		s_wait.status_code = 0;
 		s_wait.status_code = WEXITSTATUS(s_wait.wstatus);
-		printf("+++++++++++ EXIT STATUS CODE:[%d] ++++++++++++++", s_wait.wstatus);
+		printf("\n\n+++++++++++ EXIT STATUS CODE:[%d] ++++++++++++++\n\n", s_wait.status_code);
 		// if (s_wait.status_code != 0)
 		// 	exit(s_wait.status_code); //
 	}
@@ -92,7 +91,6 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 	int		i;
 	t_piper	piper;
 
-	ft_putendl_fd("THIS IS PIPER\n", STDOUT_FILENO);
 	piper.infile = STDIN_FILENO; //
 	piper.outfile = STDOUT_FILENO;//
 	if (init_piper_data(parser_data, &piper) != 0)
@@ -102,7 +100,7 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 	{
 		if (piper.fork_count != 1 && i < piper.fork_count - 1)
 		{
-			if (make_pipes(piper.pipe1, piper.pipe2, i + 1) != 0)
+			if (make_pipes(piper.pipe1, piper.pipe2, (i + 1)) != 0)
 				return (free(piper.pids), PIPE_ERROR);
 		}
 		init_child_data(parser_data, &piper, i + 1);
@@ -120,4 +118,3 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 	free(piper.pids);
 	return (EXEC_SUCCESS);
 }
-
