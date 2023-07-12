@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 17:21:48 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:09:42 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,29 @@ void	execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *mallo
 	}
 }
 
+// char	*get_assignment_value(char *assignment)
+// {
+// 	int 	i;
+// 	char	*result;
+
+// 	i = 0;
+// 	while (*(assignment + i) != '=')
+// 		i++;
+// 	result = 
+	
+// }
+
 void	execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_head, bool *malloc_failed)
 {
 	t_assignment	*tmp;
+	// char			*to_expand;
 
 	tmp = assignments;
 	while (assignments)
 	{
 		if (*malloc_failed == true)
 			break ;
+		// to_expand =
 		tmp->word = expander(tmp->word, var_head, malloc_failed);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:19:40 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 19:01:01 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:45:27 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,12 @@ void					execute_expander_on_redirect_list(t_redirect *redirect, t_var_list *var
 void					execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_head, bool *malloc_failed);
 void					execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *malloc_failed);
 
+/* expander_test_2 */
+int						expander_test(t_var_list *var_head);
+char					*TEST_expander(char *to_expand, t_var_list *var_head, bool *malloc_failed);
+char					*TEST_double_quote_expansion(char *str, int *i, t_var_list *var_head, bool *malloc_failed);
+char					*TEST_substring_expansion(char *str, t_var_list *var_head, bool *malloc_failed);
+char					*TEST_variable_expansion(char *str, int *i, t_var_list *var_head, bool *malloc_failed);
+
 #endif
+

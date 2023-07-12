@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 18:48:45 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/12 21:43:36 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ EXPANDER_SRCS := \
 	expander/expander.c \
 	expander/expander_utils.c \
 	expander/expander_here_end.c \
-	expander/expander_executor_utils.c
+	expander/expander_executor_utils.c \
+	expander/expander_test_2.c
 
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
