@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 17:23:14 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 17:10:38 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/12 17:25:34 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ WHITE	:= \033[37;1m
 RESET	:= \033[0m
 
 #//= Mandatory part =//#
-NAME			:= expander
+NAME			:= expander.a
 CFLAGS 			:= -Wall -Wextra -Werror
 # -g3 -fsanitize=address
 
@@ -48,9 +48,8 @@ libft:
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME)	: $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT) && \
-	echo "$(CYAN)>> Unit testing - expander <<$(RESET)" && \
-	echo "$(GREEN)Compilation successful!$(RESET)"
+	@ar rcs $(NAME) $(OBJS) && \
+	echo "$(WHITE)>> library - $(NAME) compiled <<$(RESET)"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@

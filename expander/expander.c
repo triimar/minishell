@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 17:09:38 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 17:20:28 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*substring_expansion(char *str, t_var_list *var_head, bool *malloc_failed)
 	{
 		if (*(str + i) == '$')
 			result = variable_expansion(str, &i, var_head, malloc_failed);
-		if (malloc_failed == true)
+		if (*malloc_failed == true)
 			break ;
 		i++;
 	}
@@ -102,7 +102,7 @@ char	*expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 			else
 				to_expand = quote_removal(to_expand, &i, malloc_failed);
 		}
-		if (malloc_failed == true)
+		if (*malloc_failed == true)
 			break ;
 		i++;
 	}

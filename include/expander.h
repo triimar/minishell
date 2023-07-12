@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:19:40 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 17:15:42 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 17:20:52 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strdup_pt(const char *start, char *delimiter);
 
 /* expander_here_end.c */
-char					*quote_removal_here_end(char *here_end, t_var_list *var_head, bool *malloc_failed);
+char					*quote_removal_here_end(char *here_end, bool *malloc_failed);
 char					*quote_removal(char *str, int *i, bool *malloc_failed);
 
 /* expander_executor_utils.c */

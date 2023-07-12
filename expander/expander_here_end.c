@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:06:59 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 17:08:39 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 17:21:06 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*quote_removal(char *str, int *i, bool *malloc_failed)
 	return (result);
 }
 
-char	*quote_removal_here_end(char *here_end, t_var_list *var_head, bool *malloc_failed)
+char	*quote_removal_here_end(char *here_end, bool *malloc_failed)
 {
 	int		i;
 
@@ -47,7 +47,7 @@ char	*quote_removal_here_end(char *here_end, t_var_list *var_head, bool *malloc_
 	{
 		if (*(here_end + i) == '\"' || *(here_end + i) == '\'')
 			here_end = quote_removal(here_end, &i, malloc_failed);
-		if (malloc_failed == true)
+		if (*malloc_failed == true)
 			break ;
 		i++;
 	}
