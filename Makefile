@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/05 17:38:09 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/12 18:48:45 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= minishell
-CFLAGS 			:= -Wall -Wextra -Werror 
-#-g3 -fsanitize=address
+CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 WHEREIS_BREW	:= if test -d $(HOME)/.brew/opt/readline; then echo $(HOME)/.brew; \
 					elif test -d $(HOME)/goinfre/.brew/opt/readline; then echo $(HOME)/goinfre/.brew; \
@@ -53,7 +52,14 @@ SRCS	:= \
 	src/minishell_data_init.c \
 	src/minishell_utils.c
 
+EXPANDER_SRCS := \
+	expander/expander.c \
+	expander/expander_utils.c \
+	expander/expander_here_end.c \
+	expander/expander_executor_utils.c
+
 OBJS := $(SRCS:.c=.o)
+EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
 
 #//= Make Rules =//#
 all : libft parser $(NAME)
@@ -64,8 +70,8 @@ libft:
 parser:
 	@$(MAKE) -C $(PARSER_DIR)
 
-$(NAME)	: $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS) && \
+$(NAME)	: $(OBJS) $(EXPANDER_OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) -o $(NAME) $(LIBS) && \
 	echo "$(YELLOW)>> Mandatory part - Minishell <<$(RESET)" && \
 	echo "$(GREEN)Compilation successful!$(RESET)"
 
@@ -73,7 +79,7 @@ $(NAME)	: $(OBJS)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
+	@rm -f $(OBJS) $(EXPANDER_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(PARSER_DIR) clean
 
