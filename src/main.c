@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 21:29:54 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 22:22:05 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ int	main(int argc, char **argv)
 		if (*p_input)
 		{
 			add_history(p_input);
-			expander_test(data.var_head);
+			// expander_test(data.var_head);
 			if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
 			{
-				// if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
+				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
 					parser_test(&parser_data);
-				// else
-				// {
-				// 	free_ast(&parser_data);
-				// 	return (1);
-				// }
+				else
+				{
+					free_ast(&parser_data);
+					return (1);
+				}
 			}
 			else
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 17:09:11 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 22:19:53 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,25 @@ Returns a pointer to a null-terminated byte string, which contains
 copies of at most size bytes from the string pointed to by str */
 char	*ft_strdup_pt(const char *start, char *delimiter)
 {
-	char	*dst;
+	int		i;
 	int		len;
+	char	*dst;
 
+	i = 0;
 	len = 0;
 	if (!start || !delimiter || delimiter < start)
 		return (NULL);
 	while (start + len != delimiter && *(start + len) != '\0')
 		len++;
-	dst = malloc((len + 1) * sizeof(char));
+	dst = ft_calloc(1, (len + 1) * sizeof(char));
 	if (!dst)
 		return (NULL);
-	ft_strlcpy(dst, start, len + 1);
+	while (i < len)
+	{
+		dst[i] = start[i];
+		i++;
+	}	
+	// ft_strlcpy(dst, start, len + 1);
 	return (dst);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:40:49 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 21:48:49 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 22:13:24 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ char	*TEST_variable_expansion(char *str, int *i, t_var_list *var_head, bool *mal
 	char	*value;
 	char	*result;
 
+	// printf("hi\n\n\n");
 	cnt = 1;
 	while (ft_isdigit(*(str + *i + cnt)) || ft_isalpha(*(str + *i + cnt)) || *(str + *i + cnt) == '_')
 		cnt++;
+	// printf("%i\n\n\n", cnt); // right len of key
 	key = ft_strdup_pt(str + *i + 1, str + *i + cnt);
+	// printf("%s\n\n\n", key); // right key
 	value = get_value_for_key(var_head, key);
+	// printf("%s\n\n\n", value); // right value
 	strlen_result = ft_strlen(str) + ft_strlen(value) - cnt;
+	// printf("length of result string: %d\n\n\n", strlen_result); // right length
 	result = ft_calloc(1, strlen_result + 1);
 	if (result == NULL)
 	{
@@ -33,9 +38,14 @@ char	*TEST_variable_expansion(char *str, int *i, t_var_list *var_head, bool *mal
 		return (str);
 	}
 	ft_memmove(result, str, *i);
+	// ft_printf("%i\n\n", *i); // right index
+	// ft_printf("first move: %s\n\n", result); // right result
 	ft_memmove(result + *i, value, ft_strlen(value));
-	ft_memmove(result + *i + ft_strlen(value), str + *i + cnt, ft_strlen(str) - *i - cnt);
+	// ft_printf("second move: %s\n\n", result); // right result
+	ft_memmove(result + *i + ft_strlen(value), str + *i + cnt, ft_strlen(str) - *i - cnt); // right result
+	// ft_printf("third move: %s\n\n", result); // right result
 	*i = *i + ft_strlen(value) - 1;
+	// ft_printf("%i\n\n", *i); // right index
 	free(key);
 	free(str);
 	return (result);	
@@ -65,10 +75,13 @@ char	*TEST_double_quote_expansion(char *str, int *i, t_var_list *var_head, bool 
 	char	*substr;
 	char	*result;
 
+	// printf("hi\n\n\n");
 	cnt = 0;
 	while (*(str + *i + cnt + 1) != '\"')
 		cnt++;
+	// printf("%i\n\n\n", cnt); // right len of substr
 	substr = ft_strdup_pt(str + *i + 1, str + *i + cnt + 1);
+	printf("%s\n\n\n", substr);
 	substr = TEST_substring_expansion(substr, var_head, malloc_failed);
 	substrlen = ft_strlen(substr);
 	result = ft_calloc(1, ft_strlen(str) - cnt - 2 + substrlen);
@@ -102,7 +115,7 @@ char	*TEST_expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 			else if (*(to_expand + i) == '\'')
 				to_expand = quote_removal(to_expand, &i, malloc_failed);
 			else
-				TEST_variable_expansion(to_expand, &i, var_head, malloc_failed);	
+				to_expand = TEST_variable_expansion(to_expand, &i, var_head, malloc_failed); // working ok
 		}
 		if (*malloc_failed == true)
 			break ;
@@ -114,7 +127,7 @@ char	*TEST_expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 int	expander_test(t_var_list *var_head)
 {
 	bool		malloc_failed = false;
-	const char	*given_str = "$USER";
+	const char	*given_str = "\"hi\"";
 	char		*to_expand = ft_strdup(given_str);
 
 	printf("\n------- EXPANDER TEST -------\n\n");
