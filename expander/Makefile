@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/23 17:23:14 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/23 17:26:44 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/12 17:10:38 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,10 @@ INCLUDE_DIR		:= ../include
 HEADERS 		:= -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
 
 EXPANDER_SRCS := \
-	expander.c
+	expander.c \
+	expander_utils.c \
+	expander_here_end.c \
+	expander_executor_utils.c
 
 OBJS := $(EXPANDER_SRCS:.c=.o)
 

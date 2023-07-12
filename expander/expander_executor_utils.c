@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/06 20:17:40 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 17:09:44 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,4 @@ void	execute_expander_on_tree(t_ast *node, t_var_list *var_head, bool *malloc_fa
 	execute_expander_on_tree(node->right, var_head, malloc_failed);
 	if (node->content)
 		execute_expander_on_content(node->content, var_head, malloc_failed);
-}
-
-t_expander_exit_code	expander_executor(t_ast *ast_root, t_var_list *var_head)
-{
-	bool	malloc_failed;
-
-	malloc_failed = false;
-	execute_expander_on_tree(ast_root, var_head, &malloc_failed);
-	if (malloc_failed == true)
-		return (EXPANDER_FAILURE);
-	return (EXPANDER_SUCCESS);
 }
