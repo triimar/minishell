@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/08 18:19:24 by tmarts            #+#    #+#              #
-#    Updated: 2023/07/09 18:08:56 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/12 16:25:13 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,11 @@ EXECUTION_SRCS := \
 	get_envp.c \
 	get_right_path.c \
 	execution_utils.c \
-	test_envp_and_path.c
+	test_envp_and_path.c \
+	child_processes.c \
+	execution_errors.c \
+	execution_utils.c \
+	piper.c
 
 OBJS := $(EXECUTION_SRCS:.c=.o)
 
