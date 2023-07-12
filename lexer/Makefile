@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/06/23 11:49:56 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/09 17:37:38 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ LEXER_SRCS := \
 OBJS := $(LEXER_SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : libft $(NAME)
+all : $(NAME)
 
 libft:
 	@$(MAKE) -C $(LIBFT_DIR)

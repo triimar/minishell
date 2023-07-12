@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 18:48:45 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/12 19:53:33 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,16 +41,19 @@ LEXER			:= $(LEXER_DIR)/lexer.a
 PARSER_DIR		:= ./parser
 PARSER			:= $(PARSER_DIR)/parser.a
 
+EXECUTION_DIR		:= ./execution
+EXECUTION			:= $(EXECUTION_DIR)/execution.a
+
 INCLUDE_DIR		:= ./include
 HEADERS 		:= -I $(BREW_PATH)/opt/readline/include -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
-LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER)
+LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER) $(EXECUTION)
 
 SRCS	:= \
 	src/main.c \
 	src/builtin_exit.c \
 	src/signals.c \
 	src/minishell_data_init.c \
-	src/minishell_utils.c
+	src/minishell_utils.c \
 
 EXPANDER_SRCS := \
 	expander/expander.c \
@@ -62,10 +65,13 @@ OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : libft parser $(NAME)
+all : libft lexer parser execution $(NAME)
 
 libft:
 	@$(MAKE) -C $(LIBFT_DIR)
+
+lexer:
+	@$(MAKE) -C $(LEXER_DIR)
 
 parser:
 	@$(MAKE) -C $(PARSER_DIR)
@@ -81,14 +87,17 @@ $(NAME)	: $(OBJS) $(EXPANDER_OBJS)
 clean:
 	@rm -f $(OBJS) $(EXPANDER_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LEXER_DIR) clean
 	@$(MAKE) -C $(PARSER_DIR) clean
-
+	@$(MAKE) -C $(EXECUTION_DIR) clean
+	
 fclean:	clean
 	@rm -f $(NAME)
+	@rm -f $(EXECUTION)
 	@rm -f $(PARSER)
 	@rm -f $(LEXER)
 	@rm -f $(LIBFT)
 	
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libft, parser
+.PHONY: all clean fclean re libft lexer parser execution

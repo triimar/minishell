@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/09 21:15:45 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/12 15:56:34 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,51 @@ typedef struct s_var_list	t_var_list;
 
 typedef enum e_exec_exit_code
 {
-	EXEC_SUCESS,
+	EXEC_SUCCESS,
 	EXEC_MALLOC_ERROR,
 	PIPE_ERROR,
-	FORK_ERROR
+	FORK_ERROR,
+	EXEC_FAIL,
 }	t_exec_exit_code;
 
-// typedef struct s_ast_content
-// {
-// 	t_redirect		*stdin_redirect;
-// 	t_redirect		*stdout_redirect;
-// 	t_assignment	*assignments;
-// 	char			**cmd;
-// }	t_ast_content;
-
-// typedef struct s_ast
-// {
-// 	t_ast_content	*content;
-// 	t_ast			*left;
-// 	t_ast			*right;
-// }	t_ast;
+typedef struct s_piper
+{
+	int				infile;
+	int				outfile;
+	int				pipe1[2];
+	int				pipe2[2];
+	int				fork_count;
+	int				*pids;
+	int				child_nr;
+	t_ast_content	*cmd_node;
+}	t_piper;
 
 typedef struct s_exec
 {
-	int		infile;
-	int		outfile;
-	int		forks;
-	int		pipe1[2];
-	int		pipe2[2];
-	// int		here_doc; will be handled before?
-	int		*pids;
-	char	**all_paths;
-	char 	**envp;
-//	t_cmd	*s_cmd_lst;
+	char	**envp;
+	char	*path;
 }	t_exec;
 
+typedef struct s_wait
+{
+	int		wstatus;
+	int		status_code;
+}	t_wait;
+
+t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list);
+void				child_process(t_piper *piper, t_var_list *var_list);
+
+int					get_fork_count(t_parser *parser_data);
+t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
+
 t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
-t_exec_exit_code	get_all_paths(t_exec *s_exec, t_var_list *var_list);
-char				*get_right_path(char *command, char **all_paths);
-t_exec_exit_code	test_envp_and_path(t_var_list *var_list, t_ast_content *content);
-void				ft_free_ptpt(char **array, int str_count);
+t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
+
+void				ft_free_pp_n(char **array, int str_count);
+void				ft_free_pp(char **p_p);
+
+void				child_error(t_exec *exec_data, int exitcode, char *cmd);
+
+t_exec_exit_code	test_envp_path(t_var_list *var_list, t_ast_content *cont);
+
 #endif

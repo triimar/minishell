@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 18:45:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 19:54:37 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 // 	signal(SIGTSTP, SIG_DFL);
 // 	signal(SIGQUIT, SIG_DFL);
 // }
+
 
 int	main(int argc, char **argv)
 {
@@ -44,8 +45,7 @@ int	main(int argc, char **argv)
 		if (p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
 		{
 			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 
-			//free everything, stop everything
-			
+			//free everything, stop everything			
 			// break;
 			rl_redisplay();
 			ft_putendl_fd("exit", STDOUT_FILENO);
