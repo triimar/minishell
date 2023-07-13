@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/13 17:04:14 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/13 17:09:13 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ SRCS	:= \
 	src/builtin_exit.c \
 	src/signals.c \
 	src/minishell_data_init.c \
-	src/minishell_utils.c
+	src/minishell_utils.c \
 
 EXPANDER_SRCS := \
 	expander/expander.c \
@@ -58,20 +58,32 @@ EXPANDER_SRCS := \
 	expander/expander_here_end.c \
 	expander/expander_executor_utils.c
 
+EXECUTION_SRCS := \
+	execution/execution_utils.c \
+	execution/get_envp.c \
+	execution/get_right_path.c \
+	execution/child_processes.c \
+	execution/execution_errors.c \
+	execution/piper.c
+
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
+EXECUTION_OBJS := $(EXECUTION_SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : libft parser $(NAME)
+all : libft lexer parser $(NAME)
 
 libft:
 	@$(MAKE) -C $(LIBFT_DIR)
 
+lexer:
+	@$(MAKE) -C $(LEXER_DIR)
+
 parser:
 	@$(MAKE) -C $(PARSER_DIR)
 
-$(NAME)	: $(OBJS) $(EXPANDER_OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) -o $(NAME) $(LIBS) && \
+$(NAME)	: $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS) -o $(NAME) $(LIBS) && \
 	echo "$(YELLOW)>> Mandatory part - Minishell <<$(RESET)" && \
 	echo "$(GREEN)Compilation successful!$(RESET)"
 
@@ -79,10 +91,10 @@ $(NAME)	: $(OBJS) $(EXPANDER_OBJS)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS) $(EXPANDER_OBJS)
+	@rm -f $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(PARSER_DIR) clean
-
+	
 fclean:	clean
 	@rm -f $(NAME)
 	@rm -f $(PARSER)
@@ -91,4 +103,4 @@ fclean:	clean
 	
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libft, parser
+.PHONY: all clean fclean re libft lexer parser

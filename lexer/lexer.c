@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/23 12:07:13 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 20:06:44 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ t_lexer_exit_code	lexer(t_lexer *data, const char *source)
 			break ;
 	}
 	iter_token_list(data, &check_if_assignment_word);
-	lexer_test(data);
+	// lexer_test(data);
 	return (LEXER_SUCCESS);
 }

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:19:40 by eunskim           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/13 17:04:32 by eunskim          ###   ########.fr       */
+=======
+/*   Updated: 2023/07/12 20:57:55 by tmarts           ###   ########.fr       */
+>>>>>>> 5557d6295e460a89d61c61de5a13ae1ac27c4852
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +21,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "minishell.h"
-# include "parser.h"
 
 typedef struct s_var_list	t_var_list;
 

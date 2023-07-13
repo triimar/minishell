@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 19:19:27 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/12 20:58:37 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ void				print_var_list(t_var_list *var_list);
 
 char				*ft_strdup_pt(const char *start, char *delimiter);
 void				ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new);
-char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
 
 #endif

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/13 17:06:12 by eunskim          ###   ########.fr       */
+=======
+/*   Updated: 2023/07/12 21:04:56 by tmarts           ###   ########.fr       */
+>>>>>>> 5557d6295e460a89d61c61de5a13ae1ac27c4852
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +48,7 @@ int	main(int argc, char **argv)
 		if (p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
 		{
 			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 
-			//free everything, stop everything
-			
+			//free everything, stop everything			
 			// break;
 			rl_redisplay();
 			ft_putendl_fd("exit", STDOUT_FILENO);
@@ -69,13 +72,14 @@ int	main(int argc, char **argv)
 			add_history(p_input);
 			if (parser(&parser_data, (const char *) p_input) == PARSER_SUCCESS)
 			{
-				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
-					parser_test(&parser_data);
-				else
-				{
-					free_ast(&parser_data);
-					return (1);
-				}
+				// if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
+				piper(&parser_data, data.var_head);
+				parser_test(&parser_data);
+				// else
+				// {
+				// 	free_ast(&parser_data);
+				// 	return (1);
+				// }
 			}
 			else
 				return (1);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/19 14:32:56 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 18:37:43 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/12 19:54:04 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ PARSER_SRCS := \
 OBJS := $(PARSER_SRCS:.c=.o)
 
 #//= Make Rules =//#
-all : lexer $(NAME)
+all : $(NAME)
 
 lexer:
 	@$(MAKE) -C $(LEXER_DIR)
