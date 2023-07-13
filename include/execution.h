@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 20:58:22 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/13 17:46:01 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_wait
 	int		wstatus;
 	int		status_code;
 }	t_wait;
+
+void				open_infile(t_redirect *stdin_redirect, t_piper *piper);
 
 t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list);
 void				child_process(t_piper *piper, t_var_list *var_list);
