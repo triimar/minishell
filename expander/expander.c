@@ -6,53 +6,42 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 16:59:52 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:55:10 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-char	*variable_expansion(char *str, int *i, t_var_list *var_head, bool *malloc_failed)
+char	*variable_expansion(char *str, int *i, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	int		cnt;
 	int		strlen_value;
-	char	*key;
+	char	*tmp;
 	char	*value;
-	char	*result;
 
-	cnt = 1;
-	while (ft_isdigit(*(str + *i + cnt)) || ft_isalpha(*(str + *i + cnt)) || *(str + *i + cnt) == '_')
-		cnt++;
+	cnt = check_key_len(str, *i);
 	if (cnt == 1)
 		return (str);
-	key = ft_strdup_pt(str + *i + 1, str + *i + cnt);
-	if (key == NULL)
-	{
-		*malloc_failed = true;
-		return (str);
-	}
-	value = get_value_for_key(var_head, key);
-	if (value == NULL)
-		strlen_value = 0;
-	else
-		strlen_value = ft_strlen(value);
-	result = ft_calloc(1, ft_strlen(str) + strlen_value - cnt + 1);
-	if (result == NULL)
-	{
-		*malloc_failed = true;
-		free(key);
-		return (str);
-	}
-	ft_memmove(result, str, *i);
-	ft_memmove(result + *i, value, strlen_value);
-	ft_memmove(result + *i + strlen_value, str + *i + cnt, ft_strlen(str) - *i - cnt);
+	tmp = ft_strdup_pt(str + *i + 1, str + *i + cnt);
+	if (tmp == NULL)
+		return (*malloc_failed = true, str);
+	value = get_value_for_key(var_head, tmp);
+	strlen_value = check_value_len(value);
+	free(tmp);
+	tmp = ft_calloc(1, ft_strlen(str) + strlen_value - cnt + 1);
+	if (tmp == NULL)
+		return (*malloc_failed = true, str);
+	ft_memmove(tmp, str, *i);
+	ft_memmove(tmp + *i, value, strlen_value);
+	ft_memmove(tmp + *i + strlen_value, str + *i + cnt, \
+	ft_strlen(str) - *i - cnt);
 	*i = *i + strlen_value - 1;
-	free(key);
-	free(str);
-	return (result);	
+	return (free(str), tmp);
 }
 
-char	*substring_expansion(char *str, t_var_list *var_head, bool *malloc_failed)
+char	*substring_expansion(char *str, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	int		i;
 
@@ -70,7 +59,8 @@ char	*substring_expansion(char *str, t_var_list *var_head, bool *malloc_failed)
 	return (str);
 }
 
-char	*double_quote_expansion(char *str, int *i, t_var_list *var_head, bool *malloc_failed)
+char	*double_quote_expansion(char *str, int *i, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	int		cnt;
 	int		substrlen;
@@ -83,28 +73,20 @@ char	*double_quote_expansion(char *str, int *i, t_var_list *var_head, bool *mall
 		cnt++;
 	substr = ft_strdup_pt(str + *i, str + *i + cnt + 2);
 	if (substr == NULL)
-	{
-		*malloc_failed = true;
-		return (str);
-	}
+		return (*malloc_failed = true, str);
 	substr = substring_expansion(substr, var_head, malloc_failed);
 	if (*malloc_failed == true)
 		return (str);
 	substrlen = ft_strlen(substr);
 	result = ft_calloc(1, ft_strlen(str) - cnt - 2 + substrlen - 2 + 1);
 	if (result == NULL)
-	{
-		*malloc_failed = true;
-		free(substr);
-		return (str);
-	}
+		return (*malloc_failed = true, free(substr), str);
 	ft_memmove(result, str, *i);
 	ft_memmove(result + *i, substr + 1, substrlen - 2);
-	ft_memmove(result + *i + substrlen - 2, str + *i + cnt + 2, ft_strlen(str) - *i - cnt - 2);
+	ft_memmove(result + *i + substrlen - 2, \
+	str + *i + cnt + 2, ft_strlen(str) - *i - cnt - 2);
 	*i = *i + substrlen - 2 - 1;
-	free(substr);
-	free(str);
-	return (result);
+	return (free(substr), free(str), result);
 }
 
 char	*expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
@@ -116,14 +98,17 @@ char	*expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 		return (NULL);
 	while (*(to_expand + i) != '\0')
 	{
-		if (*(to_expand + i) == '\"' || *(to_expand + i) == '\'' || *(to_expand + i) == '$')
+		if (*(to_expand + i) == '\"' \
+		|| *(to_expand + i) == '\'' || *(to_expand + i) == '$')
 		{
 			if (*(to_expand + i) == '\"')
-				to_expand = double_quote_expansion(to_expand, &i, var_head, malloc_failed);
+				to_expand = \
+				double_quote_expansion(to_expand, &i, var_head, malloc_failed);
 			else if (*(to_expand + i) == '\'')
 				to_expand = quote_removal(to_expand, &i, malloc_failed);
 			else
-				to_expand = variable_expansion(to_expand, &i, var_head, malloc_failed);	
+				to_expand = \
+				variable_expansion(to_expand, &i, var_head, malloc_failed);
 		}
 		if (*malloc_failed == true)
 			break ;

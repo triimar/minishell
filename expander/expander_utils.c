@@ -6,11 +6,30 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 15:57:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:54:34 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+
+int	check_value_len(char *value)
+{
+	if (value == NULL)
+		return (0);
+	else
+		return (ft_strlen(value));
+}
+
+int	check_key_len(char *str, int i)
+{
+	int	cnt;
+
+	cnt = 1;
+	while (ft_isdigit(*(str + i + cnt)) \
+	|| ft_isalpha(*(str + i + cnt)) || *(str + i + cnt) == '_')
+		cnt++;
+	return (cnt);
+}
 
 /* char	*ft_strndup_pt(const char *start, char *delimiter)
 Returns a pointer to a null-terminated byte string, which contains 
@@ -23,7 +42,7 @@ char	*ft_strdup_pt(const char *start, char *delimiter)
 
 	i = 0;
 	len = 0;
-	if (!start || !delimiter || delimiter <= start)
+	if (!start || !delimiter || delimiter < start)
 		return (NULL);
 	while (start + len != delimiter && *(start + len) != '\0')
 		len++;

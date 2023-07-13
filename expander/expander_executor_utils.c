@@ -6,13 +6,14 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 16:08:15 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:54:42 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *malloc_failed)
+void	execute_expander_on_cmd_array(char **cmd, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	int	i;
 
@@ -26,7 +27,8 @@ void	execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *mallo
 	}
 }
 
-void	execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_head, bool *malloc_failed)
+void	execute_expander_on_assignments(t_assignment *assignments, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	t_assignment	*tmp;
 	char			*prefix;
@@ -61,7 +63,8 @@ void	execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_
 	}
 }
 
-void	execute_expander_on_redirect_list(t_redirect *redirect, t_var_list *var_head, bool *malloc_failed)
+void	execute_expander_on_redirect_list(t_redirect *redirect, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	t_redirect	*tmp;
 
@@ -78,15 +81,21 @@ void	execute_expander_on_redirect_list(t_redirect *redirect, t_var_list *var_hea
 	}
 }
 
-void	execute_expander_on_content(t_ast_content *content, t_var_list *var_head, bool *malloc_failed)
+void	execute_expander_on_content(t_ast_content *content, \
+t_var_list *var_head, bool *malloc_failed)
 {
-	execute_expander_on_redirect_list(content->stdin_redirect, var_head, malloc_failed);
-	execute_expander_on_redirect_list(content->stdout_redirect, var_head, malloc_failed);
-	execute_expander_on_assignments(content->assignments, var_head, malloc_failed);
-	execute_expander_on_cmd_array(content->cmd, var_head, malloc_failed);
+	execute_expander_on_redirect_list(content->stdin_redirect, \
+	var_head, malloc_failed);
+	execute_expander_on_redirect_list(content->stdout_redirect, \
+	var_head, malloc_failed);
+	execute_expander_on_assignments(content->assignments, \
+	var_head, malloc_failed);
+	execute_expander_on_cmd_array(content->cmd, \
+	var_head, malloc_failed);
 }
 
-void	execute_expander_on_tree(t_ast *node, t_var_list *var_head, bool *malloc_failed)
+void	execute_expander_on_tree(t_ast *node, \
+t_var_list *var_head, bool *malloc_failed)
 {
 	if (node == NULL)
 		return ;
