@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 22:09:42 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/13 17:04:14 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= minishell
-CFLAGS 			:= -Wall -Wextra -Werror
-# -g3 -fsanitize=address
+CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 WHEREIS_BREW	:= if test -d $(HOME)/.brew/opt/readline; then echo $(HOME)/.brew; \
 					elif test -d $(HOME)/goinfre/.brew/opt/readline; then echo $(HOME)/goinfre/.brew; \
@@ -57,8 +56,7 @@ EXPANDER_SRCS := \
 	expander/expander.c \
 	expander/expander_utils.c \
 	expander/expander_here_end.c \
-	expander/expander_executor_utils.c \
-	expander/expander_test_2.c
+	expander/expander_executor_utils.c
 
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)

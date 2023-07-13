@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 21:09:42 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:08:15 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,44 @@ void	execute_expander_on_cmd_array(char **cmd, t_var_list *var_head, bool *mallo
 	i = 0;
 	if (cmd == NULL || *cmd == NULL)
 		return ;
-	while (cmd + i != NULL)
+	while (*(cmd + i) != NULL)
 	{
 		*(cmd + i) = expander(*(cmd + i), var_head, malloc_failed);
 		i++;
 	}
 }
 
-// char	*get_assignment_value(char *assignment)
-// {
-// 	int 	i;
-// 	char	*result;
-
-// 	i = 0;
-// 	while (*(assignment + i) != '=')
-// 		i++;
-// 	result = 
-	
-// }
-
 void	execute_expander_on_assignments(t_assignment *assignments, t_var_list *var_head, bool *malloc_failed)
 {
 	t_assignment	*tmp;
-	// char			*to_expand;
+	char			*prefix;
+	char			*to_expand;
+	int				i;
 
 	tmp = assignments;
-	while (assignments)
+	while (tmp)
 	{
+		i = 0;
 		if (*malloc_failed == true)
 			break ;
-		// to_expand =
-		tmp->word = expander(tmp->word, var_head, malloc_failed);
+		while (*(tmp->word + i) != '=')
+			i++;
+		prefix = ft_strdup_pt(tmp->word, tmp->word + i + 1);
+		if (prefix == NULL)
+		{
+			*malloc_failed = true;
+			return ;
+		}
+		to_expand = ft_strdup(tmp->word + i + 1);
+		if (to_expand == NULL)
+		{
+			*malloc_failed = true;
+			free(prefix);
+			return ;
+		}
+		to_expand = expander(to_expand, var_head, malloc_failed);
+		free(tmp->word);
+		tmp->word = ft_strjoin(prefix, to_expand);
 		tmp = tmp->next;
 	}
 }

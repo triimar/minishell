@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 22:19:53 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/13 15:57:22 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strdup_pt(const char *start, char *delimiter)
 
 	i = 0;
 	len = 0;
-	if (!start || !delimiter || delimiter < start)
+	if (!start || !delimiter || delimiter <= start)
 		return (NULL);
 	while (start + len != delimiter && *(start + len) != '\0')
 		len++;
@@ -34,8 +34,7 @@ char	*ft_strdup_pt(const char *start, char *delimiter)
 	{
 		dst[i] = start[i];
 		i++;
-	}	
-	// ft_strlcpy(dst, start, len + 1);
+	}
 	return (dst);
 }
 
@@ -62,9 +61,9 @@ char	*get_value_for_key(t_var_list *var_head, const char *key)
 	value = NULL;
 	while (tmp)
 	{
-		if (ft_strcmp((const char *) var_head->key, key))
+		if (ft_strcmp((const char *) tmp->key, key))
 		{
-			value = var_head->value;
+			value = tmp->value;
 			break ;
 		}
 		tmp = tmp->next;
