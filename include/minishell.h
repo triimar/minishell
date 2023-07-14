@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 20:58:37 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/13 17:10:24 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <stdbool.h>
+# include <fcntl.h> //defines O_RDONLY etc
 # include "libft.h"
 # include "parser.h"
 # include "expander.h"

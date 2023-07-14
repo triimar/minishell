@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/13 17:12:22 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/13 17:47:36 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ EXECUTION_SRCS := \
 	execution/get_right_path.c \
 	execution/child_processes.c \
 	execution/execution_errors.c \
+	execution/redirections.c \
 	execution/piper.c
 
 OBJS := $(SRCS:.c=.o)
