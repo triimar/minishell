@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 17:54:42 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/14 16:53:03 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,28 @@ t_var_list *var_head, bool *malloc_failed)
 	}
 }
 
+static void	add_prefix_to_str(t_assignment *tmp, int i, \
+char *to_expand, bool *malloc_failed)
+{
+	char	*prefix;
+
+	if (*malloc_failed == true)
+		return ;
+	prefix = ft_strdup_pt(tmp->word, tmp->word + i + 1);
+	if (prefix == NULL)
+	{
+		*malloc_failed = true;
+		free(to_expand);
+		return ;
+	}
+	free(tmp->word);
+	tmp->word = ft_strjoin(prefix, to_expand);
+}
+
 void	execute_expander_on_assignments(t_assignment *assignments, \
 t_var_list *var_head, bool *malloc_failed)
 {
 	t_assignment	*tmp;
-	char			*prefix;
 	char			*to_expand;
 	int				i;
 
@@ -43,22 +60,14 @@ t_var_list *var_head, bool *malloc_failed)
 			break ;
 		while (*(tmp->word + i) != '=')
 			i++;
-		prefix = ft_strdup_pt(tmp->word, tmp->word + i + 1);
-		if (prefix == NULL)
-		{
-			*malloc_failed = true;
-			return ;
-		}
 		to_expand = ft_strdup(tmp->word + i + 1);
 		if (to_expand == NULL)
 		{
 			*malloc_failed = true;
-			free(prefix);
 			return ;
 		}
 		to_expand = expander(to_expand, var_head, malloc_failed);
-		free(tmp->word);
-		tmp->word = ft_strjoin(prefix, to_expand);
+		add_prefix_to_str(tmp, i, to_expand, malloc_failed);
 		tmp = tmp->next;
 	}
 }
@@ -81,19 +90,6 @@ t_var_list *var_head, bool *malloc_failed)
 	}
 }
 
-void	execute_expander_on_content(t_ast_content *content, \
-t_var_list *var_head, bool *malloc_failed)
-{
-	execute_expander_on_redirect_list(content->stdin_redirect, \
-	var_head, malloc_failed);
-	execute_expander_on_redirect_list(content->stdout_redirect, \
-	var_head, malloc_failed);
-	execute_expander_on_assignments(content->assignments, \
-	var_head, malloc_failed);
-	execute_expander_on_cmd_array(content->cmd, \
-	var_head, malloc_failed);
-}
-
 void	execute_expander_on_tree(t_ast *node, \
 t_var_list *var_head, bool *malloc_failed)
 {
@@ -104,5 +100,14 @@ t_var_list *var_head, bool *malloc_failed)
 	execute_expander_on_tree(node->left, var_head, malloc_failed);
 	execute_expander_on_tree(node->right, var_head, malloc_failed);
 	if (node->content)
-		execute_expander_on_content(node->content, var_head, malloc_failed);
+	{
+		execute_expander_on_redirect_list(node->content->stdin_redirect, \
+		var_head, malloc_failed);
+		execute_expander_on_redirect_list(node->content->stdout_redirect, \
+		var_head, malloc_failed);
+		execute_expander_on_assignments(node->content->assignments, \
+		var_head, malloc_failed);
+		execute_expander_on_cmd_array(node->content->cmd, \
+		var_head, malloc_failed);
+	}
 }
