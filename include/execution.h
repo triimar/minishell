@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/13 17:46:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/16 21:53:46 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ typedef struct s_wait
 	int		status_code;
 }	t_wait;
 
-void				open_infile(t_redirect *stdin_redirect, t_piper *piper);
+int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
+int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
+int					here_doc_all(int *here_doc_df, t_redirect *stdin_redirect);
 
 t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list);
 void				child_process(t_piper *piper, t_var_list *var_list);
@@ -68,6 +70,7 @@ t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
 void				ft_free_pp_n(char **array, int str_count);
 void				ft_free_pp(char **p_p);
 char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
+
 void				child_error(t_exec *exec_data, int exitcode, char *cmd);
 
 #endif

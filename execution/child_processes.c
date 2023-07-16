@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/14 22:38:59 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/16 23:17:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static void	child_first(t_piper *piper)
 {
 	if (piper->fork_count == 1)
 	{
-		printf("\n\ninfile %d, outfile %d\n\n", piper->infile, piper->outfile);
 		redirect(piper->infile, piper->outfile);
 		
 	}
@@ -87,12 +86,43 @@ static void	child_last(t_piper *piper, int child_nr)
 	}
 }
 
+// static void	child_redirections(t_piper *piper, int child_nr)
+// {
+// 		if (parser_data->ast_root->content->stdin_redirect == NULL)
+// 		piper.infile = STDIN_FILENO;
+// 	else
+// 	{
+// 		open_infiles(parser_data->ast_root->content->stdin_redirect, &piper.infile);
+// 		if (piper.infile < 0)
+// 			return (EXEC_FAIL);
+// 	}
+// 	if (parser_data->ast_root->content->stdout_redirect == NULL)
+// 		piper.outfile = STDOUT_FILENO;
+// 	else
+// 	{
+// 		open_outfiles(parser_data->ast_root->content->stdout_redirect, &piper.outfile);
+// 		if (piper.outfile < 0)
+// 			return (EXEC_FAIL);
+// 	}
+// 	if (child_nr % 2 == 0)
+// 	{
+// 		close(piper->pipe1[1]);
+// 		close(piper->pipe2[0]);
+// 		redirect(piper->pipe1[0], piper->pipe2[1]);
+// 	}
+// 	else
+// 	{
+// 		close(piper->pipe1[0]);
+// 		close(piper->pipe2[1]);
+// 		redirect(piper->pipe2[0], piper->pipe1[1]);
+// 	}
+// }
+
 void	child_process(t_piper *piper, t_var_list *var_list)
 {
 	t_exec	exec_data;
 
 	ft_putendl_fd("THIS IS CHILD\n", STDOUT_FILENO);
-	printf("[%d]\n", piper->infile);
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
 	if (piper->cmd_node->cmd == NULL)

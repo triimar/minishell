@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/14 22:45:49 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/16 22:56:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,23 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 	int		i;
 	t_piper	piper;
 
-	open_infile(parser_data->ast_root->content->stdin_redirect, &piper);
-	if (piper.infile < 0)
-		return(EXEC_FAIL);
-	piper.outfile = STDOUT_FILENO;
+//if pipes then content is NULL and causes segfault
+	if (parser_data->ast_root->content->stdin_redirect == NULL)
+		piper.infile = STDIN_FILENO;
+	else
+	{
+		open_infiles(parser_data->ast_root->content->stdin_redirect, &piper.infile);
+		if (piper.infile < 0)
+			return (EXEC_FAIL);
+	}
+	if (parser_data->ast_root->content->stdout_redirect == NULL)
+		piper.outfile = STDOUT_FILENO;
+	else
+	{
+		open_outfiles(parser_data->ast_root->content->stdout_redirect, &piper.outfile);
+		if (piper.outfile < 0)
+			return (EXEC_FAIL);
+	}
 	if (init_piper_data(parser_data, &piper) != 0)
 		return (EXEC_MALLOC_ERROR);
 	i = 0;
@@ -114,9 +127,10 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 		close_used_pipes(&piper);
 		i++;
 	}
-	if (piper.infile != STDIN_FILENO)
-		close(piper.infile);
-	// close(piper.outfile); //restore stdin stdout
+	// if (piper.infile != STDIN_FILENO)
+	// 	close(piper.infile);
+	// if (piper.outfile != STDOUT_FILENO)
+	// 	close(piper.outfile);
 	ft_waiting(piper.pids, piper.fork_count);
 	free(piper.pids);
 	return (EXEC_SUCCESS);
