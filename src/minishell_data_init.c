@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_data_init.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/11 15:07:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/16 16:42:52 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 		new_var_node = (t_var_list *)ft_calloc(1, sizeof(t_var_list));
 		if (!new_var_node)
 			return (free_var_list(*var_list), MS_MALLOC_ERROR);
-		if (i % 2 == 0) //to test envp maker for execve
-			new_var_node->env_flag = 1;
+		new_var_node->env_flag = 1;
 		delimiter_pt = ft_strchr(environ[i], '=');
 		new_var_node->key = ft_strdup_pt(environ[i], (delimiter_pt));
 		if (!new_var_node->key)

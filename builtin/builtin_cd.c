@@ -6,11 +6,10 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:10:48 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/16 13:25:13 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/16 14:09:07 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtin.h"
 
 int	change_value_for_key(t_var_list *var_head, char *key, char *new_value)

@@ -6,11 +6,10 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:04:22 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/16 12:07:25 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/16 14:09:17 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "builtin.h"
 
 int	builtin_pwd(void)
