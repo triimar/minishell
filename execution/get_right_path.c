@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 20:27:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/16 16:19:45 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,11 @@ static t_exec_exit_code	path_find_loop(char **path, char *cmd, char **all_paths)
 	return (EXEC_SUCCESS);
 }
 
-
 t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
 {
 	char	**all_paths;
 
 	all_paths = NULL;
-	if (!command) // empty string - result cmd not found exit code 127
-		return (EXEC_FAIL); //is it possible to reach this point w/o command?
 	if (access(command, F_OK) == 0 && (command[0] == '.'
 			|| command[0] == '/' || ft_strchr(command + 1, '/')))
 	{

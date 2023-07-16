@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/13 17:44:44 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/14 22:45:49 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 	open_infile(parser_data->ast_root->content->stdin_redirect, &piper);
 	if (piper.infile < 0)
 		return(EXEC_FAIL);
-	piper.outfile = STDOUT_FILENO;//
+	piper.outfile = STDOUT_FILENO;
 	if (init_piper_data(parser_data, &piper) != 0)
 		return (EXEC_MALLOC_ERROR);
 	i = 0;

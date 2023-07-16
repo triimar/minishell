@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 19:00:52 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/14 22:38:59 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static void	child_middle(t_piper *piper, int child_nr)
 static void	child_first(t_piper *piper)
 {
 	if (piper->fork_count == 1)
+	{
+		printf("\n\ninfile %d, outfile %d\n\n", piper->infile, piper->outfile);
 		redirect(piper->infile, piper->outfile);
+		
+	}
 	else
 	{
 		// close(piper->outfile);
@@ -64,8 +68,6 @@ static void	child_first(t_piper *piper)
 		{
 			exit(EXIT_FAILURE);
 		}
-		// if (piper->here_doc == 1)
-		// 	here_doc(piper);
 		redirect(piper->infile, piper->pipe1[1]);
 	}
 }
@@ -90,8 +92,11 @@ void	child_process(t_piper *piper, t_var_list *var_list)
 	t_exec	exec_data;
 
 	ft_putendl_fd("THIS IS CHILD\n", STDOUT_FILENO);
+	printf("[%d]\n", piper->infile);
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
+	if (piper->cmd_node->cmd == NULL)
+		exit (0);
 	if (piper->child_nr == 1)
 		child_first(piper);
 	else if (piper->child_nr == piper->fork_count)
