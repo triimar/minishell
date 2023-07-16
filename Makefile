@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/13 17:47:36 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/16 11:14:48 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,9 +67,14 @@ EXECUTION_SRCS := \
 	execution/redirections.c \
 	execution/piper.c
 
+BUILTIN_SRCS := \
+	builtin/builtin_pwd.c \
+	builtin/builtin_cd.c
+
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
 EXECUTION_OBJS := $(EXECUTION_SRCS:.c=.o)
+BUILTIN_OBJS := $(BUILTIN_SRCS:.c=.o)
 
 #//= Make Rules =//#
 all : libft lexer parser $(NAME)
@@ -83,8 +88,8 @@ lexer:
 parser:
 	@$(MAKE) -C $(PARSER_DIR)
 
-$(NAME)	: $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS) -o $(NAME) $(LIBS) && \
+$(NAME)	: $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS) $(BUILTIN_OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS) $(BUILTIN_OBJS) -o $(NAME) $(LIBS) && \
 	echo "$(YELLOW)>> Mandatory part - Minishell <<$(RESET)" && \
 	echo "$(GREEN)Compilation successful!$(RESET)"
 
@@ -92,7 +97,7 @@ $(NAME)	: $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS)
+	@rm -f $(OBJS) $(EXPANDER_OBJS) $(EXECUTION_OBJS) $(BUILTIN_OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(PARSER_DIR) clean
 	

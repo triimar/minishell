@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/14 16:46:30 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/16 13:26:28 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,16 @@ int	main(int argc, char **argv)
 				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
 				{
 					// piper(&parser_data, data.var_head);
+					if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
+					&& parser_data.ast_root->content->cmd != NULL && ft_strcmp("cd", parser_data.ast_root->content->cmd[0]))
+					{
+						builtin_cd(data.var_head, parser_data.ast_root->content->cmd);
+						printf("\npwd: %s\n", get_value_for_key(data.var_head, "PWD"));
+						printf("\ngetcwd say: ");
+						printf("\noldpwd: %s\n\n", get_value_for_key(data.var_head, "OLDPWD"));
+						builtin_pwd();
+					}
+						
 					parser_test(&parser_data);
 				}
 				else
