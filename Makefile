@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/16 22:08:56 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/17 19:36:48 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,8 @@ EXECUTION_SRCS := \
 	execution/execution_errors.c \
 	execution/redirections.c \
 	execution/here_doc.c \
-	execution/piper.c
+	execution/piper.c \
+	execution/execution.c
 
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)

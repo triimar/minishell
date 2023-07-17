@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/16 21:53:46 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/17 20:30:29 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@
 # include "minishell.h"
 
 typedef struct s_var_list	t_var_list;
+typedef struct s_minishell	t_minishell;
 
 typedef enum e_exec_exit_code
 {
 	EXEC_SUCCESS,
+	EXEC_FAIL,
 	EXEC_MALLOC_ERROR,
 	PIPE_ERROR,
 	FORK_ERROR,
-	EXEC_FAIL,
 }	t_exec_exit_code;
+
 
 typedef struct s_piper
 {
@@ -57,9 +59,15 @@ typedef struct s_wait
 int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
 int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
 int					here_doc_all(int *here_doc_df, t_redirect *stdin_redirect);
+int					redirect_main(int *stdin_save, t_redirect *stdin_redirect, \
+							int *stdout_save, t_redirect *stdout_redirect);
+void				restore_redirect(int stdin_save, int stdout_save);
 
+t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
 t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list);
 void				child_process(t_piper *piper, t_var_list *var_list);
+
+void				ft_waiting(int *pids, int nr_of_forks);
 
 int					get_fork_count(t_parser *parser_data);
 t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);

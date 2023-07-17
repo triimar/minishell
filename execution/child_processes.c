@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/16 23:17:33 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/17 19:23:31 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	child_process(t_piper *piper, t_var_list *var_list)
 		child_error(&exec_data, 1, piper->cmd_node->cmd[0]);
 	if (!exec_data.path)
 		child_error(&exec_data, 127, piper->cmd_node->cmd[0]);
-	else if (access(exec_data.path, X_OK) != 0)
+	if (access(exec_data.path, X_OK) != 0)
 		child_error(&exec_data, 128, piper->cmd_node->cmd[0]);
 	execve(exec_data.path, piper->cmd_node->cmd, exec_data.envp);
 	child_error(&exec_data, -1, piper->cmd_node->cmd[0]);

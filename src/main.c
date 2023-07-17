@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/16 22:34:30 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/17 19:40:22 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	main(int argc, char **argv)
 			{
 				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
 				{
-					piper(&parser_data, data.var_head);
+					// piper(&parser_data, data.var_head);
+					executor(&data, &parser_data);
 					parser_test(&parser_data);
 				}
 				else

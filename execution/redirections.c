@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 21:00:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/16 22:21:32 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/17 19:42:55 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,36 @@ int	open_outfiles(t_redirect *stdout_redirect, int *out_fd)
 			close(*out_fd);
 	}
 	return (0);
+}
+
+int	redirect_main(int *stdin_save, t_redirect *stdin_redirect, \
+	int *stdout_save, t_redirect *stdout_redirect)
+{
+	int	in_fd;
+	int	out_fd;
+
+	*stdin_save = dup(STDIN_FILENO);
+	*stdout_save = dup(STDOUT_FILENO);
+	if (stdin_redirect != NULL)
+	{
+		if (open_infiles(stdin_redirect, &in_fd) != 0)
+			return (1);
+		dup2(in_fd, STDIN_FILENO);
+	}
+	if (stdout_redirect != NULL)
+	{
+		if (open_outfiles(stdout_redirect, &out_fd) != 0)
+			return (1);
+		dup2(out_fd, STDOUT_FILENO);
+	}
+	return (0);
+}
+
+void	restore_redirect(int stdin_save, int stdout_save)
+{
+	dup2(stdin_save, STDIN_FILENO);
+	close(stdin_save);
+	dup2(stdout_save, STDOUT_FILENO);
+	close(stdout_save);
+	return ;
 }
