@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/17 21:02:11 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:57:00 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 static void	init_child_data(t_parser *parser_data, t_piper *piper, int index)
 {
+	piper->infile = STDIN_FILENO;
+	piper->outfile = STDOUT_FILENO;
 	piper->child_nr = index;
 	piper->cmd_node = \
 		get_cmd_node(parser_data, piper->fork_count, piper->child_nr);
+	if (piper->cmd_node->stdin_redirect != NULL)
+		open_infiles(piper->cmd_node->stdin_redirect, &piper->infile);
+	if (piper->cmd_node->stdout_redirect != NULL)
+		open_outfiles(piper->cmd_node->stdout_redirect, &piper->outfile);
 	return ;
 }
 
@@ -44,10 +50,10 @@ static int	make_pipes(int *pipe1, int *pipe2, int child_nr)
 	return (0);
 }
 
-static void	close_used_pipes(t_piper *piper_data)
+static void	close_used_pipes_and_fds(t_piper *piper_data)
 {
-	if (piper_data->fork_count != 1 && piper_data->child_nr != 1 && \
-		piper_data->child_nr <= piper_data->fork_count)
+	if (piper_data->child_nr != 1 \
+		&& piper_data->child_nr <= piper_data->fork_count)
 	{
 		if (piper_data->child_nr % 2 == 0)
 		{
@@ -60,6 +66,10 @@ static void	close_used_pipes(t_piper *piper_data)
 			close(piper_data->pipe2[1]);
 		}
 	}
+	if (piper_data->cmd_node->stdin_redirect != NULL)
+		close(piper_data->infile);
+	if (piper_data->cmd_node->stdout_redirect != NULL)
+		close(piper_data->outfile);
 }
 
 void	ft_waiting(int *pids, int nr_of_forks)
@@ -80,7 +90,7 @@ void	ft_waiting(int *pids, int nr_of_forks)
 	{
 		s_wait.status_code = 0;
 		s_wait.status_code = WEXITSTATUS(s_wait.wstatus);
-		printf("\n\n+++++++++++ EXIT STATUS CODE:[%d] ++++++++++++++\n\n", s_wait.status_code);
+		// printf("\n\n+++++++++++ EXIT STATUS CODE:[%d] ++++++++++++++\n\n", s_wait.status_code);
 		// if (s_wait.status_code != 0)
 		// 	exit(s_wait.status_code); //
 	}
@@ -136,7 +146,7 @@ void	ft_waiting(int *pids, int nr_of_forks)
 // 	return (EXEC_SUCCESS);
 // }
 
-t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
+t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data)
 {
 	int		i;
 	t_piper	piper;
@@ -157,7 +167,7 @@ t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
 			return (free(piper.pids), FORK_ERROR);
 		if (piper.pids[i] == 0)
 			child_process(&piper, var_list);
-		close_used_pipes(&piper);
+		close_used_pipes_and_fds(&piper);
 		i++;
 	}
 	ft_waiting(piper.pids, piper.fork_count);

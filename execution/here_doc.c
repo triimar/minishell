@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 16:34:55 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/16 21:35:21 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:48:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,39 @@ static int	here_doc(char *delimiter)
 	return (here_doc_fd);
 }
 
-// returns 0 if no heredoc, -1 if error, and > 0 the number of heredocs
-int	here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect)
+// // returns 0 if no heredoc, -1 if error, and > 0 the number of heredocs
+// int	here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect)
+// {
+// 	t_redirect	*tmp;
+// 	int			i;
+
+// 	i = 0;
+// 	*here_doc_fd = 0;
+// 	tmp = stdin_redirect;
+// 	while (tmp != NULL)
+// 	{
+// 		if (tmp->type == REDIRECT_HERE_DOC)
+// 		{
+// 			if (i > 0)
+// 				close(*here_doc_fd);
+// 			*here_doc_fd = here_doc(tmp->word);
+// 			if (*here_doc_fd < 0)
+// 				return (-1);
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (i);
+// }
+
+t_redirect	*here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect)
 {
 	t_redirect	*tmp;
+	t_redirect	*heredoc_node;
 	int			i;
 
 	i = 0;
+	heredoc_node = NULL;
 	tmp = stdin_redirect;
 	while (tmp != NULL)
 	{
@@ -55,12 +81,13 @@ int	here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect)
 		{
 			if (i > 0)
 				close(*here_doc_fd);
+			heredoc_node = tmp;
 			*here_doc_fd = here_doc(tmp->word);
 			if (*here_doc_fd < 0)
-				return (-1);
+				break ; //error
 			i++;
 		}
 		tmp = tmp->next;
 	}
-	return (i);
+	return (heredoc_node);
 }

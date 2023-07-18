@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 21:00:29 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/17 19:42:55 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/18 18:48:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,64 @@ static int	get_redirection_fd(t_redirect *current)
 	return (redirection_fd);
 }
 
+// int	open_infiles(t_redirect *stdin_redirect, int *in_fd)
+// {
+// 	t_in_redir	redir_data;
+
+// 	redir_data.hdoc_counter = 0;
+// 	redir_data.current = stdin_redirect;
+// 	redir_data.hdoc_count = here_doc_all(&redir_data.hdoc_fd, stdin_redirect);
+// 	if (redir_data.hdoc_count < 0)
+// 		return (1);
+// 	while (redir_data.current != NULL)
+// 	{
+// 		if (redir_data.current->type == REDIRECT_HERE_DOC)
+// 		{
+// 			redir_data.hdoc_counter++;
+// 			if (redir_data.hdoc_counter == redir_data.hdoc_count)
+// 				*in_fd = redir_data.hdoc_fd;
+// 		}
+// 		else
+// 		{
+// 			*in_fd = get_redirection_fd(redir_data.current);
+// 			if (*in_fd < 0)
+// 			{
+// 				if (redir_data.hdoc_count != 0)
+// 					close(redir_data.hdoc_fd);
+// 				return (1);
+// 			}	
+// 		}
+// 		redir_data.current = redir_data.current->next;
+// 		if (redir_data.current != NULL)
+// 			close(*in_fd);
+// 	}
+// 	return (0);
+// }
+
 int	open_infiles(t_redirect *stdin_redirect, int *in_fd)
 {
-	t_redirect	*current;
-	int			heredoc_fd;
-	int			heredoc_count;
-	int			i;
+	t_in_redir	redir_data;
 
-	i = 0;
-	current = stdin_redirect;
-	heredoc_count = here_doc_all(&heredoc_fd, stdin_redirect);
-	if (heredoc_count < 0)
+	redir_data.current = stdin_redirect;
+	redir_data.final_hdoc = here_doc_all(&redir_data.hdoc_fd, stdin_redirect);
+	if (redir_data.final_hdoc != NULL && redir_data.hdoc_fd < 0)
 		return (1);
-	while (current != 0)
+	while (redir_data.current != NULL)
 	{
-		if (current->type == REDIRECT_HERE_DOC)
+		if (redir_data.current->type != REDIRECT_HERE_DOC)
 		{
-			i++;
-			if (i == heredoc_count)
-				*in_fd = heredoc_fd;
-		}
-		else
-		{
-			*in_fd = get_redirection_fd(current);
+			*in_fd = get_redirection_fd(redir_data.current);
 			if (*in_fd < 0)
 			{
-				if (heredoc_count != 0)
-					close(heredoc_fd);
+				if (redir_data.final_hdoc != NULL)
+					close(redir_data.hdoc_fd);
 				return (1);
 			}	
 		}
-		current = current->next;
-		if (current != NULL)
+		else if (redir_data.current == redir_data.final_hdoc)
+			*in_fd = redir_data.hdoc_fd;
+		redir_data.current = redir_data.current->next;
+		if (redir_data.current != NULL)
 			close(*in_fd);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/17 20:30:29 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:57:32 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,23 @@ typedef struct s_wait
 	int		status_code;
 }	t_wait;
 
+typedef struct s_in_redir
+{
+	t_redirect	*current;
+	t_redirect	*final_hdoc;
+	int			hdoc_fd;
+}	t_in_redir;
+
 int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
 int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
-int					here_doc_all(int *here_doc_df, t_redirect *stdin_redirect);
+// int					here_doc_all(int *here_doc_df, t_redirect *stdin_redirect);
+t_redirect			*here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect);
 int					redirect_main(int *stdin_save, t_redirect *stdin_redirect, \
 							int *stdout_save, t_redirect *stdout_redirect);
 void				restore_redirect(int stdin_save, int stdout_save);
 
 t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
-t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list);
+t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data);
 void				child_process(t_piper *piper, t_var_list *var_list);
 
 void				ft_waiting(int *pids, int nr_of_forks);

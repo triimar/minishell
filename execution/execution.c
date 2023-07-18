@@ -6,17 +6,19 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/17 20:57:53 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/18 21:05:26 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <sys/stat.h>
 
 static t_exec_exit_code	execve_single(t_var_list *var_list, \
 										t_ast_content *cmd_node)
 {
-	t_exec	exec_data;
-	int		pid;
+	struct stat		path_stat;
+	t_exec			exec_data;
+	int				pid;
 
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
@@ -32,7 +34,7 @@ static t_exec_exit_code	execve_single(t_var_list *var_list, \
 		if (!exec_data.path)
 			child_error(&exec_data, 127, cmd_node->cmd[0]);
 		if (access(exec_data.path, X_OK) != 0)
-			child_error(&exec_data, 128, cmd_node->cmd[0]);
+			child_error(&exec_data, 126, cmd_node->cmd[0]);
 		execve(exec_data.path, cmd_node->cmd, exec_data.envp);
 		child_error(&exec_data, -1, cmd_node->cmd[0]);
 	}
@@ -109,8 +111,8 @@ t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data)
 	}
 	else
 	{
-		// if (piper(ms_data->var_head, parser_data) != EXEC_SUCCESS)
-		// 	return (EXEC_FAIL);
+		if (piper(ms_data->var_head, parser_data) != EXEC_SUCCESS)
+			return (EXEC_FAIL);
 		return (EXEC_SUCCESS);
 	}
 	return (EXEC_SUCCESS);
