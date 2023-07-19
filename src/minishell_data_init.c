@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/16 16:42:52 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:21:56 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 // #include<stddef.h>
 
 #include "minishell.h"
+
+static t_ms_exit_code	add_oldpwd_node(t_var_list **var_list)
+{
+	t_var_list	*oldpwd;
+
+	oldpwd = (t_var_list *)ft_calloc(1, sizeof(t_var_list));
+	if (!oldpwd)
+		return (free_var_list(*var_list), MS_MALLOC_ERROR);
+	oldpwd->env_flag = 0;
+	oldpwd->key = ft_strdup("OLDPWD");
+	if (!oldpwd->key)
+		return (free_var_list(*var_list), MS_MALLOC_ERROR);
+	oldpwd->value = NULL;
+	ft_lstadd_back_ms(var_list, oldpwd);
+	return (MINISHELL_SUCCESS);
+}
 
 t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 {
@@ -39,7 +55,7 @@ t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 		ft_lstadd_back_ms(var_list, new_var_node);
 		i++;
 	}
-	return (MINISHELL_SUCCESS);
+	return (add_oldpwd_node(var_list));
 }
 
 void	free_var_list(t_var_list *var_list)
