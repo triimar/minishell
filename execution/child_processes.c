@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 16:24:52 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 17:37:11 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,25 +83,22 @@ static void	child_last(t_piper *piper, int child_nr)
 	}
 }
 
-void	child_process_pipes(t_piper *piper, t_var_list *var_list)
+void	redirect_in_child(t_piper *piper)
 {
-	if (piper->cmd_node->cmd == NULL)
-		exit (0);
 	if (piper->child_nr == 1)
 		child_first(piper);
 	else if (piper->child_nr == piper->fork_count)
 		child_last(piper, piper->child_nr);
 	else
 	{
-		if (child_nr % 2 == 0)
+		if (piper->child_nr % 2 == 0)
 			pipes_dup_close(piper->pipe1, piper->pipe2, piper);
 		else
 			pipes_dup_close(piper->pipe2, piper->pipe1, piper);
 	}
-	child_process(var_list, piper->cmd_node->cmd);
 }
 
-void	child_process(t_var_list *var_list, char **cmd)
+void	child_execve_process(t_var_list *var_list, char **cmd)
 {
 	t_exec	exec_data;
 
@@ -118,3 +115,34 @@ void	child_process(t_var_list *var_list, char **cmd)
 	execve(exec_data.path, cmd, exec_data.envp);
 	child_error(&exec_data, -1, cmd[0]);
 }
+
+void	child_process_pipes(t_piper *piper, t_var_list *var_list)
+{
+	if piper->cmd_node->assignments != NULL
+	{
+		if (add_to_var_list(var_list, \
+			piper->cmd_node->assignments) != 0)
+		exit(EXIT_FAILURE); //figure out exit code
+	}
+	redirect_in_child(piper);
+	if (ft_strncmp(piper->cmd_node->cmd[0], "echo", 5) == 0)
+		exit(EXIT_FAILURE) ;
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "cd", 3) == 0)
+		exit(EXIT_FAILURE) ;
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "pwd", 4) == 0)
+		exit(EXIT_FAILURE) ;
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "cd", 3) == 0)
+		exit(EXIT_FAILURE) ;
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "export", 7) == 0)
+		exit (EXIT_FAILURE);
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "unset", 6) == 0)
+		exit(EXIT_FAILURE) ;
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "env", 4) == 0)
+		exit(EXIT_FAILURE) ;
+	else if (ft_strncmp(piper->cmd_node->cmd[0], "exit", 5) == 0)
+		builtin_exit(1);
+	else
+		child_execve_process(var_list, piper->cmd_node->cmd);
+	exit(EXEC_SUCCESS);
+}
+

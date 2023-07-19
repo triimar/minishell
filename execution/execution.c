@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 16:05:49 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 17:30:14 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ static t_exec_exit_code	execve_single(t_var_list *var_list, \
 	if (pid == -1)
 		return (FORK_ERROR);
 	if (pid == 0)
-		child_process(var_list, cmd);
+		child_execve_process(var_list, cmd);
 	ft_waiting(&pid, 1);
 	return (EXEC_SUCCESS);
 }
+
+
 
 static t_exec_exit_code	exec_single_cmd(t_var_list *var_list, \
 										t_ast_content *cmd_node)
@@ -48,7 +50,6 @@ static t_exec_exit_code	exec_single_cmd(t_var_list *var_list, \
 		return (builtin_exit(1), 0); //rewrite so that it takes char * as input
 	else
 		return (execve_single(var_list, cmd_node->cmd));
-
 }
 
 t_exec_exit_code	add_to_var_list(t_var_list *var_list, t_assignment *assign)
@@ -56,8 +57,11 @@ t_exec_exit_code	add_to_var_list(t_var_list *var_list, t_assignment *assign)
 	t_var_list		*oi;
 	t_assignment	*ai;
 
-	oi = var_list;
-	ai = assign;
+	while (assign != NULL)
+	{
+		oi = var_list;
+		ai = assign;
+	}
 	return (EXEC_SUCCESS);
 }
 

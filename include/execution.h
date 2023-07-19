@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 16:01:52 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 17:30:48 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_in_redir
 	int			hdoc_fd;
 }	t_in_redir;
 
+t_exec_exit_code	add_to_var_list(t_var_list *var_list, t_assignment *assign);
+
 int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
 int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
 // int					here_doc_all(int *here_doc_df, t_redirect *stdin_redirect);
@@ -74,7 +76,7 @@ t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
 t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data);
 void				child_process_pipes(t_piper *piper, t_var_list *var_list);
 // void				child_process(t_exec *exec_data, t_var_list *var_list);
-void				child_process(t_var_list *var_list, char **cmd);
+void				child_execve_process(t_var_list *var_list, char **cmd);
 
 void				ft_waiting(int *pids, int nr_of_forks);
 
