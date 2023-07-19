@@ -6,33 +6,11 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:10:48 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/16 14:09:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/19 17:07:27 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-int	change_value_for_key(t_var_list *var_head, char *key, char *new_value)
-{
-	t_var_list	*tmp;
-	char		*value;
-
-	tmp = var_head;
-	value = ft_strdup(new_value);
-	if (value == NULL)
-		return (EXIT_FAILURE);
-	while (tmp)
-	{
-		if (ft_strcmp((const char *) tmp->key, key))
-		{
-			free(tmp->value);
-			tmp->value = value;
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	return (EXIT_SUCCESS);
-}
 
 int	cd_to_oldpwd(t_var_list *var_head, char *pwd)
 {

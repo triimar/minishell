@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/16 16:41:46 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/19 18:19:01 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,12 +65,14 @@ EXECUTION_SRCS := \
 	execution/child_processes.c \
 	execution/execution_errors.c \
 	execution/redirections.c \
-	execution/piper.c
+	execution/piper.c \
+	error_printer/error_printer.c
 
 BUILTIN_SRCS := \
 	builtin/builtin_pwd.c \
-	builtin/builtin_cd.c
-	# builtin/builtin_echo.c
+	builtin/builtin_cd.c \
+	builtin/builtin_echo.c \
+	builtin/builtin_utils.c
 
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)

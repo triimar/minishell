@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:47:39 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/16 17:11:44 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/18 19:51:32 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,64 @@ int	check_option_n(char **arg)
 	{
 		if (arg[i][0] != '-')
 			return (i);
-		//
+		while (arg[i][j] != '\0')
+		{
+			if (arg[i][j] != 'n')
+				return (i);
+			j++;
+		}
+		i++;
 	}
+	return (i);
 }
 
-int	builtin_echo(char **cmd)
+int	builtin_echo_strjoin(char **cmd, int cnt, int option_n)
 {
 	int		i;
-	int		cnt;
-	int		option_n;
 	char	*tmp;
 	char	*tmp_dup;
 
 	i = 0;
-	cnt = 0;
-	option_n = false;
-	while (*(cmd + cnt) != NULL)
-		cnt++;
-	if (cnt == 1)
-		return (ft_putstr_fd("\n", STDOUT_FILENO), EXIT_SUCCESS);
-	option_n = check_option_n(cmd + 1);
-	while (cnt - i > 2 + option_n)
+	tmp_dup = NULL;
+	while (cnt - i > 1 + option_n)
 	{
 		if (i == 0)
-		{
 			tmp = ft_strdup(cmd[cnt - 1]);
-			if (tmp == NULL)
-				return (ft_putendl_fd("Malloc failed.", STDOUT_FILENO));
-		}
 		else
-		{
 			tmp = ft_strjoin_sym(cmd[cnt - 1 - i], tmp_dup, ' ');
-			if (tmp == NULL)
-				return (ft_putendl_fd("Malloc failed.", STDOUT_FILENO));
-			free(tmp_dup);
-		}
+		if (tmp == NULL)
+			return (free_p(tmp_dup), EXIT_FAILURE);
+		free_p(tmp_dup);
 		tmp_dup = ft_strdup(tmp);
 		if (tmp_dup == NULL)
-			return (free(tmp), ft_putendl_fd("Malloc failed.", STDOUT_FILENO));
+			return (free(tmp), EXIT_FAILURE);
 		free(tmp);
 		i++;
 	}
-	printf("%s", tmp_dup);
+	if (tmp_dup != NULL)
+		printf("%s", tmp_dup);
+	return (free_p(tmp_dup), EXIT_SUCCESS);
+}
+
+int	builtin_echo(char **cmd)
+{
+	int		cnt;
+	int		option_n;
+
+	cnt = 0;
+	option_n = 0;
+	while (*(cmd + cnt) != NULL)
+		cnt++;
+	option_n = check_option_n(cmd + 1);
+	if (cnt == 1)
+	{
+		if (option_n == 0)
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		return (EXIT_SUCCESS);
+	}
+	if (builtin_echo_strjoin(cmd, cnt, option_n))
+		return (internal_error_printer("Malloc failed"), EXIT_FAILURE);
 	if (option_n == 0)
 		printf("\n");
-	free_p(tmp_dup);
 	return (EXIT_SUCCESS);
 }

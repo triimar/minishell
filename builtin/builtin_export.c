@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/14 17:04:22 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/18 17:31:21 by eunskim          ###   ########.fr       */
+/*   Created: 2023/07/19 17:13:10 by eunskim           #+#    #+#             */
+/*   Updated: 2023/07/19 18:18:12 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	builtin_pwd(void)
+void	check_if_only_assignments(char **arg)
 {
-	char	*pwd;
+}
 
-	pwd = NULL;
-	pwd = getcwd(pwd, PATH_MAX);
-	if (pwd == NULL)
-	{
-		builtin_error_printer(pwd, NULL, strerror(errno));
-		return (EXIT_FAILURE);
-	}
-	printf("%s\n", pwd);
-	free(pwd);
-	return (EXIT_SUCCESS);
+int	builtin_export(t_var_list *var_head, char **cmd)
+{	
 }

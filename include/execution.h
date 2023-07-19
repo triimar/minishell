@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/13 17:46:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/18 19:23:16 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ void				ft_free_pp_n(char **array, int str_count);
 void				ft_free_pp(char **p_p);
 char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
 void				child_error(t_exec *exec_data, int exitcode, char *cmd);
+
+void				builtin_error_printer(char *cmd, char *arg, char *msg);
+void				internal_error_printer(char *msg);
 
 #endif
