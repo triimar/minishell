@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/11 15:07:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 16:54:44 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 // #include<stddef.h>
 
 #include "minishell.h"
+
+static t_ms_exit_code	add_oldpwd_node(t_var_list **var_list)
+{
+	t_var_list	*oldpwd;
+
+	oldpwd = (t_var_list *)ft_calloc(1, sizeof(t_var_list));
+	if (!oldpwd)
+		return (free_var_list(*var_list), MS_MALLOC_ERROR);
+	oldpwd->env_flag = 0;
+	oldpwd->key = ft_strdup("OLDPWD");
+	if (!oldpwd->key)
+		return (free_var_list(*var_list), MS_MALLOC_ERROR);
+	oldpwd->value = NULL;
+	ft_lstadd_back_ms(var_list, oldpwd);
+	return (MINISHELL_SUCCESS);
+}
 
 t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 {
@@ -28,8 +44,7 @@ t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 		new_var_node = (t_var_list *)ft_calloc(1, sizeof(t_var_list));
 		if (!new_var_node)
 			return (free_var_list(*var_list), MS_MALLOC_ERROR);
-		if (i % 2 == 0) //to test envp maker for execve
-			new_var_node->env_flag = 1;
+		new_var_node->env_flag = 1;
 		delimiter_pt = ft_strchr(environ[i], '=');
 		new_var_node->key = ft_strdup_pt(environ[i], (delimiter_pt));
 		if (!new_var_node->key)
@@ -40,7 +55,7 @@ t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 		ft_lstadd_back_ms(var_list, new_var_node);
 		i++;
 	}
-	return (MINISHELL_SUCCESS);
+	return (add_oldpwd_node(var_list));
 }
 
 void	free_var_list(t_var_list *var_list)
