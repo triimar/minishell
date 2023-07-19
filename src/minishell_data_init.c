@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_data_init.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 18:21:56 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:44:54 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,33 +89,3 @@ void	print_var_list(t_var_list *var_list)
 	}
 	printf("\n----------------------------------\n");
 }
-// int	main(void)
-// {
-// 	t_var_list	*var_list;
-// 	t_var_list	*printer;
-// 	t_var_list	*free_this;
-// 	int			i;
-
-// 	i = 0;
-// 	var_list = NULL;
-// 	initiate_var_list(&var_list);
-// 	printer = var_list;
-// 	while (printer != NULL)
-// 	{
-// 		printf("[%d] [%s] [%s] [%d]\n", i, printer->key, printer->value, printer->env_flag);
-// 		printer = printer->next;
-// 		i++;
-// 	}
-
-// 	while(var_list != NULL)
-// 	{
-// 		free (var_list->key);
-// 		free (var_list->value);
-// 		free_this = var_list;
-// 		var_list = var_list->next;
-// 		free (free_this);
-// 	}
-
-// 	system("leaks a.out");
-// 	return(0);
-// }
