@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 17:30:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 20:01:20 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static t_exec_exit_code	exec_single_cmd(t_var_list *var_list, \
 		return (0);
 	else if (ft_strncmp(cmd_node->cmd[0], "env", 4) == 0)
 		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "exit", 5) == 0)
-		return (builtin_exit(1), 0); //rewrite so that it takes char * as input
+	// else if (ft_strncmp(cmd_node->cmd[0], "exit", 5) == 0)
+	// 	return (builtin_exit(1), 0); //rewrite so that it takes char * as input
 	else
 		return (execve_single(var_list, cmd_node->cmd));
 }

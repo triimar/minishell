@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 17:40:44 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 22:48:25 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,56 +96,6 @@ void	ft_waiting(int *pids, int nr_of_forks)
 	}
 }
 
-// t_exec_exit_code	piper(t_parser *parser_data, t_var_list *var_list)
-// {
-// 	int		i;
-// 	t_piper	piper;
-
-// //if pipes then content is NULL and causes segfault
-// 	if (parser_data->ast_root->content->stdin_redirect == NULL)
-// 		piper.infile = STDIN_FILENO;
-// 	else
-// 	{
-// 		open_infiles(parser_data->ast_root->content->stdin_redirect, &piper.infile);
-// 		if (piper.infile < 0)
-// 			return (EXEC_FAIL);
-// 	}
-// 	if (parser_data->ast_root->content->stdout_redirect == NULL)
-// 		piper.outfile = STDOUT_FILENO;
-// 	else
-// 	{
-// 		open_outfiles(parser_data->ast_root->content->stdout_redirect, &piper.outfile);
-// 		if (piper.outfile < 0)
-// 			return (EXEC_FAIL);
-// 	}
-// 	if (init_piper_data(parser_data, &piper) != 0)
-// 		return (EXEC_MALLOC_ERROR);
-// 	i = 0;
-// 	while (i <= piper.fork_count - 1)
-// 	{
-// 		if (piper.fork_count != 1 && i < piper.fork_count - 1)
-// 		{
-// 			if (make_pipes(piper.pipe1, piper.pipe2, (i + 1)) != 0)
-// 				return (free(piper.pids), PIPE_ERROR);
-// 		}
-// 		init_child_data(parser_data, &piper, i + 1);
-// 		piper.pids[i] = fork();
-// 		if (piper.pids[i] == -1)
-// 			return (free(piper.pids), FORK_ERROR);
-// 		if (piper.pids[i] == 0)
-// 			child_process(&piper, var_list);
-// 		close_used_pipes(&piper);
-// 		i++;
-// 	}
-// 	// if (piper.infile != STDIN_FILENO)
-// 	// 	close(piper.infile);
-// 	// if (piper.outfile != STDOUT_FILENO)
-// 	// 	close(piper.outfile);
-// 	ft_waiting(piper.pids, piper.fork_count);
-// 	free(piper.pids);
-// 	return (EXEC_SUCCESS);
-// }
-
 t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data)
 {
 	int		i;
@@ -167,10 +117,10 @@ t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data)
 			return (free(piper.pids), FORK_ERROR);
 		if (piper.pids[i] == 0)
 		{
-			if (piper.cmd_node.cmd != NULL)
+			if (piper.cmd_node->cmd != NULL)
 				child_process_pipes(&piper, var_list);
 			else
-				exit ();
+				exit (1);
 		}
 		close_used_pipes_and_fds(&piper);
 		i++;
