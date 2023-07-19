@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/18 21:05:26 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 16:05:49 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,15 @@
 #include <sys/stat.h>
 
 static t_exec_exit_code	execve_single(t_var_list *var_list, \
-										t_ast_content *cmd_node)
+										char **cmd)
 {
-	struct stat		path_stat;
-	t_exec			exec_data;
 	int				pid;
 
-	exec_data.envp = NULL;
-	exec_data.path = NULL;
 	pid = fork();
 	if (pid == -1)
 		return (FORK_ERROR);
 	if (pid == 0)
-	{
-		if (get_envp(&exec_data, var_list) != 0)
-			exit(EXIT_FAILURE);
-		if (get_right_path(&exec_data, cmd_node->cmd[0]) != 0)
-			child_error(&exec_data, 1, cmd_node->cmd[0]);
-		if (!exec_data.path)
-			child_error(&exec_data, 127, cmd_node->cmd[0]);
-		if (access(exec_data.path, X_OK) != 0)
-			child_error(&exec_data, 126, cmd_node->cmd[0]);
-		execve(exec_data.path, cmd_node->cmd, exec_data.envp);
-		child_error(&exec_data, -1, cmd_node->cmd[0]);
-	}
+		child_process(var_list, cmd);
 	ft_waiting(&pid, 1);
 	return (EXEC_SUCCESS);
 }
@@ -62,7 +47,7 @@ static t_exec_exit_code	exec_single_cmd(t_var_list *var_list, \
 	else if (ft_strncmp(cmd_node->cmd[0], "exit", 5) == 0)
 		return (builtin_exit(1), 0); //rewrite so that it takes char * as input
 	else
-		return (execve_single(var_list, cmd_node));
+		return (execve_single(var_list, cmd_node->cmd));
 
 }
 
@@ -73,7 +58,6 @@ t_exec_exit_code	add_to_var_list(t_var_list *var_list, t_assignment *assign)
 
 	oi = var_list;
 	ai = assign;
-
 	return (EXEC_SUCCESS);
 }
 

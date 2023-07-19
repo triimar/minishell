@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/18 19:57:00 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 16:07:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data)
 		if (piper.pids[i] == -1)
 			return (free(piper.pids), FORK_ERROR);
 		if (piper.pids[i] == 0)
-			child_process(&piper, var_list);
+			child_process_pipes(&piper, var_list);
 		close_used_pipes_and_fds(&piper);
 		i++;
 	}

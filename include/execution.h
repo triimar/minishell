@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/18 19:57:32 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/19 16:01:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef enum e_exec_exit_code
 	PIPE_ERROR,
 	FORK_ERROR,
 }	t_exec_exit_code;
-
 
 typedef struct s_piper
 {
@@ -73,7 +72,9 @@ void				restore_redirect(int stdin_save, int stdout_save);
 
 t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
 t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data);
-void				child_process(t_piper *piper, t_var_list *var_list);
+void				child_process_pipes(t_piper *piper, t_var_list *var_list);
+// void				child_process(t_exec *exec_data, t_var_list *var_list);
+void				child_process(t_var_list *var_list, char **cmd);
 
 void				ft_waiting(int *pids, int nr_of_forks);
 
