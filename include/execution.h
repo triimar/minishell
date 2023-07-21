@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 19:08:10 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 01:32:18 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ typedef struct s_exec
 
 typedef struct s_wait
 {
-	int		wstatus;
+	int		wstatus;	
 	int		status_code;
 }	t_wait;
 
-t_exec_exit_code	add_to_var_list(t_var_list *var_list, t_assignment *assign);
+t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
+											t_assignment *assign, int flag);
 
 int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
 int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
