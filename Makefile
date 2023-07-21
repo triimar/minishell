@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/19 18:48:36 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/21 01:40:00 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,12 +60,22 @@ EXPANDER_SRCS := \
 
 EXECUTION_SRCS := \
 	execution/execution_utils.c \
+	execution/execution.c \
+	execution/here_doc.c \
 	execution/get_envp.c \
 	execution/get_right_path.c \
 	execution/child_processes.c \
 	execution/execution_errors.c \
 	execution/redirections.c \
-	execution/piper.c
+	execution/piper.c \
+	execution/assignments.c \
+	error_printer/error_printer.c
+
+BUILTIN_SRCS := \
+	builtin/builtin_pwd.c \
+	builtin/builtin_cd.c \
+	builtin/builtin_echo.c \
+	builtin/builtin_utils.c
 
 OBJS := $(SRCS:.c=.o)
 EXPANDER_OBJS := $(EXPANDER_SRCS:.c=.o)
