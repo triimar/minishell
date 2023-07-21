@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 21:58:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 22:12:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ typedef struct s_wait
 
 t_exec_exit_code	add_assignments(t_var_list *var_list, \
 											t_assignment *assign, int flag);
+t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
+											char *str, int flag);
+t_exec_exit_code	add_assignments(t_var_list *var_list, \
+								t_assignment *assign, int flag);
 
 int					get_fork_count(t_parser *parser_data);
 t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
@@ -90,9 +94,16 @@ void				child_execve_process(t_minishell *ms_data, char **cmd);
 void				ft_waiting(int *pids, int nr_of_forks, int *exit_code);
 
 
-void				child_error(t_minishell *ms_data,t_exec *exec_data, int exitcode, char *cmd);
+t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
+t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
 
-void				builtin_error_printer(char *cmd, char *arg, char *msg);
+void				ft_free_pp_n(char **array, int str_count);
+void				ft_free_pp(char **p_p);
+char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
+
+void				child_error(t_exec *exec_data, int exitcode, char *cmd);
+
+void				error_printer(char *cmd, char *arg, char *msg);
 void				internal_error_printer(char *msg);
 
 int					is_builtin(char *cmd);

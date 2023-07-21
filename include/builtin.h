@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 16:39:16 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 18:15:15 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		check_option_n(char **arg);
 
 // builtin_cd.c
 int		builtin_cd(t_var_list *var_head, char **cmd);
+int		execute_cd(t_var_list *var_head, char **cmd);
 int		cd_to_home(t_var_list *var_head, char *pwd);
 int		cd_to_oldpwd(t_var_list *var_head, char *pwd);
 

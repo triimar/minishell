@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:56:16 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/19 17:09:30 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 17:52:34 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	change_value_for_key(t_var_list *var_head, char *key, char *new_value)
 	{
 		if (ft_strcmp((const char *) tmp->key, key))
 		{
-			free(tmp->value);
+			free_p(tmp->value);
 			tmp->value = value;
 			break ;
 		}

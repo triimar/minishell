@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:34:18 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 15:28:57 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 19:19:57 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ int	builtin_exit(t_minishell *ms_data, char **cmd)
 	{
 		if (ft_atoi_secure(cmd[1], &exit_code) != 0)
 		{
-			builtin_error_printer("exit", cmd[1], "numeric argument required");
+			error_printer("exit", cmd[1], "numeric argument required");
 			exit_code = 255;
 		}
 	}
 	else
 	{
-		builtin_error_printer("exit", NULL, "too many arguments");
+		error_printer("exit", NULL, "too many arguments");
 		return (1);
 	}
 	if (exit_code < 0 || exit_code > 255)
