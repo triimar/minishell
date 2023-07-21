@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_printer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:15:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/19 21:14:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:59:37 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_error_printer(char *cmd, char *arg, char *msg)
+void	error_printer(char *cmd, char *arg, char *msg)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);

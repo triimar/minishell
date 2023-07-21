@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 20:01:20 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 18:18:19 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,6 @@ static t_exec_exit_code	exec_single_cmd(t_var_list *var_list, \
 		return (execve_single(var_list, cmd_node->cmd));
 }
 
-t_exec_exit_code	add_to_var_list(t_var_list *var_list, t_assignment *assign)
-{
-	t_var_list		*oi;
-	t_assignment	*ai;
-
-	while (assign != NULL)
-	{
-		oi = var_list;
-		ai = assign;
-	}
-	return (EXEC_SUCCESS);
-}
-
 static t_exec_exit_code	single_node(t_minishell *ms_data, \
 									t_ast_content *cmd_node)
 {
@@ -77,7 +64,7 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 	if (cmd_node->cmd == NULL)
 	{
 		if (add_to_var_list(ms_data->var_head, \
-		cmd_node->assignments) != EXEC_SUCCESS)
+		cmd_node->assignments, 0) != EXEC_SUCCESS)
 			return (restore_redirect(stdin_save, stdout_save), EXEC_FAIL);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 01:32:18 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:59:37 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
 
 void				child_error(t_exec *exec_data, int exitcode, char *cmd);
 
-void				builtin_error_printer(char *cmd, char *arg, char *msg);
+void				error_printer(char *cmd, char *arg, char *msg);
 void				internal_error_printer(char *msg);
 
 #endif

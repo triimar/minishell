@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 19:57:46 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 18:18:45 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	child_process_pipes(t_piper *piper, t_var_list *var_list)
 	if (piper->cmd_node->assignments != NULL)
 	{
 		if (add_to_var_list(var_list, \
-			piper->cmd_node->assignments) != 0)
+			piper->cmd_node->assignments, 0) != 0)
 		exit(EXIT_FAILURE); //figure out exit code
 	}
 	redirect_in_child(piper);
