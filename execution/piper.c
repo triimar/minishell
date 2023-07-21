@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 22:48:25 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 21:45:10 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	close_used_pipes_and_fds(t_piper *piper_data)
 		close(piper_data->outfile);
 }
 
-void	ft_waiting(int *pids, int nr_of_forks)
+void	ft_waiting(int *pids, int nr_of_forks, int *exit_code)
 {
 	t_wait	s_wait;
 	int		pid_index;
@@ -90,9 +90,7 @@ void	ft_waiting(int *pids, int nr_of_forks)
 	{
 		s_wait.status_code = 0;
 		s_wait.status_code = WEXITSTATUS(s_wait.wstatus);
-		// printf("\n\n+++++++++++ EXIT STATUS CODE:[%d] ++++++++++++++\n\n", s_wait.status_code);
-		// if (s_wait.status_code != 0)
-		// 	exit(s_wait.status_code); //
+		*exit_code = s_wait.status_code;
 	}
 }
 
@@ -125,7 +123,7 @@ t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data)
 		close_used_pipes_and_fds(&piper);
 		i++;
 	}
-	ft_waiting(piper.pids, piper.fork_count);
+	// ft_waiting(piper.pids, piper.fork_count, );
 	free(piper.pids);
 	return (EXEC_SUCCESS);
 }

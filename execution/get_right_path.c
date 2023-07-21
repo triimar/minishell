@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/18 21:03:41 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 21:08:37 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,6 @@ static int	get_all_paths(char ***all_paths, char **envp)
 			*all_paths = ft_split((envp[i] + 5), ':');
 			if (!*all_paths)
 				return (1);
-			// i = 0;
-			// printf("\n\n------- ALL POSSIBLE PATHS ---------\n\n");
-			// while (all_paths[0][i] != NULL)
-			// {
-			// 	printf("%d - [%s]\n", i, all_paths[0][i]);
-			// 	i++;
-			// }
-			// printf("\n\n-----------------------------------");
-			// return (0);
 		}
 		i++;
 	}

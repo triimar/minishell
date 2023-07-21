@@ -6,13 +6,13 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:29:46 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/11 20:32:19 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 20:43:10 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	child_error(t_exec *exec_data, int exitcode, char *cmd)
+void	child_error(t_minishell *ms_data, t_exec *exec_data, int exitcode, char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (exitcode == 1)
@@ -33,5 +33,6 @@ void	child_error(t_exec *exec_data, int exitcode, char *cmd)
 		free(exec_data->path);
 	if (exec_data->envp)
 		ft_free_pp(exec_data->envp);
+	free_on_exit(ms_data);
 	exit(exitcode);
 }
