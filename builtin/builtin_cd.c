@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:10:48 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 18:13:41 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 19:49:18 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,18 @@ int	cd_to_oldpwd(t_var_list *var_head, char *pwd)
 	if (chdir(oldpwd) == -1)
 		return (free(pwd), \
 		error_printer("cd", NULL, strerror(errno)), EXIT_FAILURE);
-	if (change_value_for_key(var_head, "OLDPWD", pwd))
+	oldpwd = ft_strdup(oldpwd);
+	if (oldpwd == NULL)
 		return (free(pwd), \
+		internal_error_printer("Malloc failed"), EXIT_FAILURE);
+	if (change_value_for_key(var_head, "OLDPWD", pwd))
+		return (free(pwd), free(oldpwd), \
 		internal_error_printer("Malloc failed"), EXIT_FAILURE);
 	if (change_value_for_key(var_head, "PWD", oldpwd))
-		return (free(pwd), \
+		return (free(pwd), free(oldpwd), \
 		internal_error_printer("Malloc failed"), EXIT_FAILURE);
-	return (free(pwd), EXIT_SUCCESS);
+	ft_putendl_fd(oldpwd, STDOUT_FILENO);
+	return (free(pwd), free(oldpwd), EXIT_SUCCESS);
 }
 
 int	cd_to_home(t_var_list *var_head, char *pwd)

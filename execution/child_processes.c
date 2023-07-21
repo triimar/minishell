@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 18:18:45 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 19:40:17 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	child_process_pipes(t_piper *piper, t_var_list *var_list)
 {
 	if (piper->cmd_node->assignments != NULL)
 	{
-		if (add_to_var_list(var_list, \
+		if (add_assignments(var_list, \
 			piper->cmd_node->assignments, 0) != 0)
 		exit(EXIT_FAILURE); //figure out exit code
 	}

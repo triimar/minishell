@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 18:18:19 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 19:38:50 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 		return (EXEC_FAIL);
 	if (cmd_node->cmd == NULL)
 	{
-		if (add_to_var_list(ms_data->var_head, \
+		if (add_assignments(ms_data->var_head, \
 		cmd_node->assignments, 0) != EXEC_SUCCESS)
 			return (restore_redirect(stdin_save, stdout_save), EXEC_FAIL);
 	}

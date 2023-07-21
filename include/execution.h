@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 19:18:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 19:39:34 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ typedef struct s_wait
 
 t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
 											char *str, int flag);
+t_exec_exit_code	add_assignments(t_var_list *var_list, \
+								t_assignment *assign, int flag);
+
 
 int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
 int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
