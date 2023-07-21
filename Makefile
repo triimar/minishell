@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/21 01:40:00 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/21 15:34:08 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,8 @@ BUILTIN_SRCS := \
 	builtin/builtin_pwd.c \
 	builtin/builtin_cd.c \
 	builtin/builtin_echo.c \
+	builtin/builtin_exit.c \
+	builtin/builtin_exit_utils.c \
 	builtin/builtin_utils.c
 
 OBJS := $(SRCS:.c=.o)

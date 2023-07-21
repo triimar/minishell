@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 22:41:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:34:27 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef struct s_minishell
 	char		*p_input;
 	int			exit_code;
 }	t_minishell;
-
-void				builtin_exit(char **cmd, t_var_list *var_list, char *p_input, t_parser *parser_data);
 
 t_ms_exit_code		initiate_var_list(t_var_list **var_list);
 void				free_var_list(t_var_list *var_list);
