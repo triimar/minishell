@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 15:32:41 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 16:39:16 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <limits.h>
 # include <errno.h>
 # include "minishell.h"
+
+typedef struct s_minishell	t_minishell;
 
 // builtin_echo.c
 int		builtin_echo(char **cmd);
