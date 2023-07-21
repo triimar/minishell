@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 18:16:49 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 22:20:01 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,24 @@ int	main(int argc, char **argv)
 			{
 				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
 				{
-					parser_data.ast_current = parser_data.ast_root;
-					if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
-					&& parser_data.ast_root->content->cmd != NULL && \
-					ft_strncmp(parser_data.ast_root->content->cmd[0], "exit", 5) == 0)
-						builtin_exit(&data, parser_data.ast_root->content->cmd);
-					if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
-					&& parser_data.ast_root->content->cmd != NULL && ft_strcmp("cd", parser_data.ast_root->content->cmd[0]))
-					{
-						builtin_cd(data.var_head, parser_data.ast_root->content->cmd);
-						printf("\npwd: %s\n", get_value_for_key(data.var_head, "PWD"));
-						printf("\ngetcwd says: ");
-						builtin_pwd();
-						printf("\noldpwd: %s\n\n", get_value_for_key(data.var_head, "OLDPWD"));
-					}
-					else if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
-					&& parser_data.ast_root->content->cmd != NULL && ft_strcmp("echo", parser_data.ast_root->content->cmd[0]))
-						builtin_echo(parser_data.ast_root->content->cmd);
+					// parser_data.ast_current = parser_data.ast_root;
+					// if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
+					// && parser_data.ast_root->content->cmd != NULL && \
+					// ft_strncmp(parser_data.ast_root->content->cmd[0], "exit", 5) == 0)
+					// 	builtin_exit(&data, parser_data.ast_root->content->cmd);
+					// if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
+					// && parser_data.ast_root->content->cmd != NULL && ft_strcmp("cd", parser_data.ast_root->content->cmd[0]))
+					// {
+					// 	builtin_cd(data.var_head, parser_data.ast_root->content->cmd);
+					// 	printf("\npwd: %s\n", get_value_for_key(data.var_head, "PWD"));
+					// 	printf("\ngetcwd says: ");
+					// 	builtin_pwd();
+					// 	printf("\noldpwd: %s\n\n", get_value_for_key(data.var_head, "OLDPWD"));
+					// }
+					// else if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
+					// && parser_data.ast_root->content->cmd != NULL && ft_strcmp("echo", parser_data.ast_root->content->cmd[0]))
+					// 	builtin_echo(parser_data.ast_root->content->cmd);
+					executor(&data, &parser_data);
 					parser_test(&parser_data);
 				}
 				else
