@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:37:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 22:23:38 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 22:42:55 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
 	else if (full_assign(new_node, str, delim_pt) != 0)
 		return (EXEC_MALLOC_ERROR);
 	ft_lstadd_back_ms(&var_list, new_node);
-	return(EXEC_SUCCESS);
+	return (EXEC_SUCCESS);
 }
 
 t_exec_exit_code	add_assignments(t_var_list *var_list, \

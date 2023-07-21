@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 18:07:15 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/12 20:20:04 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/21 22:52:59 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,27 @@ void	ft_free_pp_n(char **array, int str_count)
 	return ;
 }
 
+char	*ft_strjoin_sym(const char *s1, const char *s2, char c)
+{
+	char	*test_path;
+	int		s1_len;
+	int		s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	test_path = malloc(s1_len + s2_len + 2);
+	if (!test_path)
+		return (NULL);
+	while (s1 && *s1 != 0)
+		*test_path++ = *s1++;
+	*test_path = c;
+	test_path++;
+	while (*s2 != '\0')
+		*test_path++ = *s2++;
+	*test_path = '\0';
+	return (test_path - s1_len - s2_len - 1);
+}
+
 int	get_fork_count(t_parser *parser_data)
 {
 	int	nr_of_forks;
@@ -68,25 +89,4 @@ t_ast_content	*get_cmd_node(t_parser *parser_data, int fork_c, int child)
 		parser_data->ast_current = parser_data->ast_current->left;
 	}
 	return (parser_data->ast_current->content);
-}
-
-char	*ft_strjoin_sym(const char *s1, const char *s2, char c)
-{
-	char	*test_path;
-	int		s1_len;
-	int		s2_len;
-
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	test_path = malloc(s1_len + s2_len + 2);
-	if (!test_path)
-		return (NULL);
-	while (s1 && *s1 != 0)
-		*test_path++ = *s1++;
-	*test_path = c;
-	test_path++;
-	while (*s2 != '\0')
-		*test_path++ = *s2++;
-	*test_path = '\0';
-	return (test_path - s1_len - s2_len - 1);
 }

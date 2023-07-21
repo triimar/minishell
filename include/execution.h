@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 22:22:53 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 00:32:59 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,16 @@ typedef enum e_exec_exit_code
 	FORK_ERROR,
 }	t_exec_exit_code;
 
-typedef struct s_in_redir
+typedef struct s_open
 {
 	t_redirect	*current;
 	t_redirect	*final_hdoc;
 	int			hdoc_fd;
-}	t_in_redir;
+}	t_open;
 
 typedef struct s_piper
 {
-	int				infile;
-	int				outfile;
+	int				fd_in_out[2];
 	int				pipe1[2];
 	int				pipe2[2];
 	int				fork_count;
@@ -62,51 +61,64 @@ typedef struct s_wait
 	int		status_code;
 }	t_wait;
 
+
+// execution.c
+t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
+
+// assignments.c
 t_exec_exit_code	add_assignments(t_var_list *var_list, \
 											t_assignment *assign, int flag);
 t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
 											char *str, int flag);
-t_exec_exit_code	add_assignments(t_var_list *var_list, \
-								t_assignment *assign, int flag);
 
-int					get_fork_count(t_parser *parser_data);
-t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
-t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
-t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
-void				ft_free_pp_n(char **array, int str_count);
-void				ft_free_pp(char **p_p);
-char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
+// open_files.c
+int					open_files(int *fds, t_redirect *stdin, t_redirect *stdout);
 
-int					open_infiles(t_redirect *stdin_redirect, int *in_fd);
-int					open_outfiles(t_redirect *stdin_redirect, int *in_fd);
-int					open_files(int *fd_in_out, t_redirect *stdin, t_redirect *stdout);
+// here_doc.c
 t_redirect			*here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect);
-// int					redirect_main(int *stdin_save, t_redirect *stdin_redirect, \
-// 							int *stdout_save, t_redirect *stdout_redirect);
+
+// redirections.c
 void				redirect(int in_fd, int out_fd);
 void				restore_redirect(int stdin_save, int stdout_save);
 
-t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
-t_exec_exit_code	piper(t_var_list *var_list, t_parser *parser_data);
-void				child_process_pipes(t_piper *piper, t_var_list *var_list);
-void				child_execve_process(t_minishell *ms_data, char **cmd);
+// builtin_execution.c
+int					is_builtin(char *cmd);
+int					run_builtin(t_var_list *var_list, char **cmd);
 
+// execution_utils.c
+void				ft_free_pp(char **p_p);
+void				ft_free_pp_n(char **array, int str_count);
+char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
+int					get_fork_count(t_parser *parser_data);
+t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
+
+//init_piper_data.c
+int					init_piper_data(t_parser *parser_data, t_piper *piper);
+int					update_child(t_parser *parser_data, t_piper *piper, int i);
+
+// piper.c
+t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data);
 void				ft_waiting(int *pids, int nr_of_forks, int *exit_code);
 
+//child_processes.c
+void				child_execve_process(t_minishell *ms_data, char **cmd);
+void				child_with_pipes(t_minishell *ms_data, t_piper *piper);
 
+//redirections_in_child.c
+void				redirect_in_child(t_piper *piper);
+
+// get_envp.c & get_right_path.c
 t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
 t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
 
-void				ft_free_pp_n(char **array, int str_count);
-void				ft_free_pp(char **p_p);
-char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
+// execution_errors.c
+void				child_error(t_minishell *ms_data, t_exec *exec_data, \
+												int exitcode, char *cmd);
 
-void				child_error(t_minishell *ms_data, t_exec *exec_data, int exitcode, char *cmd);
-
+// ../error_printer/error_printer.c
 void				error_printer(char *cmd, char *arg, char *msg);
 void				internal_error_printer(char *msg);
 
-int					is_builtin(char *cmd);
-int					run_builtin(t_var_list *var_list, char **cmd);
+
 
 #endif

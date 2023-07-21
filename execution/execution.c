@@ -6,14 +6,14 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 22:06:26 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 00:35:37 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include <sys/stat.h>
 
-static t_exec_exit_code	execve_single(t_minishell *ms_data, char **cmd)
+static t_exec_exit_code	one_fork(t_minishell *ms_data, char **cmd)
 {
 	int				pid;
 
@@ -48,7 +48,7 @@ static t_exec_exit_code	single_cmd(t_minishell *ms_data, \
 	}
 	else
 	{
-		execve_single(ms_data, cmd_node->cmd);
+		one_fork(ms_data, cmd_node->cmd);
 	}
 	restore_redirect(save_stdin_out[0], save_stdin_out[1]);
 	if (ms_data->exit_code != 0)
@@ -92,9 +92,8 @@ t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data)
 	}
 	else
 	{
-		// if (piper(ms_data->var_head, parser_data) != EXEC_SUCCESS)
-		// 	return (EXEC_FAIL);
-		return (EXEC_SUCCESS);
+		if (piper(ms_data, parser_data) != EXEC_SUCCESS)
+			return (EXEC_FAIL);
 	}
 	return (EXEC_SUCCESS);
 }

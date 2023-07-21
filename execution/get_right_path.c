@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 21:08:37 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 00:06:42 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_exec_exit_code	path_find_loop(char **path, char *cmd, char **all_paths)
 		temp_path = ft_strjoin_sym(all_paths[i], cmd, '/');
 		if (!temp_path)
 			return (EXEC_MALLOC_ERROR);
-		if (access(temp_path, F_OK) == 0)
+		if (access(temp_path, F_OK) == 0) //if exists
 		{
 			*path = temp_path;
 			return (EXEC_SUCCESS);
