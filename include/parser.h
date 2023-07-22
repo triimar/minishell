@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:58:24 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 16:34:31 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:33:48 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 typedef enum e_parser_exit_code
 {
 	PARSER_SUCCESS,
-	PARSER_FAILURE
+	PARSER_FAILURE,
+	PARSER_SYNTAX_ERROR,
+	PARSER_MALLOC_ERROR
 }	t_parser_exit_code;
 
 typedef enum e_redirect_type
@@ -96,6 +98,7 @@ t_token_list *head);
 void				init_parser_data(t_parser *data, t_token_scanner *scanner);
 char				*produce_dup_string(const char *start, int length);
 char				**extend_string_array(char **param, int word_cnt);
+void				syntax_error_printer(t_token_scanner *scanner);
 
 /* token_scanner_utils.c */
 void				advance_token_list(t_token_scanner *scanner);
@@ -129,8 +132,6 @@ void				free_p(char	*p);
 void				free_str_arr(char **arr);
 void				free_ast(t_parser *data);
 void				free_ast_content(t_ast_content *content);
-
-/* parser_test.c */
-void				parser_test(t_parser *data);
+void				parser_free(t_parser *data, t_lexer *lexer_data);
 
 #endif

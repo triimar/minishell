@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:11 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/12 20:06:44 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 19:40:50 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ t_token	scan_word(t_scanner *scanner, char c)
 			while (peek(scanner) != quote && !is_at_end(scanner))
 				advance(scanner);
 			if (is_at_end(scanner))
-				return (make_error_token("syntax error unclosed quote\n"));
+				return (make_error_token("syntax error unclosed quote"));
 			advance(scanner);
 			if (ft_strchr(WORD_DELIMITER, peek(scanner)) != 0)
 				return (make_token(TOKEN_WORD, scanner));
-			quote = advance(scanner);		
+			quote = advance(scanner);
 		}
 		else
 		{
@@ -103,30 +103,25 @@ t_lexer_exit_code	lexer(t_lexer *data, const char *source)
 	t_token			token;
 	t_token_list	*tmp_token_node;
 
-	if (!source)
-		return (NOTHING_TO_SCAN);
-	init_lexer_data(data);
-	init_scanner(&scanner, source);
+	init_lexer(data, &scanner, source);
 	while (true)
 	{
 		token = scan_token(&scanner);
 		if (token.type == TOKEN_ERROR)
 		{
-			ft_putstr_fd((char *) token.start, 2); // need to be edited later
-			free_token_list(data);
-			return (UNCLOSED_QUOTE);
+			lexer_error_printer(NULL, (char *) token.start);
+			return (free_token_list(data), UNCLOSED_QUOTE);
 		}
 		tmp_token_node = make_token_node(token);
 		if (tmp_token_node == NULL)
 		{
-			free_token_list(data);
-			return (MALLOC_ERROR);
+			lexer_error_printer("internal error", "Malloc failed");
+			return (free_token_list(data), MALLOC_ERROR);
 		}
 		add_token_node_back(&data->head, tmp_token_node);
 		if (token.type == TOKEN_EOF)
 			break ;
 	}
 	iter_token_list(data, &check_if_assignment_word);
-	// lexer_test(data);
 	return (LEXER_SUCCESS);
 }

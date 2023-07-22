@@ -6,11 +6,22 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:34:57 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/02 15:42:04 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:14:07 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+void	lexer_error_printer(char *arg, char *msg)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (arg)
+	{
+		ft_putstr_fd(arg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd(msg, STDERR_FILENO);
+}
 
 t_token	make_error_token(const char *message)
 {
@@ -32,13 +43,9 @@ t_token	make_token(t_token_type type, t_scanner *scanner)
 	return (token);
 }
 
-void	init_scanner(t_scanner *scanner, const char *source)
-{
-	scanner->start = source;
-	scanner->current = source;
-}
-
-void	init_lexer_data(t_lexer *data)
+void	init_lexer(t_lexer *data, t_scanner *scanner, const char *source)
 {
 	data->head = NULL;
+	scanner->start = source;
+	scanner->current = source;
 }

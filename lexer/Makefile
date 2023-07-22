@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:11:52 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/09 17:37:38 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/22 19:45:59 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,7 @@ LEXER_SRCS := \
 	lexer.c \
 	lexer_utils.c \
 	scanner_utils.c \
-	token_list_utils.c \
-	for_test.c
+	token_list_utils.c
 
 OBJS := $(LEXER_SRCS:.c=.o)
 

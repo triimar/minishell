@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 19:08:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/19 18:29:06 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:35:08 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 typedef enum e_lexer_exit_code
 {
 	LEXER_SUCCESS,
-	INVALID_ARGUMENT,
-	NOTHING_TO_SCAN,
 	UNCLOSED_QUOTE,
 	MALLOC_ERROR
 }	t_lexer_exit_code;
@@ -78,10 +76,11 @@ t_token				scan_word(t_scanner *scanner, char c);
 void				check_if_assignment_word(t_token *token);
 
 /* lexer_utils.c */
-void				init_lexer_data(t_lexer *data);
-void				init_scanner(t_scanner *scanner, const char *source);
+void				init_lexer(t_lexer *data, \
+t_scanner *scanner, const char *source);
 t_token				make_token(t_token_type type, t_scanner *scanner);
 t_token				make_error_token(const char *message);
+void				lexer_error_printer(char *arg, char *msg);
 
 /* scanner_utils.c */
 char				advance(t_scanner *scanner);
@@ -95,9 +94,5 @@ t_token_list		*make_token_node(t_token token);
 void				add_token_node_back(t_token_list **head, t_token_list *new);
 void				free_token_list(t_lexer *data);
 void				iter_token_list(t_lexer *data, void (*f)(t_token *));
-
-/* for_test.c */
-void				lexer_test(t_lexer *data);
-void				print_token(t_token_list *token_head);
 
 #endif

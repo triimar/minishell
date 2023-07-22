@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 18:13:26 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 21:33:34 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,27 @@
 // 	signal(SIGQUIT, SIG_DFL);
 // }
 
+int	get_exec_data(t_minishell *data)
+{
+	t_parser_exit_code	parser_ret;
+
+	parser_ret = parser(&data->parser_data, (const char *) data->p_input);
+	if (parser_ret == PARSER_SYNTAX_ERROR)
+		data->exit_code = 258;
+	else if (parser_ret == PARSER_MALLOC_ERROR)
+		data->exit_code = 1;
+	else if (parser_ret == PARSER_SUCCESS)
+	{
+		if (expander_executor(&data->parser_data, data->var_head) == EXPANDER_SUCCESS)
+			data->exit_code = 0;
+		else
+			data->exit_code = 1;
+	}
+	return (data->exit_code);
+}
 
 int	main(int argc, char **argv)
 {
-	t_parser	parser_data;
 	t_minishell	data;
 
 	if (argc != 1)
@@ -32,7 +49,6 @@ int	main(int argc, char **argv)
 	(void)argv;
 	data.var_head = NULL;
 	data.p_input = NULL;
-	data.parser_data = NULL;
 	data.exit_code = 0;
 	if (initiate_var_list(&data.var_head) != 0)
 		exit (EXIT_FAILURE);
@@ -54,40 +70,11 @@ int	main(int argc, char **argv)
 		if (data.p_input)
 		{
 			add_history(data.p_input);
-			
-			if (parser(&parser_data, (const char *) data.p_input) == PARSER_SUCCESS)
+			if (get_exec_data(&data) == 0)
 			{
-				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
-				{
-					// parser_data.ast_current = parser_data.ast_root;
-					// if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
-					// && parser_data.ast_root->content->cmd != NULL && \
-					// ft_strncmp(parser_data.ast_root->content->cmd[0], "exit", 5) == 0)
-					// 	builtin_exit(&data, parser_data.ast_root->content->cmd);
-					// if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
-					// && parser_data.ast_root->content->cmd != NULL && ft_strcmp("cd", parser_data.ast_root->content->cmd[0]))
-					// {
-					// 	builtin_cd(data.var_head, parser_data.ast_root->content->cmd);
-					// 	printf("\npwd: %s\n", get_value_for_key(data.var_head, "PWD"));
-					// 	printf("\ngetcwd says: ");
-					// 	builtin_pwd();
-					// 	printf("\noldpwd: %s\n\n", get_value_for_key(data.var_head, "OLDPWD"));
-					// }
-					// else if (parser_data.ast_root != NULL && parser_data.ast_root->content != NULL \
-					// && parser_data.ast_root->content->cmd != NULL && ft_strcmp("echo", parser_data.ast_root->content->cmd[0]))
-					// 	builtin_echo(parser_data.ast_root->content->cmd);
-					executor(&data, &parser_data);
-					// parser_test(&parser_data);
-					free_ast(&parser_data); 
-				}
-				else
-				{
-					free_ast(&parser_data);
-					return (1);
-				}
+				executor(&data, &data.parser_data);
+				free_ast(&data.parser_data);
 			}
-			else
-				return (1);
 		}
 		free(data.p_input);
 	}

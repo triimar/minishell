@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:34:18 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 18:25:56 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 21:30:36 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	free_on_exit(t_minishell *ms_data)
 		free(ms_data->p_input);
 	if (ms_data->var_head)
 		free_var_list(ms_data->var_head);
-	if (ms_data->parser_data)
-		free_ast(ms_data->parser_data);
+	free_ast(&ms_data->parser_data);
 	rl_clear_history();
 }
 
