@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 00:32:59 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 17:28:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_wait
 	int		status_code;
 }	t_wait;
 
-
 // execution.c
 t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
 
@@ -111,14 +110,8 @@ void				redirect_in_child(t_piper *piper);
 t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
 t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
 
-// execution_errors.c
-void				child_error(t_minishell *ms_data, t_exec *exec_data, \
-												int exitcode, char *cmd);
-
 // ../error_printer/error_printer.c
 void				error_printer(char *cmd, char *arg, char *msg);
 void				internal_error_printer(char *msg);
-
-
 
 #endif

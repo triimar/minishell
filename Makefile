@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/22 00:33:46 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/22 17:28:06 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,6 @@ EXECUTION_SRCS := \
 	execution/redirections_in_child.c \
 	execution/get_envp.c \
 	execution/get_right_path.c \
-	execution/execution_errors.c \
 	error_printer/error_printer.c \
 
 BUILTIN_SRCS := \
