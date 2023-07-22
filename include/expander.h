@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:19:40 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/14 16:55:56 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 21:12:27 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef enum e_expander_exit_code
 }	t_expander_exit_code;
 
 /* expander.c */
-t_expander_exit_code	expander_executor(t_ast *ast_root, \
+t_expander_exit_code	expander_executor(t_parser *parser_data, \
 t_var_list *var_head);
 char					*expander(char *to_expand, t_var_list *var_head, \
 bool *malloc_failed);

@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 19:38:50 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 00:35:37 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include <sys/stat.h>
 
-static t_exec_exit_code	execve_single(t_var_list *var_list, \
-										char **cmd)
+static t_exec_exit_code	one_fork(t_minishell *ms_data, char **cmd)
 {
 	int				pid;
 
@@ -22,57 +21,64 @@ static t_exec_exit_code	execve_single(t_var_list *var_list, \
 	if (pid == -1)
 		return (FORK_ERROR);
 	if (pid == 0)
-		child_execve_process(var_list, cmd);
-	ft_waiting(&pid, 1);
+		child_execve_process(ms_data, cmd);
+	ft_waiting(&pid, 1, &ms_data->exit_code);
+	if (ms_data->exit_code != 0)
+		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);
 }
 
-
-
-static t_exec_exit_code	exec_single_cmd(t_var_list *var_list, \
-										t_ast_content *cmd_node)
+static t_exec_exit_code	single_cmd(t_minishell *ms_data, \
+										t_ast_content *cmd_node, int *fildes)
 {
-	if (ft_strncmp(cmd_node->cmd[0], "echo", 5) == 0)
-		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
-		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "pwd", 4) == 0)
-		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "cd", 3) == 0)
-		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "export", 7) == 0)
-		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "unset", 6) == 0)
-		return (0);
-	else if (ft_strncmp(cmd_node->cmd[0], "env", 4) == 0)
-		return (0);
-	// else if (ft_strncmp(cmd_node->cmd[0], "exit", 5) == 0)
-	// 	return (builtin_exit(1), 0); //rewrite so that it takes char * as input
+	int	save_stdin_out[2];
+
+	save_stdin_out[0] = dup(STDIN_FILENO);
+	save_stdin_out[1] = dup(STDOUT_FILENO);
+	redirect(fildes[0], fildes[1]);
+	if (is_builtin(cmd_node->cmd[0]))
+	{
+		if (ft_strncmp(cmd_node->cmd[0], "exit", 5) == 0)
+		{
+			restore_redirect(save_stdin_out[0], save_stdin_out[1]);
+			ms_data->exit_code = builtin_exit(ms_data, cmd_node->cmd);
+		}
+		else
+			ms_data->exit_code = run_builtin(ms_data->var_head, cmd_node->cmd);
+	}
 	else
-		return (execve_single(var_list, cmd_node->cmd));
+	{
+		one_fork(ms_data, cmd_node->cmd);
+	}
+	restore_redirect(save_stdin_out[0], save_stdin_out[1]);
+	if (ms_data->exit_code != 0)
+		return (EXEC_FAIL);
+	return (EXEC_SUCCESS);
 }
 
 static t_exec_exit_code	single_node(t_minishell *ms_data, \
-									t_ast_content *cmd_node)
+														t_ast_content *cmd_node)
 {
-	int	stdin_save;
-	int	stdout_save;
+	int	fd_in_out[2];
 
-	if (redirect_main(&stdin_save, cmd_node->stdin_redirect, \
-			&stdout_save, cmd_node->stdout_redirect) != 0)
+	fd_in_out[0] = STDIN_FILENO;
+	fd_in_out[1] = STDOUT_FILENO;
+	if (open_files(fd_in_out, cmd_node->stdin_redirect, \
+												cmd_node->stdout_redirect) != 0)
 		return (EXEC_FAIL);
-	if (cmd_node->cmd == NULL)
+	if (cmd_node->cmd == NULL && cmd_node->assignments != NULL)
 	{
 		if (add_assignments(ms_data->var_head, \
-		cmd_node->assignments, 0) != EXEC_SUCCESS)
-			return (restore_redirect(stdin_save, stdout_save), EXEC_FAIL);
+									cmd_node->assignments, 0) != EXEC_SUCCESS)
+		{
+			close(fd_in_out[0]);
+			close (fd_in_out[1]);
+			return (EXEC_FAIL);
+		}
 	}
-	else
-	{
-		if (exec_single_cmd(ms_data->var_head, cmd_node) != EXEC_SUCCESS)
-			return (restore_redirect(stdin_save, stdout_save), EXEC_FAIL);
-	}
-	restore_redirect(stdin_save, stdout_save);
+	else if (single_cmd(ms_data, cmd_node, fd_in_out) \
+															!= EXEC_SUCCESS)
+		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);
 }
 
@@ -86,9 +92,8 @@ t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data)
 	}
 	else
 	{
-		if (piper(ms_data->var_head, parser_data) != EXEC_SUCCESS)
+		if (piper(ms_data, parser_data) != EXEC_SUCCESS)
 			return (EXEC_FAIL);
-		return (EXEC_SUCCESS);
 	}
 	return (EXEC_SUCCESS);
 }

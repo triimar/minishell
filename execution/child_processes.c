@@ -3,146 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   child_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 19:40:17 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:29:35 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <sys/stat.h>
 
-static void	redirect(int in_fd, int out_fd)
+static void	free_execve(t_minishell *ms_data, t_exec *exec_data)
 {
-	if (in_fd != STDIN_FILENO)
-	{
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-	}
-	if (out_fd != STDOUT_FILENO)
-	{
-		dup2(out_fd, STDOUT_FILENO);
-		close(out_fd);
-	}
+	if (exec_data->path)
+		free(exec_data->path);
+	if (exec_data->envp)
+		ft_free_pp(exec_data->envp);
+	free_on_exit(ms_data);
 }
 
-static void	pipes_dup_close(int pipe_read[], int pipe_write[], t_piper *piper)
+void	child_execve_process(t_minishell *ms_data, char **cmd)
 {
-	close(pipe_read[1]);
-	close(pipe_write[0]);
-	if (piper->cmd_node->stdin_redirect != NULL)
-	{
-		close(pipe_read[0]);
-		dup2(piper->infile, STDIN_FILENO);
-	}
-	else
-		dup2(pipe_read[0], STDIN_FILENO);
-	if (piper->cmd_node->stdout_redirect != NULL)
-	{
-		close(pipe_write[1]);
-		dup2(piper->outfile, STDOUT_FILENO);
-	}
-	else
-		dup2(pipe_write[1], STDOUT_FILENO);
-}
-
-static void	child_first(t_piper *piper)
-{
-	close(piper->pipe1[0]);
-	if (piper->cmd_node->stdout_redirect != NULL)
-	{
-		close(piper->pipe1[1]);
-		redirect(piper->infile, piper->outfile);
-	}
-	redirect(piper->infile, piper->pipe1[1]);
-}
-
-static void	child_last(t_piper *piper, int child_nr)
-{
-	if (child_nr % 2 == 0)
-	{
-		close(piper->pipe1[1]);
-		if (piper->cmd_node->stdin_redirect != NULL)
-		{
-			close(piper->pipe1[0]);
-			redirect (piper->infile, piper->outfile);
-		}
-		else
-			redirect(piper->pipe1[0], piper->outfile);
-	}
-	else
-	{
-		close(piper->pipe2[1]);
-		if (piper->cmd_node->stdin_redirect != NULL)
-		{
-			close(piper->pipe2[0]);
-			redirect (piper->infile, piper->outfile);
-		}
-		else
-			redirect(piper->pipe2[0], piper->outfile);
-	}
-}
-
-void	redirect_in_child(t_piper *piper)
-{
-	if (piper->child_nr == 1)
-		child_first(piper);
-	else if (piper->child_nr == piper->fork_count)
-		child_last(piper, piper->child_nr);
-	else
-	{
-		if (piper->child_nr % 2 == 0)
-			pipes_dup_close(piper->pipe1, piper->pipe2, piper);
-		else
-			pipes_dup_close(piper->pipe2, piper->pipe1, piper);
-	}
-}
-
-void	child_execve_process(t_var_list *var_list, char **cmd)
-{
-	t_exec	exec_data;
+	struct stat	path_stat;
+	t_exec		exec_data;
 
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
-	if (get_envp(&exec_data, var_list) != 0)
+	if (get_envp(&exec_data, ms_data->var_head) != 0)
 		exit(EXIT_FAILURE);
 	if (get_right_path(&exec_data, cmd[0]) != 0)
-		child_error(&exec_data, 1, cmd[0]);
+	{
+		error_printer(cmd[0], NULL, "malloc fail");
+		free_execve(ms_data, &exec_data);
+		exit (1);
+	}
 	if (!exec_data.path)
-		child_error(&exec_data, 127, cmd[0]);
+	{
+		error_printer(cmd[0], NULL, "command not found");
+		free_execve(ms_data, &exec_data);
+		exit (127);
+	}
+	if (stat(exec_data.path, &path_stat) == -1)
+	{
+		internal_error_printer("STAT(1)");
+		free_execve(ms_data, &exec_data);
+		exit (127);
+	}
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		error_printer(cmd[0], NULL, "is a directory");
+		free_execve(ms_data, &exec_data);
+		exit (126);
+	}
 	if (access(exec_data.path, X_OK) != 0)
-		child_error(&exec_data, 126, cmd[0]);
+	{
+		error_printer(cmd[0], NULL, "command not executable");
+		free_execve(ms_data, &exec_data);
+		exit (126);
+	}
 	execve(exec_data.path, cmd, exec_data.envp);
-	child_error(&exec_data, -1, cmd[0]);
+	error_printer(cmd[0], NULL, strerror(errno));
+	free_execve(ms_data, &exec_data);
+	exit (-1);
 }
 
-void	child_process_pipes(t_piper *piper, t_var_list *var_list)
+void	child_with_pipes(t_minishell *ms_data, t_piper *piper)
 {
-	if (piper->cmd_node->assignments != NULL)
-	{
-		if (add_assignments(var_list, \
-			piper->cmd_node->assignments, 0) != 0)
-		exit(EXIT_FAILURE); //figure out exit code
-	}
 	redirect_in_child(piper);
-	if (ft_strncmp(piper->cmd_node->cmd[0], "echo", 5) == 0)
-		exit(EXIT_FAILURE) ;
-	else if (ft_strncmp(piper->cmd_node->cmd[0], "cd", 3) == 0)
-		exit(EXIT_FAILURE) ;
-	else if (ft_strncmp(piper->cmd_node->cmd[0], "pwd", 4) == 0)
-		exit(EXIT_FAILURE) ;
-	else if (ft_strncmp(piper->cmd_node->cmd[0], "cd", 3) == 0)
-		exit(EXIT_FAILURE) ;
-	else if (ft_strncmp(piper->cmd_node->cmd[0], "export", 7) == 0)
-		exit (EXIT_FAILURE);
-	else if (ft_strncmp(piper->cmd_node->cmd[0], "unset", 6) == 0)
-		exit(EXIT_FAILURE) ;
-	else if (ft_strncmp(piper->cmd_node->cmd[0], "env", 4) == 0)
-		exit(EXIT_FAILURE) ;
-	// else if (ft_strncmp(piper->cmd_node->cmd[0], "exit", 5) == 0)
-	// 	builtin_exit(1);
+	if (piper->cmd_node->cmd == NULL)
+	{
+		free_on_exit(ms_data);
+		exit(EXIT_FAILURE);
+	}
+	if (is_builtin(piper->cmd_node->cmd[0]))
+	{
+		if (ft_strncmp(piper->cmd_node->cmd[0], "exit", 5) == 0)
+			ms_data->exit_code = builtin_exit(ms_data, piper->cmd_node->cmd);
+		else
+			ms_data->exit_code = \
+						run_builtin(ms_data->var_head, piper->cmd_node->cmd);
+	}	
 	else
-		child_execve_process(var_list, piper->cmd_node->cmd);
-	exit(EXEC_SUCCESS);
+		child_execve_process(ms_data, piper->cmd_node->cmd);
+	free(piper->pids);
+	free_on_exit(ms_data);
+	exit(ms_data->exit_code);
 }
 

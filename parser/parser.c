@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/23 13:06:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:33:45 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,32 +92,28 @@ t_token_scanner *scanner)
 
 t_parser_exit_code	parser(t_parser *data, const char *source)
 {
+	t_lexer_exit_code	lexer_ret;
 	t_lexer				lexer_data;
 	t_token_scanner		scanner;
 	t_parser_exit_code	parser_ret;
 
-	if (lexer(&lexer_data, source) != LEXER_SUCCESS)
-		return (EXIT_FAILURE);
-	if (lexer_data.head->token.type == TOKEN_EOF)
-	{
-		free_token_list(&lexer_data);
-		return (PARSER_SUCCESS);
-	}
+	lexer_ret = lexer(&lexer_data, source);
+	if (lexer_ret != LEXER_SUCCESS)
+		return ((t_parser_exit_code)((int) lexer_ret + 1));
 	init_token_scanner(&scanner, lexer_data.head);
 	init_parser_data(data, &scanner);
+	if (lexer_data.head->token.type == TOKEN_EOF)
+		return (free_token_list(&lexer_data), PARSER_SUCCESS);
 	parser_ret = parse_complete_command(data, &scanner);
-	free_token_list(&lexer_data); // should be edited from here
 	if (data->malloc_failed == true)
 	{
-		ft_putstr_fd("\nmalloc failed!\n\n", 2);
-		free_ast(data);
-		return (PARSER_FAILURE);
+		lexer_error_printer("internal error", "Malloc failed");
+		return (parser_free(data, &lexer_data), PARSER_MALLOC_ERROR);
 	}
 	if (parser_ret == PARSER_FAILURE)
 	{
-		ft_putstr_fd("\nsyntax error!\n\n", 2);
-		free_ast(data);
-		return (PARSER_FAILURE);
+		syntax_error_printer(&scanner);
+		return (parser_free(data, &lexer_data), PARSER_SYNTAX_ERROR);
 	}
-	return (PARSER_SUCCESS);
+	return (free_token_list(&lexer_data), PARSER_SUCCESS);
 }

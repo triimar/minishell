@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/19 14:32:56 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/12 19:54:04 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/22 20:35:37 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,7 @@ PARSER_SRCS := \
 	parser_linked_list_utils.c \
 	ast_utils.c \
 	ast_content_utils.c \
-	parser_free.c \
-	parser_test.c
+	parser_free.c
 
 OBJS := $(PARSER_SRCS:.c=.o)
 

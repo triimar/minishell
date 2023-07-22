@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 18:55:10 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 21:12:59 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ char	*expander(char *to_expand, t_var_list *var_head, bool *malloc_failed)
 	return (to_expand);
 }
 
-t_expander_exit_code	expander_executor(t_ast *ast_root, t_var_list *var_head)
+t_expander_exit_code	expander_executor(t_parser *parser_data, t_var_list *var_head)
 {
 	bool	malloc_failed;
 
 	malloc_failed = false;
-	execute_expander_on_tree(ast_root, var_head, &malloc_failed);
+	execute_expander_on_tree(parser_data->ast_root, var_head, &malloc_failed);
 	if (malloc_failed == true)
-		return (EXPANDER_FAILURE);
+		return (free_ast(parser_data), EXPANDER_FAILURE);
 	return (EXPANDER_SUCCESS);
 }

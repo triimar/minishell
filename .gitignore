@@ -10,3 +10,5 @@ test.txt
 .vscode/
 .DS_Store
 minishell
+42_minishell_tester
+minishell_tester

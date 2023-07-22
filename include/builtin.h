@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 18:15:15 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 22:18:48 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		cd_to_oldpwd(t_var_list *var_head, char *pwd);
 // builtin_exit.c & builtin_exit_utils.c
 int		builtin_exit(t_minishell *ms_data, char **cmd);
 int		ft_atoi_secure(const char *str, int *data);
+void	free_on_exit(t_minishell *ms_data);
 
 // builtin_pwd.c
 int		builtin_pwd(void);

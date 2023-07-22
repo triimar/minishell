@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 15:34:27 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:42:07 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_var_list
 typedef struct s_minishell
 {
 	t_var_list	*var_head;
-	t_parser	*parser_data;
+	t_parser	parser_data;
 	char		*p_input;
 	int			exit_code;
 }	t_minishell;

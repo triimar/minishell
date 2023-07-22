@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/21 19:21:40 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/22 17:28:06 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,17 +58,20 @@ EXPANDER_SRCS := \
 	expander/expander_executor_utils.c
 
 EXECUTION_SRCS := \
-	execution/execution_utils.c \
 	execution/execution.c \
+	execution/assignments.c \
+	execution/open_files.c \
 	execution/here_doc.c \
+	execution/redirections.c \
+	execution/builtin_execution.c \
+	execution/execution_utils.c \
+	execution/init_piper_data.c \
+	execution/piper.c \
+	execution/child_processes.c \
+	execution/redirections_in_child.c \
 	execution/get_envp.c \
 	execution/get_right_path.c \
-	execution/child_processes.c \
-	execution/execution_errors.c \
-	execution/redirections.c \
-	execution/piper.c \
-	execution/assignments.c \
-	error_printer/error_printer.c
+	error_printer/error_printer.c \
 
 BUILTIN_SRCS := \
 	builtin/builtin_pwd.c \

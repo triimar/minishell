@@ -6,11 +6,17 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 12:53:09 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/20 19:58:35 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:32:13 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+void	parser_free(t_parser *data, t_lexer *lexer_data)
+{
+	free_ast(data);
+	free_token_list(lexer_data);
+}
 
 void	free_ast_content(t_ast_content *content)
 {
