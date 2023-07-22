@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:47:39 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/18 19:51:32 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 22:07:54 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	builtin_echo_strjoin(char **cmd, int cnt, int option_n)
 		i++;
 	}
 	if (tmp_dup != NULL)
-		printf("%s", tmp_dup);
+		ft_putstr_fd(tmp_dup, STDOUT_FILENO);
 	return (free_p(tmp_dup), EXIT_SUCCESS);
 }
 
@@ -81,6 +81,6 @@ int	builtin_echo(char **cmd)
 	if (builtin_echo_strjoin(cmd, cnt, option_n))
 		return (internal_error_printer("Malloc failed"), EXIT_FAILURE);
 	if (option_n == 0)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
