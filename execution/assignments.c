@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:37:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 19:19:01 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/21 20:11:57 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_exec_exit_code	add_assignments(t_var_list *var_list, \
 
 	cur_assign = assign;
 	while (cur_assign != NULL)
-	{
+	{	
 		if (add_to_var_list(var_list, cur_assign->word, flag))
 			return (EXEC_FAIL);
 		cur_assign = cur_assign->next;
