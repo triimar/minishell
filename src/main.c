@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 22:20:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 18:13:26 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
 		if (data.p_input)
 		{
 			add_history(data.p_input);
-
+			
 			if (parser(&parser_data, (const char *) data.p_input) == PARSER_SUCCESS)
 			{
 				if (expander_executor(parser_data.ast_root, data.var_head) == EXPANDER_SUCCESS)
@@ -77,7 +77,8 @@ int	main(int argc, char **argv)
 					// && parser_data.ast_root->content->cmd != NULL && ft_strcmp("echo", parser_data.ast_root->content->cmd[0]))
 					// 	builtin_echo(parser_data.ast_root->content->cmd);
 					executor(&data, &parser_data);
-					parser_test(&parser_data);
+					// parser_test(&parser_data);
+					free_ast(&parser_data); 
 				}
 				else
 				{

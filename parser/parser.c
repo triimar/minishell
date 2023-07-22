@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:48:02 by eunskim           #+#    #+#             */
-/*   Updated: 2023/06/23 13:06:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:17:51 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ t_parser_exit_code	parser(t_parser *data, const char *source)
 
 	if (lexer(&lexer_data, source) != LEXER_SUCCESS)
 		return (EXIT_FAILURE);
+	init_token_scanner(&scanner, lexer_data.head);
+	init_parser_data(data, &scanner);
 	if (lexer_data.head->token.type == TOKEN_EOF)
 	{
 		free_token_list(&lexer_data);
 		return (PARSER_SUCCESS);
 	}
-	init_token_scanner(&scanner, lexer_data.head);
-	init_parser_data(data, &scanner);
 	parser_ret = parse_complete_command(data, &scanner);
 	free_token_list(&lexer_data); // should be edited from here
 	if (data->malloc_failed == true)

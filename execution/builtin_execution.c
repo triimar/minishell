@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_buitins.c                                :+:      :+:    :+:   */
+/*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:54:25 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 17:08:17 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 19:16:53 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	run_builtin(t_var_list *var_list, char **cmd)
 {
 	if (ft_strncmp(cmd[0], "echo", 5) == 0)
 		return (builtin_echo(cmd));
-	if (ft_strncmp(cmd[0], "cd", 3) == 0 || (ft_strncmp(cmd[0], "CD", 3) == 0))
+	if (ft_strncmp(cmd[0], "cd", 3) == 0)
 		return (builtin_cd(var_list, cmd));
-	if (ft_strncmp(cmd[0], "env", 4) == 0 || ft_strncmp(cmd[0], "ENV", 4) == 0)
-		return (0);
-	if (ft_strncmp(cmd[0], "pwd", 4) == 0 || ft_strncmp(cmd[0], "PWD", 4) == 0)
+	if (ft_strncmp(cmd[0], "env", 4) == 0)
+		return (builtin_env(var_list));
+	if (ft_strncmp(cmd[0], "pwd", 4) == 0)
 		return (builtin_pwd());
 	if (ft_strncmp(cmd[0], "export", 7) == 0)
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 18:55:10 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 18:15:13 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ t_expander_exit_code	expander_executor(t_ast *ast_root, t_var_list *var_head)
 {
 	bool	malloc_failed;
 
+	if (ast_root == NULL)
+		return (EXPANDER_SUCCESS);
 	malloc_failed = false;
 	execute_expander_on_tree(ast_root, var_head, &malloc_failed);
 	if (malloc_failed == true)

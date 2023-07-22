@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 17:29:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 17:45:41 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,3 @@ void	child_with_pipes(t_minishell *ms_data, t_piper *piper)
 	free_on_exit(ms_data);
 	exit(ms_data->exit_code);
 }
-

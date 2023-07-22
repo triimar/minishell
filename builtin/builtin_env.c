@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/19 17:13:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/22 21:25:55 by tmarts           ###   ########.fr       */
+/*   Created: 2023/07/22 18:54:26 by tmarts            #+#    #+#             */
+/*   Updated: 2023/07/22 19:18:38 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	check_if_only_assignments(char **arg)
-{
-}
-
-int	builtin_export(t_var_list *var_head, char **cmd)
-{	
-	
-}
-
-
-void	export_no_args(t_var_list *var_head)
+int	builtin_env(t_var_list *var_list)
 {
 	t_var_list	*current;
 
-	current = var_head;
+	current = var_list;
 	while (current != NULL)
 	{
 		if (current->env_flag == 1)
 		{
-			
+			if (current->key && current->value)
+			{
+				ft_putstr_fd(current->key, STDOUT_FILENO);
+				ft_putchar_fd('=', STDOUT_FILENO);
+				ft_putendl_fd(current->value, STDOUT_FILENO);
+			}
 		}
 		current = current->next;
 	}
+	return (0);
 }
