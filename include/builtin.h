@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 22:18:48 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 19:15:28 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	free_on_exit(t_minishell *ms_data);
 
 // builtin_pwd.c
 int		builtin_pwd(void);
+
+// builtin_env.c
+int		builtin_env(t_var_list *var_list);
 
 // builtin_utils.c
 int		change_value_for_key(t_var_list *var_head, char *key, char *new_value);

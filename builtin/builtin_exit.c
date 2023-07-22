@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:34:18 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 21:19:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 21:30:36 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	builtin_exit(t_minishell *ms_data, char **cmd)
 	int	exit_code;
 	int	arg_count;
 
-	ft_putendl_fd("exit", 1);
+	// ft_putendl_fd("exit", 1);
 	arg_count = get_arg_count(cmd);
 	if (arg_count == 1)
 		exit_code = 0;
-	else if (arg_count == 2)
+	if (arg_count > 1)
 	{
 		if (ft_atoi_secure(cmd[1], &exit_code) != 0)
 		{
@@ -49,7 +49,7 @@ int	builtin_exit(t_minishell *ms_data, char **cmd)
 			exit_code = 255;
 		}
 	}
-	else
+	if (arg_count > 2 && exit_code != 255)
 	{
 		error_printer("exit", NULL, "too many arguments");
 		return (1);

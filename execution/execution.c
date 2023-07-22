@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 00:35:37 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 18:19:06 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 
 t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data)
 {	
+	if (parser_data->ast_root == NULL)
+		return (EXEC_SUCCESS);
 	if (parser_data->ast_root->content != NULL)
 	{
 		if (single_node(ms_data, parser_data->ast_root->content) != \
