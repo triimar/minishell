@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:56:16 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 17:52:34 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/22 22:15:44 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ int	change_value_for_key(t_var_list *var_head, char *key, char *new_value)
 		tmp = tmp->next;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	get_arg_count(char **cmd)
+{
+	int	arg_count;
+
+	arg_count = 0;
+	while (cmd && *(cmd + arg_count) != NULL)
+		arg_count++;
+	return (arg_count);
 }
