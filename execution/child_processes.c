@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 17:45:41 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:07:45 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,13 @@ void	child_with_pipes(t_minishell *ms_data, t_piper *piper)
 	if (is_builtin(piper->cmd_node->cmd[0]))
 	{
 		if (ft_strncmp(piper->cmd_node->cmd[0], "exit", 5) == 0)
-			ms_data->exit_code = builtin_exit(ms_data, piper->cmd_node->cmd);
+			g_exit_code = builtin_exit(ms_data, piper->cmd_node->cmd);
 		else
-			ms_data->exit_code = \
-						run_builtin(ms_data->var_head, piper->cmd_node->cmd);
+			g_exit_code = run_builtin(ms_data->var_head, piper->cmd_node->cmd);
 	}	
 	else
 		child_execve_process(ms_data, piper->cmd_node->cmd);
 	free(piper->pids);
 	free_on_exit(ms_data);
-	exit(ms_data->exit_code);
+	exit(g_exit_code);
 }
