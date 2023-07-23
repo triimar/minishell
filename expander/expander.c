@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/22 22:57:28 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:01:18 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_var_list *var_head, bool *malloc_failed)
 	tmp = ft_strdup_pt(str + *i + 1, str + *i + cnt);
 	if (tmp == NULL)
 		return (*malloc_failed = true, str);
-	value = get_value_for_key(var_head, tmp);
+	value = return_value_str(var_head, tmp, malloc_failed);
+	if (*malloc_failed == true)
+		return (free(tmp), str);
 	strlen_value = check_value_len(value);
 	free(tmp);
 	tmp = ft_calloc(1, ft_strlen(str) + strlen_value - cnt + 1);

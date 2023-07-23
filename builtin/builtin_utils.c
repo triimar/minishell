@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 16:56:16 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/22 22:15:44 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:56:19 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+char	*get_value_for_key(t_var_list *var_head, const char *key)
+{
+	t_var_list	*tmp;
+	char		*value;
+
+	tmp = var_head;
+	value = NULL;
+	while (tmp)
+	{
+		if (ft_strcmp((const char *) tmp->key, key))
+		{
+			value = tmp->value;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	return (value);
+}
 
 bool	check_if_in_var_list(t_var_list *var_head, char *key)
 {
