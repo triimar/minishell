@@ -6,11 +6,13 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 16:11:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/23 18:37:16 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_code;
 
 // lexer/parser TODO : error handling (error message, exit code), more testing
 
@@ -21,23 +23,23 @@
 // 	signal(SIGQUIT, SIG_DFL);
 // }
 
-int	get_exec_data(t_minishell *data)
+int get_exec_data(t_minishell *data)
 {
 	t_parser_exit_code	parser_ret;
 
 	parser_ret = parser(&data->parser_data, (const char *) data->p_input);
 	if (parser_ret == PARSER_SYNTAX_ERROR)
-		data->exit_code = 258;
+		g_exit_code = 258;
 	else if (parser_ret == PARSER_MALLOC_ERROR)
-		data->exit_code = 1;
+		g_exit_code = 1;
 	else if (parser_ret == PARSER_SUCCESS)
 	{
 		if (expander_executor(&data->parser_data, data->var_head) == EXPANDER_SUCCESS)
-			data->exit_code = 0;
+			g_exit_code = 0;
 		else
-			data->exit_code = 1;
+			g_exit_code = 1;
 	}
-	return (data->exit_code);
+	return (g_exit_code);
 }
 
 int	main(int argc, char **argv)
@@ -50,7 +52,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	data.var_head = NULL;
 	data.p_input = NULL;
-	data.exit_code = 0;
+	g_exit_code = 0;
 	if (initiate_var_list(&data.var_head) != 0)
 		exit (EXIT_FAILURE);
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 20:42:07 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/23 18:50:46 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define BLUE	"\033[34;1m\002"
 # define RESET	"\001\e[0m\002"
 
+extern int					g_exit_code;
 extern char					**environ;
 
 typedef struct s_var_list	t_var_list;

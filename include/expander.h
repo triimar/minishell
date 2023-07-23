@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 11:19:40 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/22 21:12:27 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/23 19:02:13 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int *i, t_var_list *var_head, bool *malloc_failed);
 /* expander_utils.c */
 int						check_value_len(char *value);
 int						check_key_len(char *str, int i);
-char					*get_value_for_key(t_var_list *var_head, \
-const char *key);
 int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strdup_pt(const char *start, char *delimiter);
+char					*return_value_str(t_var_list *var_head, \
+char *key, bool *malloc_failed);
 
 /* expander_here_end.c */
 char					*quote_removal_here_end(char *here_end, \

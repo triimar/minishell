@@ -6,11 +6,26 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/23 15:36:03 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/23 19:02:39 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+
+char	*return_value_str(t_var_list *var_head, char *key, bool *malloc_failed)
+{
+	char	*value;
+
+	if (ft_strcmp("?", key))
+	{
+		value = ft_itoa(g_exit_code);
+		if (value == NULL)
+			return (*malloc_failed = true, NULL);
+	}
+	else
+		value = get_value_for_key(var_head, key);
+	return (value);
+}
 
 int	check_value_len(char *value)
 {
@@ -71,25 +86,4 @@ int	ft_strcmp(const char *s1, const char *s2)
 	if (*s1 || *s2)
 		return (0);
 	return (1);
-}
-
-char	*get_value_for_key(t_var_list *var_head, const char *key)
-{
-	t_var_list	*tmp;
-	char		*value;
-
-	tmp = var_head;
-	value = NULL;
-	// if (ft_strcmp("?", key))
-		//
-	while (tmp)
-	{
-		if (ft_strcmp((const char *) tmp->key, key))
-		{
-			value = tmp->value;
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	return (value);
 }
