@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:34:18 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 22:15:35 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:14:10 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,29 @@ void	free_on_exit(t_minishell *ms_data)
 
 int	builtin_exit(t_minishell *ms_data, char **cmd)
 {
-	int	exit_code;
+	int	exit_local;
 	int	arg_count;
 
 	// ft_putendl_fd("exit", 1);
 	arg_count = get_arg_count(cmd);
 	if (arg_count == 1)
-		exit_code = 0;
+		exit_local = 0;
 	if (arg_count > 1)
 	{
-		if (ft_atoi_secure(cmd[1], &exit_code) != 0)
+		if (ft_atoi_secure(cmd[1], &exit_local) != 0)
 		{
 			error_printer("exit", cmd[1], "numeric argument required");
-			exit_code = 255;
+			exit_local = 255;
 		}
 	}
-	if (arg_count > 2 && exit_code != 255)
+	if (arg_count > 2 && exit_local != 255)
 	{
 		error_printer("exit", NULL, "too many arguments");
 		return (1);
 	}
-	if (exit_code < 0 || exit_code > 255)
-		exit_code = exit_code % 256;
+	if (exit_local < 0 || exit_local > 255)
+		exit_local = exit_local % 256;
 	free_on_exit(ms_data);
-	exit (exit_code);
+	g_exit_code = exit_local;
+	exit (g_exit_code);
 }
