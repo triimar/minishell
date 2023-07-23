@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 19:05:27 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/23 19:41:40 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int get_exec_data(t_minishell *data)
 int	main(int argc, char **argv)
 {
 	t_minishell	data;
-	char		*line;
+	// char		*line;
 
 	if (argc != 1)
 		return (0);
@@ -61,15 +61,18 @@ int	main(int argc, char **argv)
 			data.p_input = readline(BLUE "eunskim_tmarts minishell % " RESET);
 		else
 		{
-			line = get_next_line(fileno(stdin));
-			data.p_input = ft_strtrim(line, "\n");
-			free(line);
+			data.p_input = get_next_line(fileno(stdin));
+			// data.p_input = strdup(line);
+			if (data.p_input)
+			{
+				data.p_input[ft_strlen(data.p_input) - 1] = 0;
+			}
 		}
 		if (data.p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
 		{
 			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 
 			//free everything, stop everything			
-			// break;
+			break;
 			// rl_redisplay();
 			// ft_putendl_fd("exit", STDOUT_FILENO);
 			// free(p_input);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/22 22:28:22 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/23 19:29:04 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
