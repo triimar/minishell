@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 18:19:06 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:38:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static t_exec_exit_code	one_fork(t_minishell *ms_data, char **cmd)
 		return (FORK_ERROR);
 	if (pid == 0)
 		child_execve_process(ms_data, cmd);
-	ft_waiting(&pid, 1, &ms_data->exit_code);
-	if (ms_data->exit_code != 0)
+	ft_waiting(&pid, 1);
+	if (g_exit_code != 0)
 		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);
 }
@@ -41,17 +41,17 @@ static t_exec_exit_code	single_cmd(t_minishell *ms_data, \
 		if (ft_strncmp(cmd_node->cmd[0], "exit", 5) == 0)
 		{
 			restore_redirect(save_stdin_out[0], save_stdin_out[1]);
-			ms_data->exit_code = builtin_exit(ms_data, cmd_node->cmd);
+			g_exit_code = builtin_exit(ms_data, cmd_node->cmd);
 		}
 		else
-			ms_data->exit_code = run_builtin(ms_data->var_head, cmd_node->cmd);
+			g_exit_code = run_builtin(ms_data->var_head, cmd_node->cmd);
 	}
 	else
 	{
 		one_fork(ms_data, cmd_node->cmd);
 	}
 	restore_redirect(save_stdin_out[0], save_stdin_out[1]);
-	if (ms_data->exit_code != 0)
+	if (g_exit_code != 0)
 		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);
 }

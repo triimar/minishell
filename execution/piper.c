@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 00:25:19 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:38:13 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	close_used_pipes_and_fds(t_piper *piper_data)
 		close(piper_data->fd_in_out[1]);
 }
 
-void	ft_waiting(int *pids, int nr_of_forks, int *exit_code)
+void	ft_waiting(int *pids, int nr_of_forks)
 {
 	t_wait	s_wait;
 	int		pid_index;
@@ -67,7 +67,7 @@ void	ft_waiting(int *pids, int nr_of_forks, int *exit_code)
 	{
 		s_wait.status_code = 0;
 		s_wait.status_code = WEXITSTATUS(s_wait.wstatus);
-		*exit_code = s_wait.status_code;
+		g_exit_code = s_wait.status_code;
 	}
 }
 
@@ -95,6 +95,6 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 		close_used_pipes_and_fds(&piper);
 		i++;
 	}
-	ft_waiting(piper.pids, piper.fork_count, &ms_data->exit_code);
+	ft_waiting(piper.pids, piper.fork_count);
 	return (free(piper.pids), EXEC_SUCCESS);
 }

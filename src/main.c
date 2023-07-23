@@ -6,11 +6,13 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 21:33:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:33:09 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_code;
 
 // lexer/parser TODO : error handling (error message, exit code), more testing
 
