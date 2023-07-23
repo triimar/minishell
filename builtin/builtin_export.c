@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:13:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/23 17:34:39 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:21:02 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,28 @@ t_var_list	*get_var_list_node(t_var_list *var_head, char *str)
 	return (NULL);
 }
 
+int	modify_node(t_var_list *matching_node, char *cmd, int flag)
+{
+	char		*delimiter;
+	char		*new_value;
+
+	matching_node->env_flag = flag;
+	delimiter = ft_strchr(cmd, '=');
+	if (delimiter != NULL)
+	{
+		new_value = ft_strdup(delimiter + 1);
+		if (!new_value)
+			return (1);
+		free(matching_node->value);
+		matching_node->value = new_value;
+	}
+	return (0);
+}
+
 int	builtin_export(t_var_list *var_head, char **cmd)
 {	
 	int			arg_count;
 	int			index;
-	char		*delimiter;
 	t_var_list	*matching_node;
 
 	index = 1;
@@ -77,22 +94,13 @@ int	builtin_export(t_var_list *var_head, char **cmd)
 	while (cmd && *(cmd + index))
 	{
 		matching_node = get_var_list_node(var_head, *(cmd + index));
-		if (matching_node == NULL)
-			return (0);
-			// printf("\nNO MATCH\n");
-		else
-		{	
-			// printf("\nKEY=[%s]     VALUE=[%s]     FLAG=[%d]\n", matching_node->key, matching_node->value, matching_node->env_flag);
-			delimiter = ft_strchr(*(cmd + index), '=');
-			if (delimiter == NULL)
-				matching_node->env_flag = 1;
-			else
-			{
-				free(matching_node->value);
-				matching_node->value = ft_strdup(delimiter + 1);
-			}
-			// printf("\nKEY=[%s]     VALUE=[%s]     FLAG=[%d]\n", matching_node->key, matching_node->value, matching_node->env_flag);
+		if (matching_node != NULL)
+		{
+			if (modify_node(matching_node, *(cmd + index), 1) != 0)
+				return (1); //should i continue with other args?
 		}
+		else if (add_to_var_list(var_head, *(cmd + index), 1) != 0)
+			return (1);
 		index++;
 	}
 	return (0);

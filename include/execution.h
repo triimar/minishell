@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 17:28:33 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:39:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int					update_child(t_parser *parser_data, t_piper *piper, int i);
 
 // piper.c
 t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data);
-void				ft_waiting(int *pids, int nr_of_forks, int *exit_code);
+void				ft_waiting(int *pids, int nr_of_forks);
 
 //child_processes.c
 void				child_execve_process(t_minishell *ms_data, char **cmd);

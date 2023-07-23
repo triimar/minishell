@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:37:42 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 21:31:18 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:24:08 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
 	t_var_list		*new_node;
 	char			*delim_pt;
 
+	
 	new_node = (t_var_list *)ft_calloc(1, sizeof(t_var_list));
 	if (!new_node)
 		return (EXEC_MALLOC_ERROR);
