@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 21:33:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 16:11:22 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	get_exec_data(t_minishell *data)
 int	main(int argc, char **argv)
 {
 	t_minishell	data;
+	char		*line;
 
 	if (argc != 1)
 		return (0);
@@ -54,7 +55,14 @@ int	main(int argc, char **argv)
 		exit (EXIT_FAILURE);
 	while (1)
 	{
-		data.p_input = readline(BLUE "eunskim_tmarts minishell % " RESET);
+		if (isatty(fileno(stdin)))
+			data.p_input = readline(BLUE "eunskim_tmarts minishell % " RESET);
+		else
+		{
+			line = get_next_line(fileno(stdin));
+			data.p_input = ft_strtrim(line, "\n");
+			free(line);
+		}
 		if (data.p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
 		{
 			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 

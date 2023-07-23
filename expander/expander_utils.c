@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/13 18:54:34 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:36:03 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	check_key_len(char *str, int i)
 	int	cnt;
 
 	cnt = 1;
+	if (*(str + i + cnt) == '?')
+		return (2);
 	while (ft_isdigit(*(str + i + cnt)) \
 	|| ft_isalpha(*(str + i + cnt)) || *(str + i + cnt) == '_')
 		cnt++;
@@ -78,6 +80,8 @@ char	*get_value_for_key(t_var_list *var_head, const char *key)
 
 	tmp = var_head;
 	value = NULL;
+	// if (ft_strcmp("?", key))
+		//
 	while (tmp)
 	{
 		if (ft_strcmp((const char *) tmp->key, key))
