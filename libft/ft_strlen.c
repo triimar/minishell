@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:31:24 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 17:10:40 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 17:39:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	while (s && s[len])
+	while (s[len])
 		len++;
 	return (len);
 }
