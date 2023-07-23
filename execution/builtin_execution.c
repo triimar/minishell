@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:54:25 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 19:16:53 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 22:25:46 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	run_builtin(t_var_list *var_list, char **cmd)
 	if (ft_strncmp(cmd[0], "pwd", 4) == 0)
 		return (builtin_pwd());
 	if (ft_strncmp(cmd[0], "export", 7) == 0)
-		return (0);
+		return (builtin_export(var_list, cmd));
 	if (ft_strncmp(cmd[0], "unset", 6) == 0)
 		return (0);
 	return (0);

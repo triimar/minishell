@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/22 19:15:28 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 22:25:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ int		builtin_pwd(void);
 // builtin_env.c
 int		builtin_env(t_var_list *var_list);
 
+// builtin_export.c
+int		builtin_export(t_var_list *var_head, char **cmd);
+
 // builtin_utils.c
 int		change_value_for_key(t_var_list *var_head, char *key, char *new_value);
 bool	check_if_in_var_list(t_var_list *var_head, char *key);
+int		get_arg_count(char **cmd);
 
 #endif

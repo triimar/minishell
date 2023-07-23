@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:34:18 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 21:30:36 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 22:15:35 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ void	free_on_exit(t_minishell *ms_data)
 		free_var_list(ms_data->var_head);
 	free_ast(&ms_data->parser_data);
 	rl_clear_history();
-}
-
-static int	get_arg_count(char **cmd)
-{
-	int	arg_count;
-
-	arg_count = 0;
-	while (cmd && *(cmd + arg_count) != NULL)
-		arg_count++;
-	return (arg_count);
 }
 
 int	builtin_exit(t_minishell *ms_data, char **cmd)

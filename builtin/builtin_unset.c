@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 15:31:24 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 17:39:39 by tmarts           ###   ########.fr       */
+/*   Created: 2023/07/23 16:05:21 by tmarts            #+#    #+#             */
+/*   Updated: 2023/07/23 16:09:07 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "builtin.h"
 
-size_t	ft_strlen(const char *s)
+int	builtin_unset(t_var_list *var_head, char *cmd)
 {
-	size_t	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	
 }

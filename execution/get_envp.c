@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:05:06 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 17:51:40 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 17:25:12 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,10 @@ static int	ft_envp_lstsize(t_var_list *lst)
 	length = 0;
 	while (current != NULL)
 	{
-		if (current->env_flag == 0 || current->key == NULL)
-			current = current->next;
-		else
-		{
-			current = current->next;
+		if (current->env_flag != 0 && current->key != NULL \
+			&& current->value != NULL)
 			length++;
-		}
+		current = current->next;
 	}
 	return (length);
 }
@@ -46,17 +43,16 @@ t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list)
 		return (EXEC_MALLOC_ERROR);
 	while (i < len)
 	{
-		if (cur_node->env_flag == 0 || cur_node->key == NULL)
-			cur_node = cur_node->next;
-		else
+		if (cur_node->env_flag != 0 && cur_node->key != NULL && \
+			cur_node->value != NULL)
 		{
 			s_exec->envp[i] = \
 				ft_strjoin_sym(cur_node->key, cur_node->value, '=');
 			if (!s_exec->envp[i])
 				return (ft_free_pp_n(s_exec->envp, i), EXEC_MALLOC_ERROR);
-			cur_node = cur_node->next;
 			i++;
 		}
+		cur_node = cur_node->next;
 	}
 	return (EXEC_SUCCESS);
 }

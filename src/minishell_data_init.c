@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/19 18:44:54 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/22 22:33:55 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_ms_exit_code	add_oldpwd_node(t_var_list **var_list)
 	oldpwd = (t_var_list *)ft_calloc(1, sizeof(t_var_list));
 	if (!oldpwd)
 		return (free_var_list(*var_list), MS_MALLOC_ERROR);
-	oldpwd->env_flag = 0;
+	oldpwd->env_flag = 1;
 	oldpwd->key = ft_strdup("OLDPWD");
 	if (!oldpwd->key)
 		return (free_var_list(*var_list), MS_MALLOC_ERROR);
