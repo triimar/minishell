@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:13:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/23 18:21:02 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:02:13 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,15 @@ int	builtin_export(t_var_list *var_head, char **cmd)
 		export_no_args(var_head);
 	while (cmd && *(cmd + index))
 	{
-		matching_node = get_var_list_node(var_head, *(cmd + index));
-		if (matching_node != NULL)
+		if (ft_isdigit(**(cmd + index)))
 		{
-			if (modify_node(matching_node, *(cmd + index), 1) != 0)
-				return (1); //should i continue with other args?
-		}
+			error_printer(cmd[0], *(cmd + index), "not a valid identifier");
+			g_exit_code = 1;
+		}	
+		matching_node = get_var_list_node(var_head, *(cmd + index));
+		if (matching_node != NULL && \
+						modify_node(matching_node, *(cmd + index), 1) != 0)
+			return (1);
 		else if (add_to_var_list(var_head, *(cmd + index), 1) != 0)
 			return (1);
 		index++;
