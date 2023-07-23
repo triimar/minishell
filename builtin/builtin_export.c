@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:13:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/23 19:02:13 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 21:49:12 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,56 +36,22 @@ static void	export_no_args(t_var_list *var_head)
 	return ;
 }
 
-static int	ft_sub_len(char const *start, char c)
+static int	is_valid_identifier(char *cmd)
 {
-	int	len;
-
-	len = 0;
-	while (*(start + len) != 0 && *(start + len) != c)
-		len++;
-	return (len);
-}
-
-t_var_list	*get_var_list_node(t_var_list *var_head, char *str)
-{
-	t_var_list	*current;
-	int			newkey_len;
-
-	newkey_len = ft_sub_len(str, '=');
-	current = var_head;
-	while (current != NULL)
+	if (!ft_isalpha(*cmd))
 	{
-		if (ft_strncmp(current->key, str, newkey_len) == 0 \
-			&& (int)ft_strlen(current->key) == newkey_len)
-			return (current);
-		current = current->next;
+		error_printer("export", cmd, "not a valid identifier");
+		g_exit_code = 1;
+		return (0);
 	}
-	return (NULL);
-}
-
-int	modify_node(t_var_list *matching_node, char *cmd, int flag)
-{
-	char		*delimiter;
-	char		*new_value;
-
-	matching_node->env_flag = flag;
-	delimiter = ft_strchr(cmd, '=');
-	if (delimiter != NULL)
-	{
-		new_value = ft_strdup(delimiter + 1);
-		if (!new_value)
-			return (1);
-		free(matching_node->value);
-		matching_node->value = new_value;
-	}
-	return (0);
+	return (1);
 }
 
 int	builtin_export(t_var_list *var_head, char **cmd)
 {	
 	int			arg_count;
 	int			index;
-	t_var_list	*matching_node;
+	t_var_list	*node_found;
 
 	index = 1;
 	arg_count = get_arg_count(cmd);
@@ -93,18 +59,19 @@ int	builtin_export(t_var_list *var_head, char **cmd)
 		export_no_args(var_head);
 	while (cmd && *(cmd + index))
 	{
-		if (ft_isdigit(**(cmd + index)))
+		if (is_valid_identifier(*(cmd + index)))
 		{
-			error_printer(cmd[0], *(cmd + index), "not a valid identifier");
-			g_exit_code = 1;
-		}	
-		matching_node = get_var_list_node(var_head, *(cmd + index));
-		if (matching_node != NULL && \
-						modify_node(matching_node, *(cmd + index), 1) != 0)
-			return (1);
-		else if (add_to_var_list(var_head, *(cmd + index), 1) != 0)
-			return (1);
+			node_found = get_var_list_node(var_head, *(cmd + index));
+			if (node_found != NULL)
+			{
+				if (modify_var_list_node(node_found, *(cmd + index)) != 0)
+					return (1);
+				node_found->env_flag = 1;
+			}					
+			else if (add_to_var_list(var_head, *(cmd + index), 1) != 0)
+				return (1);
+		}
 		index++;
 	}
-	return (0);
+	return (g_exit_code);
 }

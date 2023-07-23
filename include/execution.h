@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 18:39:03 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 21:28:04 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ typedef struct s_wait
 t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
 
 // assignments.c
-t_exec_exit_code	add_assignments(t_var_list *var_list, \
-											t_assignment *assign, int flag);
-t_exec_exit_code	add_to_var_list(t_var_list *var_list, \
-											char *str, int flag);
+t_exec_exit_code	add_assignments(t_var_list *var_list, t_assignment *assign);
 
 // open_files.c
 int					open_files(int *fds, t_redirect *stdin, t_redirect *stdout);
@@ -83,13 +80,6 @@ void				restore_redirect(int stdin_save, int stdout_save);
 // builtin_execution.c
 int					is_builtin(char *cmd);
 int					run_builtin(t_var_list *var_list, char **cmd);
-
-// execution_utils.c
-void				ft_free_pp(char **p_p);
-void				ft_free_pp_n(char **array, int str_count);
-char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
-int					get_fork_count(t_parser *parser_data);
-t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
 
 //init_piper_data.c
 int					init_piper_data(t_parser *parser_data, t_piper *piper);
@@ -109,6 +99,19 @@ void				redirect_in_child(t_piper *piper);
 // get_envp.c & get_right_path.c
 t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
 t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
+
+// assignments_utils.c
+t_var_list			*get_var_list_node(t_var_list *var_head, char *str);
+int					modify_var_list_node(t_var_list *matching_node, char *cmd);
+int					add_to_var_list(t_var_list *var_list, \
+											char *str, int flag);
+
+// execution_utils.c
+void				ft_free_pp(char **p_p);
+void				ft_free_pp_n(char **array, int str_count);
+char				*ft_strjoin_sym(const char *s1, const char *s2, char c);
+int					get_fork_count(t_parser *parser_data);
+t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
 
 // ../error_printer/error_printer.c
 void				error_printer(char *cmd, char *arg, char *msg);

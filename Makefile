@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/23 19:29:04 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/23 21:14:08 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,13 +64,14 @@ EXECUTION_SRCS := \
 	execution/here_doc.c \
 	execution/redirections.c \
 	execution/builtin_execution.c \
-	execution/execution_utils.c \
 	execution/init_piper_data.c \
 	execution/piper.c \
 	execution/child_processes.c \
 	execution/redirections_in_child.c \
 	execution/get_envp.c \
 	execution/get_right_path.c \
+	execution/assignments_utils.c \
+	execution/execution_utils.c \
 	error_printer/error_printer.c \
 
 BUILTIN_SRCS := \
