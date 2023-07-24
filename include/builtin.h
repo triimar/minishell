@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/23 19:03:50 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/24 18:42:15 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ int		builtin_env(t_var_list *var_list);
 
 // builtin_export.c
 int		builtin_export(t_var_list *var_head, char **cmd);
+
+// builtin_unset.c
+int		builtin_unset(t_var_list *var_head, char **cmd);
 
 // builtin_utils.c
 int		get_arg_count(char **cmd);
