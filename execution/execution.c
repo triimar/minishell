@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 21:28:38 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/24 19:22:36 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 			return (EXEC_FAIL);
 		}
 	}
-	else if (single_cmd(ms_data, cmd_node, fd_in_out) \
+	else if (cmd_node->cmd != NULL && single_cmd(ms_data, cmd_node, fd_in_out) \
 															!= EXEC_SUCCESS)
 		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);

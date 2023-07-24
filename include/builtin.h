@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/24 18:42:15 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/24 19:24:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <limits.h>
 # include <errno.h>
+# include <sys/stat.h>
 # include "minishell.h"
 
 typedef struct s_minishell	t_minishell;
@@ -27,6 +28,7 @@ int		check_option_n(char **arg);
 // builtin_cd.c
 int		builtin_cd(t_var_list *var_head, char **cmd);
 int		execute_cd(t_var_list *var_head, char **cmd);
+int		cd_with_path(t_var_list *var_head, char **cmd, char *pwd);
 int		cd_to_home(t_var_list *var_head, char *pwd);
 int		cd_to_oldpwd(t_var_list *var_head, char *pwd);
 

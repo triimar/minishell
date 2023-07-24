@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:10:48 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 19:49:18 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/24 18:21:22 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,8 @@ int	cd_to_home(t_var_list *var_head, char *pwd)
 	return (free(pwd), EXIT_SUCCESS);
 }
 
-int	execute_cd(t_var_list *var_head, char **cmd)
+int	cd_with_path(t_var_list *var_head, char **cmd, char *pwd)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, PATH_MAX);
-	if (pwd == NULL)
-		return (error_printer("cd", NULL, strerror(errno)), EXIT_FAILURE);
-	if (cmd[1] == NULL || (cmd[1][0] == '~' && cmd[1][1] == '\0'))
-		return (cd_to_home(var_head, pwd));
-	else if (cmd[1][0] == '-' && cmd[1][1] == '\0')
-		return (cd_to_oldpwd(var_head, pwd));
-	else if (cmd[1][0] == '\0')
-		return (free(pwd), EXIT_SUCCESS);
 	if (chdir(cmd[1]) == -1)
 		return (free(pwd), \
 		error_printer("cd", NULL, strerror(errno)), EXIT_FAILURE);
@@ -88,6 +77,23 @@ int	execute_cd(t_var_list *var_head, char **cmd)
 		return (free(pwd), \
 		internal_error_printer("Malloc failed"), EXIT_FAILURE);
 	return (free(pwd), EXIT_SUCCESS);
+}
+
+int	execute_cd(t_var_list *var_head, char **cmd)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, PATH_MAX);
+	if (pwd == NULL)
+		return (error_printer("cd", NULL, strerror(errno)), EXIT_FAILURE);
+	if (cmd[1] == NULL || (cmd[1][0] == '~' && cmd[1][1] == '\0'))
+		return (cd_to_home(var_head, pwd));
+	else if (cmd[1][0] == '-' && cmd[1][1] == '\0')
+		return (cd_to_oldpwd(var_head, pwd));
+	else if (cmd[1][0] == '\0')
+		return (free(pwd), EXIT_SUCCESS);
+	else
+		return (cd_with_path(var_head, cmd, pwd));
 }
 
 int	builtin_cd(t_var_list *var_head, char **cmd)

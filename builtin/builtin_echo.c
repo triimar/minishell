@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 13:47:39 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/22 22:07:54 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/24 16:24:06 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	check_option_n(char **arg)
 	j = 1;
 	while (*(arg + i) != NULL)
 	{
+		j = 1;
 		if (arg[i][0] != '-')
 			return (i);
 		while (arg[i][j] != '\0')

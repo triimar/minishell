@@ -6,15 +6,13 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 19:41:40 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:20:35 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_exit_code;
-
-// lexer/parser TODO : error handling (error message, exit code), more testing
 
 // void restore_signal_handling()
 // {
@@ -45,7 +43,6 @@ int get_exec_data(t_minishell *data)
 int	main(int argc, char **argv)
 {
 	t_minishell	data;
-	// char		*line;
 
 	if (argc != 1)
 		return (0);
@@ -62,17 +59,16 @@ int	main(int argc, char **argv)
 		else
 		{
 			data.p_input = get_next_line(fileno(stdin));
-			// data.p_input = strdup(line);
 			if (data.p_input)
-			{
 				data.p_input[ft_strlen(data.p_input) - 1] = 0;
-			}
 		}
 		if (data.p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
 		{
 			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 
 			//free everything, stop everything			
-			break;
+			rl_clear_history();
+			free_var_list(data.var_head);
+			break ;
 			// rl_redisplay();
 			// ft_putendl_fd("exit", STDOUT_FILENO);
 			// free(p_input);
@@ -92,7 +88,7 @@ int	main(int argc, char **argv)
 		free(data.p_input);
 	}
 	rl_clear_history();
-	return (0);
+	return (g_exit_code);
 }
 
 // int	main(int argc, char **argv)
