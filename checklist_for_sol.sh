@@ -14,7 +14,7 @@
 
 # ($ disappears)
 
-# cd /Users/"$U"S"ER"/Desktop/
+cd /Users/"$U"S"ER"/Desktop/
 # (cd arg error msg)
 
 # export T="-n test1 -n test 2"
