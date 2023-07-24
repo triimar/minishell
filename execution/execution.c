@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 18:38:33 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/24 15:59:09 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 	if (cmd_node->cmd == NULL && cmd_node->assignments != NULL)
 	{
 		if (add_assignments(ms_data->var_head, \
-									cmd_node->assignments, 0) != EXEC_SUCCESS)
+									cmd_node->assignments) != EXEC_SUCCESS)
 		{
 			close(fd_in_out[0]);
 			close (fd_in_out[1]);
 			return (EXEC_FAIL);
 		}
 	}
-	else if (single_cmd(ms_data, cmd_node, fd_in_out) \
+	else if (cmd_node->cmd != NULL && single_cmd(ms_data, cmd_node, fd_in_out) \
 															!= EXEC_SUCCESS)
 		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);
