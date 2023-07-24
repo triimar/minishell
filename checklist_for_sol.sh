@@ -1,39 +1,49 @@
-/bin/echo $"HOME"$USER
+# /bin/echo $"HOME"$USER
 
-/bin/echo $"HOM"E$USER
+# /bin/echo $"HOM"E$USER
 
-/bin/echo $"HOME"
+# /bin/echo $"HOME"
 
-/bin/echo $"42$"
+# /bin/echo $"42$"
 
-echo '$'$'$'$'$'
+# echo '$'$'$'$'$'
 
-echo '$'$'$'$'$'$'$'
+# echo '$'$'$'$'$'$'$'
 
-echo "$"$'$'$"$"$"$"$'$'
-($ disappears)
+# echo "$"$'$'$"$"$"$"$'$'
 
-cd /Users/"$U"S"ER"/Desktop/
-(cd arg error msg)
+# ($ disappears)
 
-export T="-n test1 -n test 2"
-echo $T
+# cd /Users/"$U"S"ER"/Desktop/
+# (cd arg error msg)
 
-export T="echo segfault | grep segfault"
-$T
+# export T="-n test1 -n test 2"
+# echo $T
 
-export T=-nnnnnnnn"nnnnnnn "
-echo $T
+# export T="echo segfault | grep segfault"
+# $T
 
-export T=-"n                    "
-Echo $T
-(word splitting)
+# export T=-nnnnnnnn"nnnnnnn "
+# echo $T
 
-<| echo ok
+# export T=-"n                    "
+# Echo $T
+# (word splitting)
 
->| echo sure
+# >| echo sure
 
-cd --
+# cd --
 
-i am ignorong:
-\\\\
+# \\\\
+
+# echo cd ~
+
+# cd "doesntexist" 2>/dev/null
+
+# cd "wtf" 2>/dev/null
+
+# expansion for ~
+
+cd notexisting
+disappearing $
+word splitting after expansion
