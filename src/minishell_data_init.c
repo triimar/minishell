@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_data_init.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 17:19:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/24 17:17:37 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:17:30 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,22 @@ t_ms_exit_code	initiate_var_list(t_var_list **var_list)
 			return (free_var_list(*var_list), MS_MALLOC_ERROR);
 		new_var_node->env_flag = 1;
 		delimiter_pt = ft_strchr(environ[i], '=');
-		new_var_node->key = ft_strdup_pt(environ[i], (delimiter_pt));
-		if (!new_var_node->key)
-			return (free_var_list(*var_list), MS_MALLOC_ERROR);
-		new_var_node->value = ft_strdup(delimiter_pt + 1);
-		if (!new_var_node->value)
-			return (free_var_list(*var_list), MS_MALLOC_ERROR);
+		if (delimiter_pt == NULL)
+		{
+			new_var_node->key = ft_strdup(environ[i]);
+			if (!new_var_node->key)
+				return (free_var_list(*var_list), MS_MALLOC_ERROR);
+			new_var_node->value = NULL;
+		}
+		else
+		{
+			new_var_node->key = ft_strdup_pt(environ[i], (delimiter_pt));
+			if (!new_var_node->key)
+				return (free_var_list(*var_list), MS_MALLOC_ERROR);
+			new_var_node->value = ft_strdup(delimiter_pt + 1);
+			if (!new_var_node->value)
+				return (free_var_list(*var_list), MS_MALLOC_ERROR);
+		}
 		ft_lstadd_back_ms(var_list, new_var_node);
 		i++;
 	}

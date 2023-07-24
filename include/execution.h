@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 21:28:04 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:44:21 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void				restore_redirect(int stdin_save, int stdout_save);
 
 // builtin_execution.c
 int					is_builtin(char *cmd);
-int					run_builtin(t_var_list *var_list, char **cmd);
+int					run_builtin(t_minishell *ms_data, char **cmd);
 
 //init_piper_data.c
 int					init_piper_data(t_parser *parser_data, t_piper *piper);

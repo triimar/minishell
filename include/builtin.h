@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/24 19:24:52 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:38:43 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		builtin_env(t_var_list *var_list);
 int		builtin_export(t_var_list *var_head, char **cmd);
 
 // builtin_unset.c
-int		builtin_unset(t_var_list *var_head, char **cmd);
+int		builtin_unset(t_minishell *ms_data, char **cmd);
 
 // builtin_utils.c
 int		get_arg_count(char **cmd);

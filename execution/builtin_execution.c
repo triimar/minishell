@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:54:25 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 22:25:46 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/24 20:43:30 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	run_builtin(t_var_list *var_list, char **cmd)
+int	run_builtin(t_minishell *ms_data, char **cmd)
 {
 	if (ft_strncmp(cmd[0], "echo", 5) == 0)
 		return (builtin_echo(cmd));
 	if (ft_strncmp(cmd[0], "cd", 3) == 0)
-		return (builtin_cd(var_list, cmd));
+		return (builtin_cd(ms_data->var_head, cmd));
 	if (ft_strncmp(cmd[0], "env", 4) == 0)
-		return (builtin_env(var_list));
+		return (builtin_env(ms_data->var_head));
 	if (ft_strncmp(cmd[0], "pwd", 4) == 0)
 		return (builtin_pwd());
 	if (ft_strncmp(cmd[0], "export", 7) == 0)
-		return (builtin_export(var_list, cmd));
+		return (builtin_export(ms_data->var_head, cmd));
 	if (ft_strncmp(cmd[0], "unset", 6) == 0)
-		return (0);
+		return (builtin_unset(ms_data, cmd));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 18:38:13 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/23 22:10:01 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,7 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 		i++;
 	}
 	ft_waiting(piper.pids, piper.fork_count);
+	if (g_exit_code != 0)
+		return (free(piper.pids), EXEC_FAIL);
 	return (free(piper.pids), EXEC_SUCCESS);
 }
