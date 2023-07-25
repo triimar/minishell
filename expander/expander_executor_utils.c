@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:27:31 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/25 17:31:52 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/25 20:48:40 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ char *to_expand, bool *malloc_failed)
 	}
 	free(tmp->word);
 	tmp->word = ft_strjoin(prefix, to_expand);
+	free(prefix);
+	free(to_expand);
+	if (tmp->word == NULL)
+	{
+		*malloc_failed = true;
+		return ;
+	}
 }
 
 void	execute_expander_on_assignments(t_assignment *assignments, \
