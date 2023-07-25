@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 16:55:33 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 00:09:22 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,27 @@ static void	free_execve(t_minishell *ms_data, t_exec *exec_data)
 	free_on_exit(ms_data);
 }
 
-static void	command_pre_check(char *command)
+static int	command_pre_check(char *command)
 {
 	if (command[0] == '\0')
+		return (announce_error(command, "command not found", 127), 1);
+	if (command[0] == '.' || ft_strchr(command, '/'))
 	{
-		error_printer(command, NULL, "command not found");
-		g_exit_code = 127;
-	}	
-	else if ((command[0] == '.' || command[0] == '/' || \
-		ft_strchr(command + 1, '/')) && access(command, F_OK) != 0)
-	{
-		error_printer(command, NULL, "no such file or directory");
-		g_exit_code = 127;
+		if (command[0] == '.' && command[1] == '\0')
+		{
+			announce_error(command, "filename argument required", 2);
+			ft_putendl_fd(".: usage: . filename [arguments]", STDERR_FILENO);
+			return (1);
+		}
+		if (access(command, F_OK) != 0)
+			return (announce_error(command, \
+										"No such file or directory", 127), 1);
+		if (access(command, F_OK) == 0 && is_directory(command))
+			return (1);
+		if (access(command, X_OK) != 0)
+			return (announce_error(command, "Permission denied", 126), 1);
 	}
+	return (0);
 }
 
 void	child_execve_process(t_minishell *ms_data, char **cmd)
@@ -44,12 +52,8 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
-	command_pre_check(cmd[0]);
-	if (g_exit_code != 0)
-	{
-		free_on_exit(ms_data);
+	if (command_pre_check(cmd[0]) != 0)
 		exit(g_exit_code);
-	}
 	if (get_envp(&exec_data, ms_data->var_head) != 0)
 		exit(EXIT_FAILURE);
 	if (get_right_path(&exec_data, cmd[0]) != 0)

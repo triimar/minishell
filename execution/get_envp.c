@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:05:06 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 17:25:12 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 00:06:24 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list)
 	len = ft_envp_lstsize(var_list);
 	s_exec->envp = ft_calloc(len + 1, sizeof (char *));
 	if (!s_exec->envp)
-		return (EXEC_MALLOC_ERROR);
+		return (internal_error_printer("Malloc failed"), EXEC_MALLOC_ERROR);
 	while (i < len)
 	{
 		if (cur_node->env_flag != 0 && cur_node->key != NULL && \
@@ -49,7 +49,8 @@ t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list)
 			s_exec->envp[i] = \
 				ft_strjoin_sym(cur_node->key, cur_node->value, '=');
 			if (!s_exec->envp[i])
-				return (ft_free_pp_n(s_exec->envp, i), EXEC_MALLOC_ERROR);
+				return (ft_free_pp_n(s_exec->envp, i), \
+				internal_error_printer("Malloc failed"), EXEC_MALLOC_ERROR);
 			i++;
 		}
 		cur_node = cur_node->next;

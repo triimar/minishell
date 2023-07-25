@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 19:05:25 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 23:57:17 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,11 @@ void				child_with_pipes(t_minishell *ms_data, t_piper *piper);
 //redirections_in_child.c
 void				redirect_in_child(t_piper *piper);
 
-// get_envp.c & get_right_path.c
+// get_envp.c
 t_exec_exit_code	get_envp(t_exec *s_exec, t_var_list *var_list);
+
+//get_right_path.c
+int					is_directory(char *path);
 t_exec_exit_code	get_right_path(t_exec *exec_data, char *command);
 
 // assignments_utils.c
