@@ -6,16 +6,44 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:36:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 22:31:12 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 19:02:44 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
+static int	check_redir_validity(t_redirect *current)
+{
+	struct stat	path_stat;
+
+	if (current->type == REDIRECT_STDIN && access(current->word, F_OK) != 0)
+		announce_error(current->word, "No such file or directory", 1);
+	else if (access(current->word, F_OK) == 0)
+	{
+		if (stat(current->word, &path_stat) == -1)
+		{
+			internal_error_printer("stat fail");
+			g_exit_code = 127;
+		}
+		if (S_ISDIR(path_stat.st_mode))
+			announce_error(current->word, "Is a directory", 126);
+	}
+	if (current->type == REDIRECT_STDIN && \
+		access(current->word, R_OK) != 0)
+		announce_error(current->word, "Permission denied", 1);
+	else if (current->type != REDIRECT_STDIN && \
+		access(current->word, F_OK) == 0 \
+		&& access(current->word, W_OK) != 0)
+		announce_error(current->word, "Permission denied", 1);
+	return (g_exit_code);
+}
+
 static int	get_single_fd(t_redirect *current)
 {
 	int	redirection_fd;
 
+	if (check_redir_validity(current) != 0)
+		return (-1);
 	if (current->type == REDIRECT_STDOUT_APPEND)
 		redirection_fd = open(current->word, O_CREAT | O_RDWR | O_APPEND, 0644);
 	else if (current->type == REDIRECT_STDOUT)
@@ -23,10 +51,7 @@ static int	get_single_fd(t_redirect *current)
 	else
 		redirection_fd = open(current->word, O_RDONLY);
 	if (redirection_fd < 0)
-	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		perror(current->word);
-	}
+		announce_error(current->word, "Failed to open file", 2);
 	return (redirection_fd);
 }
 
@@ -78,8 +103,6 @@ static int	open_outfiles(t_redirect *stdout_redirect, int *out_fd)
 
 int	open_files(int *fd_in_out, t_redirect *stdin, t_redirect *stdout)
 {
-	fd_in_out[0] = STDIN_FILENO;
-	fd_in_out[1] = STDOUT_FILENO;
 	if (stdin != NULL)
 	{
 		if (open_infiles(stdin, &fd_in_out[0]) != 0)
@@ -88,7 +111,11 @@ int	open_files(int *fd_in_out, t_redirect *stdin, t_redirect *stdout)
 	if (stdout != NULL)
 	{
 		if (open_outfiles(stdout, &fd_in_out[1]) != 0)
+		{
+			if (stdin != NULL && fd_in_out[0] != STDIN_FILENO)
+				close(fd_in_out[0]);
 			return (1);
+		}		
 	}
 	return (0);
 }
