@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 16:05:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 19:28:15 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 20:16:27 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	unset_is_valid_identifier(char *cmd)
 {
+	if (*cmd == '_' && ft_strchr(cmd, '=') == NULL)
+		return (1);
 	if (!ft_isalpha(*cmd) || ft_strchr(cmd, '=') != NULL)
 	{
 		error_printer("unset", cmd, "not a valid identifier");
