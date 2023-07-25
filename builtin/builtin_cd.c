@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:10:48 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/24 18:21:22 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:41:30 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,13 @@ int	cd_to_home(t_var_list *var_head, char *pwd)
 int	cd_with_path(t_var_list *var_head, char **cmd, char *pwd)
 {
 	if (chdir(cmd[1]) == -1)
-		return (free(pwd), \
-		error_printer("cd", NULL, strerror(errno)), EXIT_FAILURE);
+	{
+		free(pwd);
+		if (errno == ENOENT)
+			return (error_printer("cd", cmd[1], strerror(errno)), EXIT_FAILURE);
+		else
+			return (error_printer("cd", NULL, strerror(errno)), EXIT_FAILURE);
+	}
 	if (change_value_for_key(var_head, "OLDPWD", pwd))
 		return (free(pwd), \
 		internal_error_printer("Malloc failed"), EXIT_FAILURE);

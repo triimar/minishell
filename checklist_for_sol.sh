@@ -44,6 +44,6 @@
 
 # expansion for ~
 
-cd notexisting
+# cd notexisting
 disappearing $
 word splitting after expansion
