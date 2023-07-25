@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/22 00:06:42 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:12:06 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
 	char	**all_paths;
 
 	all_paths = NULL;
-	if (access(command, F_OK) == 0 && (command[0] == '.'
-			|| command[0] == '/' || ft_strchr(command + 1, '/')))
+	if (command[0] == '.' || command[0] == '/' || ft_strchr(command + 1, '/'))
 	{
 		exec_data->path = ft_strdup(command);
 		return (EXEC_SUCCESS);

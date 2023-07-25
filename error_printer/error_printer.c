@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_printer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:15:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/21 17:59:37 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/25 18:10:34 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,10 @@ void	internal_error_printer(char *msg)
 {
 	ft_putstr_fd("minishell: internal error: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
+}
+
+void	announce_error(char *cmd, char *message, int code)
+{
+	error_printer(cmd, NULL, message);
+	g_exit_code = code;
 }

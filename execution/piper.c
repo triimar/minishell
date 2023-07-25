@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/23 22:10:01 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:45:03 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static void	close_used_pipes_and_fds(t_piper *piper_data)
 			close(piper_data->pipe2[1]);
 		}
 	}
-	if (piper_data->cmd_node->stdin_redirect != NULL)
+	if (piper_data->cmd_node->stdin_redirect != NULL && piper_data->fd_in_out[0] <! 0)
 		close(piper_data->fd_in_out[0]);
-	if (piper_data->cmd_node->stdout_redirect != NULL)
+	if (piper_data->cmd_node->stdout_redirect != NULL && piper_data->fd_in_out[1] <! 0)
 		close(piper_data->fd_in_out[1]);
 }
 
