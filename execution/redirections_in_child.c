@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 23:45:09 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 23:56:03 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 16:54:58 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static void	child_last_redir(t_piper *piper, int child_nr)
 }
 
 void	redirect_in_child(t_piper *piper)
-{
+{	
+	
 	if (piper->child_nr == 1)
 		child_first_redir(piper);
 	else if (piper->child_nr == piper->fork_count)
@@ -83,4 +84,3 @@ void	redirect_in_child(t_piper *piper)
 			middle_dup_close(piper->pipe2, piper->pipe1, piper);
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/24 20:46:23 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 16:55:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ static void	free_execve(t_minishell *ms_data, t_exec *exec_data)
 	free_on_exit(ms_data);
 }
 
+static void	command_pre_check(char *command)
+{
+	if (command[0] == '\0')
+	{
+		error_printer(command, NULL, "command not found");
+		g_exit_code = 127;
+	}	
+	else if ((command[0] == '.' || command[0] == '/' || \
+		ft_strchr(command + 1, '/')) && access(command, F_OK) != 0)
+	{
+		error_printer(command, NULL, "no such file or directory");
+		g_exit_code = 127;
+	}
+}
+
 void	child_execve_process(t_minishell *ms_data, char **cmd)
 {
 	struct stat	path_stat;
@@ -29,6 +44,12 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
+	command_pre_check(cmd[0]);
+	if (g_exit_code != 0)
+	{
+		free_on_exit(ms_data);
+		exit(g_exit_code);
+	}
 	if (get_envp(&exec_data, ms_data->var_head) != 0)
 		exit(EXIT_FAILURE);
 	if (get_right_path(&exec_data, cmd[0]) != 0)
@@ -67,8 +88,37 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 	exit (-1);
 }
 
+static void	close_used_pipes_and_fds_child(t_piper *piper_data)
+{
+	if (piper_data->child_nr != 1 \
+		&& piper_data->child_nr <= piper_data->fork_count)
+	{
+		if (piper_data->child_nr % 2 == 0)
+		{
+			close(piper_data->pipe1[0]);
+			close(piper_data->pipe1[1]);
+		}
+		else
+		{
+			close(piper_data->pipe2[0]);
+			close(piper_data->pipe2[1]);
+		}
+	}
+	if (piper_data->cmd_node->stdin_redirect != NULL && piper_data->fd_in_out[0] >= 0)
+		close(piper_data->fd_in_out[0]);
+	if (piper_data->cmd_node->stdout_redirect != NULL \
+		&& piper_data->fd_in_out[1] >= 0)
+		close(piper_data->fd_in_out[1]);
+}
+
 void	child_with_pipes(t_minishell *ms_data, t_piper *piper)
 {
+	if (piper->fd_in_out[0] < 0 || piper->fd_in_out[0] < 0 || g_exit_code != 0)
+	{
+		close_used_pipes_and_fds_child(piper);
+		free_on_exit(ms_data);
+		exit(g_exit_code);
+	}		
 	redirect_in_child(piper);
 	if (piper->cmd_node->cmd == NULL)
 	{

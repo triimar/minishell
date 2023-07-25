@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 23:15:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 23:30:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 17:07:07 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int	update_child(t_parser *parser_data, t_piper *piper, int i)
 	piper->child_nr = i;
 	piper->cmd_node = \
 		get_cmd_node(parser_data, piper->fork_count, piper->child_nr);
-	if (open_files(piper->fd_in_out, piper->cmd_node->stdin_redirect, \
-									piper->cmd_node->stdout_redirect) != 0)
-		return (1);
+	g_exit_code = 0;
+	open_files(piper->fd_in_out, piper->cmd_node->stdin_redirect, \
+									piper->cmd_node->stdout_redirect);
+		// return (1);
 	return (0) ;
 }
