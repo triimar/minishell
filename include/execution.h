@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/24 20:44:21 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/25 18:11:18 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ t_ast_content		*get_cmd_node(t_parser *parser_data, int fork_c, int child);
 // ../error_printer/error_printer.c
 void				error_printer(char *cmd, char *arg, char *msg);
 void				internal_error_printer(char *msg);
+void				announce_error(char *cmd, char *msg, int code);
 
 #endif
