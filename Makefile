@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/24 16:20:17 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/25 19:48:56 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ RESET	:= \033[0m
 
 #//= Mandatory part =//#
 NAME			:= minishell
-CFLAGS 			:= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS 			:= -Wall -Wextra -Werror
+# -g3 -fsanitize=address
 
 WHEREIS_BREW	:= if test -d $(HOME)/.brew/opt/readline; then echo $(HOME)/.brew; \
 					elif test -d $(HOME)/goinfre/.brew/opt/readline; then echo $(HOME)/goinfre/.brew; \
@@ -43,7 +44,7 @@ PARSER			:= $(PARSER_DIR)/parser.a
 
 INCLUDE_DIR		:= ./include
 HEADERS 		:= -I $(BREW_PATH)/opt/readline/include -I $(LIBFT_DIR) -I $(INCLUDE_DIR)
-LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(LEXER) $(PARSER)
+LIBS			:= -lreadline -L $(BREW_PATH)/opt/readline/lib $(LIBFT) $(PARSER) $(LEXER)
 
 SRCS	:= \
 	src/main.c \

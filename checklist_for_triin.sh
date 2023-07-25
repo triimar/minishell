@@ -54,3 +54,13 @@ and some more export errors
 unset errors
 
 a few exit errors
+
+unset PATH
+ls
+
+cd /bin/
+./ls
+ls
+
+cd /bin/
+ls
