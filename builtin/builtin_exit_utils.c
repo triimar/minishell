@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:29:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 16:42:33 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 20:12:40 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_atoi_secure(const char *str, long long int *data)
 		chr++;
 	if (chr && (*chr == '-' || *chr == '+') && *(chr + 1) != '\0')
 		neg_pos = atoi_negative(chr++);
-	while (*chr != '\0')
+	while (chr && *chr != '\0')
 	{
 		if (!(*chr >= '0' && *chr <= '9'))
 			return (EXIT_FAILURE);
