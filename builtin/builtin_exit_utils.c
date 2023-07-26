@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:29:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/21 15:30:34 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 16:42:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static int	atoi_negative(char *c)
 		return (1);
 }
 
-static int	is_int_min(int neg_pos, int intvalue, char c, int *data)
+static int	is_int_min(long long int neg_pos, \
+		long long int intvalue, char c, long long int *data)
 {
-	if (neg_pos == -1 && intvalue * -10 - (c - '0') == INT_MIN)
+	if (neg_pos == -1 && intvalue * -10 - (c - '0') == LLONG_MIN)
 	{
 		*data = INT_MIN;
 		return (1);
@@ -30,11 +31,11 @@ static int	is_int_min(int neg_pos, int intvalue, char c, int *data)
 	return (0);
 }
 
-int	ft_atoi_secure(const char *str, int *data)
+int	ft_atoi_secure(const char *str, long long int *data)
 {
-	int		intvalue;
-	int		neg_pos;
-	char	*chr;
+	long long int		intvalue;
+	long long int		neg_pos;
+	char				*chr;
 
 	intvalue = 0;
 	neg_pos = 1;
@@ -49,7 +50,7 @@ int	ft_atoi_secure(const char *str, int *data)
 			return (EXIT_FAILURE);
 		if (is_int_min(neg_pos, intvalue, *chr, data))
 			return (EXIT_SUCCESS);
-		if (intvalue > (INT_MAX - (*chr - '0')) / 10)
+		if (intvalue > (LLONG_MAX - (*chr - '0')) / 10)
 			return (EXIT_FAILURE);
 		intvalue = intvalue * 10 + (*chr - '0');
 		chr++;

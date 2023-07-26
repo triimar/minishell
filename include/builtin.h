@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 11:05:50 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/24 20:38:43 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 17:01:24 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int		cd_to_oldpwd(t_var_list *var_head, char *pwd);
 
 // builtin_exit.c & builtin_exit_utils.c
 int		builtin_exit(t_minishell *ms_data, char **cmd);
-int		ft_atoi_secure(const char *str, int *data);
+int		ft_atoi_secure(const char *str, long long int *data);
 void	free_on_exit(t_minishell *ms_data);
 
 // builtin_pwd.c
 int		builtin_pwd(void);
 
 // builtin_env.c
-int		builtin_env(t_var_list *var_list);
+int		builtin_env(t_var_list *var_list, char **cmd);
 
 // builtin_export.c
 int		builtin_export(t_var_list *var_head, char **cmd);

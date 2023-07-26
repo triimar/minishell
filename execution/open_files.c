@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:36:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 00:07:51 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 16:18:18 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 static int	check_redir_validity(t_redirect *current)
 {
+	struct stat	path_stat;
+
 	if (current->type == REDIRECT_STDIN && access(current->word, F_OK) != 0)
 		return (announce_error(current->word, \
 										"No such file or directory", 1), 1);
-	if (access(current->word, F_OK) == 0 && is_directory(current->word))
-		return (1);
+	if (access(current->word, F_OK) == 0)
+	{
+		if (stat(current->word, &path_stat) == -1)
+		{
+			g_exit_code = 127;
+			return (internal_error_printer("stat fail"), 1);
+		}
+		if (S_ISDIR(path_stat.st_mode))
+			return (announce_error(current->word, "Is a directory", 1), 1);
+	}
 	if (current->type == REDIRECT_STDIN && \
 		access(current->word, R_OK) != 0)
 		return (announce_error(current->word, "Permission denied", 1), 1);

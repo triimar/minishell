@@ -1,40 +1,40 @@
 /bin/echo hi >./outfiles/outfile01 | /bin/echo bye
 
-""
+"" +
 
-"."
+"." +
 
-./ls
+./ls +
 
-"./"ls
+"./"ls +
 
-"./""ls"
+"./""ls" +
 
-"./"''"ls"
+"./"''"ls" +
 
->> $HOME
+>> $HOME +
 
-'''''''''''''''' echo ok
+'''''''''''''''' echo ok +
 
-exit 9223372036854775805
+exit 9223372036854775805 +
 
-exit ""
+exit "" +
 
 heredoc
-1)
+1) 						+
 cat << $USER
 why
 not
 $USER
 
-2)
+2)						+
 cat << "$USER"
 why
 not
 $USER
 
 3)
-cat << "$US"E"R"
+cat << "$US"E"R"		+
 because
 we
 love
@@ -43,7 +43,7 @@ $USER
 
 ENV
 
-env what
+env what       <<<< what do do with this, I think we have "no flags and arguments" requrement
 
 export (alphabetical order)
 
