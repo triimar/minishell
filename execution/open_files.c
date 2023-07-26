@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 22:36:48 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 16:18:18 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 22:39:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ static int	check_redir_validity(t_redirect *current)
 {
 	struct stat	path_stat;
 
-	if (current->type == REDIRECT_STDIN && access(current->word, F_OK) != 0)
-		return (announce_error(current->word, \
-										"No such file or directory", 1), 1);
+	if ((current->type == REDIRECT_STDIN && access(current->word, F_OK) != 0) \
+	|| (current->type != REDIRECT_STDIN && ft_strchr(current->word, '/') \
+	&& access(current->word, F_OK) != 0))
+		return \
+			(announce_error(current->word, "No such file or directory", 1), 1);
 	if (access(current->word, F_OK) == 0)
 	{
 		if (stat(current->word, &path_stat) == -1)

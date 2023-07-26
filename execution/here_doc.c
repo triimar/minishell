@@ -6,11 +6,53 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 16:34:55 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 22:44:12 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 21:51:39 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+// static int	here_doc(char *delimiter)
+// {
+// 	int		here_doc_fd;
+// 	char	*line;
+
+// 	here_doc_fd = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	if (here_doc_fd == -1)
+// 		return (announce_error("heredoc", "Failed to open file", 2), -1);
+// 	line = readline("> ");
+// 	while (line && ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) != 0)
+// 	{
+// 		ft_putendl_fd(line, here_doc_fd);
+// 		free(line);
+// 		line = readline("> ");
+// 	}
+// 	free(line);
+// 	close(here_doc_fd);
+// 	here_doc_fd = open("heredoc.tmp", O_RDONLY, 0644);
+// 	if (here_doc_fd == -1)
+// 		return (announce_error("heredoc", "Failed to open file", 2), -1);
+// 	if (unlink("heredoc.tmp") == -1)
+// 		return (announce_error("heredoc", "Failed to unlink", 2), -1);
+// 	return (here_doc_fd);
+// }
+
+static int	ft_str_same(const char *s1, const char *s2, size_t len_s1)
+{
+	if (len_s1 == 0)
+		return (0);
+	if (ft_strlen(s2) != len_s1)
+		return (1);
+	while (len_s1 > 0 && *s1 == *s2 && *s1 != 0 && *s2 != 0)
+	{
+		len_s1--;
+		s1++;
+		s2++;
+	}
+	if (len_s1 == 0 && *s2 == 0)
+		return (0);
+	return (1);
+}
 
 static int	here_doc(char *delimiter)
 {
@@ -20,12 +62,14 @@ static int	here_doc(char *delimiter)
 	here_doc_fd = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
 		return (announce_error("heredoc", "Failed to open file", 2), -1);
-	line = readline("> ");
-	while (line && ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) != 0)
+	// ft_putstr_fd("> ", STDOUT_FILENO);
+	line = get_next_line(STDIN_FILENO);
+	while (line && ft_str_same(line, delimiter, (ft_strlen(line) - 1)) != 0)
 	{
-		ft_putendl_fd(line, here_doc_fd);
+		ft_putstr_fd(line, here_doc_fd);
 		free(line);
-		line = readline("> ");
+		// ft_putstr_fd("> ", STDOUT_FILENO);
+		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);
 	close(here_doc_fd);
@@ -36,6 +80,7 @@ static int	here_doc(char *delimiter)
 		return (announce_error("heredoc", "Failed to unlink", 2), -1);
 	return (here_doc_fd);
 }
+
 
 t_redirect	*here_doc_all(int *here_doc_fd, t_redirect *stdin_redirect)
 {

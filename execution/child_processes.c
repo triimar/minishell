@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 17:33:50 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 21:53:47 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ static int	command_pre_check(char *command)
 		return (announce_error(command, "command not found", 127), 1);
 	if (command[0] == '.' || ft_strchr(command, '/'))
 	{
-		if (command[0] == '.' && command[1] == '\0')
+		if (command[0] == '.' && (command[1] == '\0' || command[1] == '.'))
 		{
 			announce_error(command, "filename argument required", 2);
-			ft_putendl_fd(".: usage: . filename [arguments]", STDERR_FILENO);
 			return (1);
 		}
 		if (access(command, F_OK) != 0)
