@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 19:47:18 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/24 18:36:45 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/26 19:59:43 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 char	*return_value_str(t_var_list *var_head, char *key, bool *malloc_failed)
 {
+	char	*tmp;
 	char	*value;
 
 	if (ft_strcmp("?", key))
 	{
-		value = ft_itoa(g_exit_code);
-		if (value == NULL)
+		if (check_if_in_var_list(var_head, "?") == false)
+			add_to_var_list(var_head, "?", 0);
+		tmp = ft_itoa(g_exit_code);
+		if (tmp == NULL)
 			return (*malloc_failed = true, NULL);
+		if (change_value_for_key(var_head, "?", tmp))
+			return (*malloc_failed = true, free(tmp), NULL);
+		free(tmp);
 	}
-	else
-		value = get_value_for_key(var_head, key);
+	value = get_value_for_key(var_head, key);
 	return (value);
 }
 
