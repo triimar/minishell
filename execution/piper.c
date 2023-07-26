@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 15:45:03 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:52:28 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	make_pipes(int *pipe1, int *pipe2, int child_nr)
 	return (0);
 }
 
-static void	close_used_pipes_and_fds(t_piper *piper_data)
+void	close_used_pipes_and_fds(t_piper *piper_data)
 {
 	if (piper_data->child_nr != 1 \
 		&& piper_data->child_nr <= piper_data->fork_count)
@@ -43,9 +43,11 @@ static void	close_used_pipes_and_fds(t_piper *piper_data)
 			close(piper_data->pipe2[1]);
 		}
 	}
-	if (piper_data->cmd_node->stdin_redirect != NULL && piper_data->fd_in_out[0] <! 0)
+	if (piper_data->cmd_node->stdin_redirect != NULL \
+		&& piper_data->fd_in_out[0] <! 0)
 		close(piper_data->fd_in_out[0]);
-	if (piper_data->cmd_node->stdout_redirect != NULL && piper_data->fd_in_out[1] <! 0)
+	if (piper_data->cmd_node->stdout_redirect != NULL \
+		&& piper_data->fd_in_out[1] <! 0)
 		close(piper_data->fd_in_out[1]);
 }
 

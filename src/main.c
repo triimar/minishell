@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 18:48:34 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/26 16:06:12 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	main(int argc, char **argv)
 		}
 		if (data.p_input)
 		{
-			add_history(data.p_input);
+			if (*data.p_input)
+				add_history(data.p_input);
 			if (get_exec_data(&data) == 0)
 			{
 				executor(&data, &data.parser_data);
