@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:57:03 by tmarts            #+#    #+#             */
-/*   Updated: 2023/06/11 21:50:16 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 19:45:44 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,10 @@ void	set_termios(int mode)
 	}
 }
 
-void	handle_ctrlc(int signum)
+static void	handle_ctrlc(int signum)
 {
 	if (signum == SIGINT)
 	{
-
 		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();

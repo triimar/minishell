@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 16:06:12 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/26 19:58:47 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int	main(int argc, char **argv)
 	if (argc != 1)
 		return (0);
 	(void)argv;
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	set_termios(1);
+	signal_ctrl_c();
 	data.var_head = NULL;
 	data.p_input = NULL;
 	g_exit_code = 0;
@@ -62,10 +67,9 @@ int	main(int argc, char **argv)
 			if (data.p_input)
 				data.p_input[ft_strlen(data.p_input) - 1] = 0;
 		}
-		if (data.p_input == NULL) /* Exit on Ctrl-D, because CTRL-D sends E0F signal and readline returns NULL when recieving an E0F */
+		if (data.p_input == NULL)
 		{
-			// ft_putendl_fd("exit", 1); // maybe not the correct way to handle this... maybe 
-			//free everything, stop everything			
+			ft_putendl_fd("exit", 1);
 			rl_clear_history();
 			free_var_list(data.var_head);
 			break ;
@@ -88,7 +92,6 @@ int	main(int argc, char **argv)
 		}
 		free(data.p_input);
 	}
-	rl_clear_history();
 	return (g_exit_code);
 }
 
