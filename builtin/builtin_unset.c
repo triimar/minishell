@@ -6,21 +6,41 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 16:05:21 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 20:16:27 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:15:40 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
+// static int	unset_is_valid_identifier(char *cmd)
+// {
+	// if (*cmd == '_' && ft_strchr(cmd, '=') == NULL)
+	// 	return (1);
+	// if (!ft_isalpha(*cmd) || ft_strchr(cmd, '=') != NULL)
+	// {
+	// 	error_printer("unset", cmd, "not a valid identifier");
+	// 	g_exit_code = 1;
+	// 	return (0);
+	// }
+
 static int	unset_is_valid_identifier(char *cmd)
 {
-	if (*cmd == '_' && ft_strchr(cmd, '=') == NULL)
-		return (1);
-	if (!ft_isalpha(*cmd) || ft_strchr(cmd, '=') != NULL)
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(cmd[0]) && cmd[0] != '_')
 	{
 		error_printer("unset", cmd, "not a valid identifier");
-		g_exit_code = 1;
 		return (0);
+	}
+	while (cmd[i] != '\0')
+	{
+		if (!ft_isalnum(cmd[i]) && cmd[i] != '_')
+		{
+			error_printer("unset", cmd, "not a valid identifier");
+			return (0);
+		}
+		i++;
 	}
 	return (1);
 }

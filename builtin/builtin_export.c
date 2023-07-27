@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:13:10 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/26 22:54:15 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:15:53 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,22 @@ static void	export_no_args(t_var_list *var_head)
 
 static int	is_valid_identifier(char *cmd)
 {
-	if (ft_isalpha(*cmd) || *cmd != '_')
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(cmd[0]) && cmd[0] != '_')
 	{
 		error_printer("export", cmd, "not a valid identifier");
 		return (0);
+	}
+	while (cmd[i] != '\0' && cmd[i] != '=')
+	{
+		if (!ft_isalnum(cmd[i]) && cmd[i] != '_')
+		{
+			error_printer("export", cmd, "not a valid identifier");
+			return (0);
+		}
+		i++;
 	}
 	return (1);
 }
