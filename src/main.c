@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 21:18:12 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 22:07:14 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	minishell_loop(t_minishell *data)
 			add_history(data->p_input);
 			if (get_exec_data(data) == 0)
 			{
-				executor(data, &data->parser_data);
+				executor(data);
 				free_ast(&data->parser_data);
 			}
 		}

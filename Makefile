@@ -6,7 +6,7 @@
 #    By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/26 22:57:06 by tmarts           ###   ########.fr        #
+#    Updated: 2023/07/27 22:59:05 by tmarts           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SRCS	:= \
 	src/main.c \
 	src/signals.c \
 	src/minishell_data_init.c \
-	src/minishell_utils.c \
 
 EXPANDER_SRCS := \
 	expander/expander.c \

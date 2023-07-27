@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 21:11:22 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 23:18:52 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ extern char					**environ;
 
 typedef struct s_var_list	t_var_list;
 
-typedef enum e_ms_exit_code
-{
-	MINISHELL_SUCCESS,
-	MS_MALLOC_ERROR
-}	t_ms_exit_code;
-
 typedef struct s_var_list
 {
 	char		*key;
@@ -58,15 +52,12 @@ typedef struct s_minishell
 	int			prev_exit;
 }	t_minishell;
 
-t_ms_exit_code		initiate_var_list(t_var_list **var_list);
-void				free_var_list(t_var_list *var_list);
-void				print_var_list(t_var_list *var_list);
+int		initiate_var_list(t_var_list **var_list);
+void	free_var_list(t_var_list *var_list);
+void	ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new);
 
-char				*ft_strdup_pt(const char *start, char *delimiter);
-void				ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new);
-
-// void				set_signals(void);
-// void				set_signals_child(void);
-// void				set_termios(int mode);
+// void		set_signals(void);
+// void		set_signals_child(void);
+// void		set_termios(int mode);
 
 #endif

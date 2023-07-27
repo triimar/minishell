@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 21:11:37 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 22:48:30 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,15 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 	return (EXEC_SUCCESS);
 }
 
-t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data)
+t_exec_exit_code	executor(t_minishell *ms_data)
 {	
-	if (parser_data->ast_root != NULL)
+	if (ms_data->parser_data.ast_root != NULL)
 	{
-		if (parser_data->ast_root->content != NULL)
-			return (single_node(ms_data, parser_data->ast_root->content));
+		if (ms_data->parser_data.ast_root->content != NULL)
+			return \
+			(single_node(ms_data, ms_data->parser_data.ast_root->content));
 		else
-			return (piper(ms_data, parser_data));
+			return (piper(ms_data, &ms_data->parser_data));
 	}
 	return (EXEC_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:57:03 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 21:08:18 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 23:43:38 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void	handle_signals(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// rl_replace_line("", 0);
-		// ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_replace_line("", 0);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -54,12 +54,12 @@ static void	handle_signals_child(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		g_exit_code = 128 + SIGINT;
 	}
 	if (signum == SIGQUIT)
 	{
-		// ft_putendl_fd("Quit: 3", STDOUT_FILENO);
+		ft_putendl_fd("Quit: 3", STDOUT_FILENO);
 		g_exit_code = 128 + SIGQUIT;
 	}
 }
