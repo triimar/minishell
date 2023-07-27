@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:09:17 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 20:38:21 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 21:11:22 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void				print_var_list(t_var_list *var_list);
 char				*ft_strdup_pt(const char *start, char *delimiter);
 void				ft_lstadd_back_ms(t_var_list **var_list, t_var_list *new);
 
-// void				signal_ctrl_c(void);
+// void				set_signals(void);
+// void				set_signals_child(void);
 // void				set_termios(int mode);
 
 #endif

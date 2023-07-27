@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 21:53:47 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 19:25:17 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 
 	exec_data.envp = NULL;
 	exec_data.path = NULL;
+	if (g_exit_code == 130)
+		free_and_exit_child(ms_data, &exec_data);
 	if (command_pre_check(cmd[0]) != 0)
 	{
 		free_on_exit(ms_data);

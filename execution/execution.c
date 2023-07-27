@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 23:04:51 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 21:11:37 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ static t_exec_exit_code	one_fork(t_minishell *ms_data, char **cmd)
 {
 	int				pid;
 
+	// set_signals_child();
 	pid = fork();
 	if (pid == -1)
 		return (internal_error_printer("Fork error"), FORK_ERROR);
 	if (pid == 0)
+	{
+		// set_termios(0);
 		child_execve_process(ms_data, cmd);
+	}
 	ft_waiting(&pid, 1);
+	// set_signals();
 	if (g_exit_code != 0)
 		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);

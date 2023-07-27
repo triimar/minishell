@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 15:52:28 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 21:11:53 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,20 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 				return (free(piper.pids), PIPE_ERROR);
 		}
 		update_child(parser_data, &piper, i + 1);
+		// set_signals_child();
 		piper.pids[i] = fork();
 		if (piper.pids[i] == -1)
 			return (free(piper.pids), FORK_ERROR);
 		if (piper.pids[i] == 0)
+		{
+			// set_termios(0);
 			child_with_pipes(ms_data, &piper);
+		}
 		close_used_pipes_and_fds(&piper);
 		i++;
 	}
 	ft_waiting(piper.pids, piper.fork_count);
+	// set_signals();
 	if (g_exit_code != 0)
 		return (free(piper.pids), EXEC_FAIL);
 	return (free(piper.pids), EXEC_SUCCESS);
