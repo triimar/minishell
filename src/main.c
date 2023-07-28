@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 20:37:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:03:03 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	g_exit_code;
 
-// void restore_signal_handling()
-// {
-//     signal(SIGINT, SIG_DFL); // Reset signal handling for SIGINT to default
-// 	signal(SIGTSTP, SIG_DFL);
-// 	signal(SIGQUIT, SIG_DFL);
-// }
+void restore_signal_handling()
+{
+    signal(SIGINT, SIG_DFL); // Reset signal handling for SIGINT to default
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
 int get_exec_data(t_minishell *data)
 {
@@ -48,11 +48,11 @@ int	main(int argc, char **argv)
 	if (argc != 1)
 		return (0);
 	(void)argv;
-	// signal(SIGTSTP, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, SIG_IGN);
-	// set_termios(1);
-	// signal_ctrl_c();
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	set_termios(1);
+	signal_ctrl_c();
 	data.var_head = NULL;
 	data.p_input = NULL;
 	g_exit_code = 0;
