@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:18:08 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/26 20:16:24 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/28 17:00:56 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ t_expander_exit_code	expander_executor(t_parser *parser_data, \
 t_var_list *var_head)
 {
 	bool	malloc_failed;
-
 
 	if (parser_data->ast_root == NULL)
 		return (EXPANDER_SUCCESS);

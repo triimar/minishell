@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/28 18:10:53 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 18:16:33 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_exit_code;
 
-int	get_exec_data(t_minishell *data)
+int get_exec_data(t_minishell *data)
 {
 	t_parser_exit_code	parser_ret;
 
