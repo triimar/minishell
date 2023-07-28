@@ -6,22 +6,13 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/28 15:40:21 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/28 17:51:03 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <termios.h>
-#include <signal.h>
 
 int	g_exit_code;
-
-void restore_signal_handling()
-{
-    signal(SIGINT, SIG_DFL); // Reset signal handling for SIGINT to default
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
 
 int get_exec_data(t_minishell *data)
 {
@@ -46,13 +37,11 @@ int get_exec_data(t_minishell *data)
 
 void	set_up_minishell(t_minishell *ms_data)
 {
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
 	set_termios(1);
-	signal_ctrl_c();
+	set_signals();
 	ms_data->var_head = NULL;
 	ms_data->p_input = NULL;
+	ms_data->prev_exit = 0;
 	g_exit_code = 0;
 }
 

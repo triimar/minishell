@@ -6,7 +6,7 @@
 /*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:10:48 by eunskim           #+#    #+#             */
-/*   Updated: 2023/07/26 18:42:17 by eunskim          ###   ########.fr       */
+/*   Updated: 2023/07/28 16:29:51 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	cd_to_oldpwd(t_var_list *var_head, char *pwd)
 	oldpwd = get_value_for_key(var_head, "OLDPWD");
 	if (oldpwd == NULL)
 		return (free(pwd), \
-		error_printer("cd", NULL, "HOME not set"), EXIT_FAILURE);
+		error_printer("cd", NULL, "OLDPWD not set"), EXIT_FAILURE);
 	if (oldpwd[0] == '\0')
 		return (free(pwd), EXIT_SUCCESS);
 	if (chdir(oldpwd) == -1)
