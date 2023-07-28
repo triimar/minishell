@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 16:34:55 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/28 15:30:03 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 17:58:27 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ static int	here_doc(char *delimiter)
 	here_doc_fd = open("heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (here_doc_fd == -1)
 		return (announce_error("heredoc", "Failed to open file", 2), -1);
-	ft_putstr_fd("> ", STDOUT_FILENO);
+	// ft_putstr_fd("> ", STDOUT_FILENO);
 	line = get_next_line(STDIN_FILENO);
 	while (line && ft_str_same(line, delimiter, (ft_strlen(line) - 1)) != 0)
 	{
 		ft_putstr_fd(line, here_doc_fd);
 		free(line);
-		ft_putstr_fd("> ", STDOUT_FILENO);
+		// ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);

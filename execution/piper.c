@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/28 15:34:38 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 18:08:15 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static int	make_pipes(int *pipe1, int *pipe2, int child_nr)
 	if (child_nr % 2 == 0)
 	{
 		if (pipe(pipe2) == -1)
-			return (1);
+			return (internal_error_printer("Pipe error"), 1);
 	}
 	else
 	{
 		if (pipe(pipe1) == -1)
-			return (1);
+			return (internal_error_printer("Pipe error"), 1);
 	}	
 	return (0);
 }
@@ -79,6 +79,7 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 	t_piper	piper;
 
 	i = -1;
+	// set_signals_child();
 	if (init_piper_data(parser_data, &piper) != 0)
 		return (internal_error_printer("Malloc failed"), MALLOC_ERROR);
 	while (++i <= piper.fork_count - 1)
@@ -87,16 +88,15 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 		(make_pipes(piper.pipe1, piper.pipe2, (i + 1)) != 0))
 			return (free(piper.pids), PIPE_ERROR);
 		update_child(parser_data, &piper, i + 1);
-		set_signals_child();
 		piper.pids[i] = fork();
 		if (piper.pids[i] == -1)
-			return (free(piper.pids), FORK_ERROR);
+			return (free(piper.pids), internal_error_printer("Fork error"), 4);
 		if (piper.pids[i] == 0)
 			child_with_pipes(ms_data, &piper);
 		close_used_pipes_and_fds(&piper);
 	}
 	ft_waiting(piper.pids, piper.fork_count);
-	set_signals();
+	// set_signals();
 	if (g_exit_code != 0)
 		return (free(piper.pids), EXEC_FAIL);
 	return (free(piper.pids), EXEC_SUCCESS);
