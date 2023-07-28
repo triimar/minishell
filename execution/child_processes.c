@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 21:53:47 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:05:27 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ static int	command_pre_check(char *command)
 	return (0);
 }
 
+static int	path_check(char *path, char *command)
+{
+	if (access(path, F_OK) != 0)
+		return (announce_error(command, \
+							"No such file or directory", 127), 1);
+	if (is_directory(path))
+		return (1);
+	if (access(path, X_OK) != 0)
+		return (announce_error(command, "command not executable", 126), 1);
+	return (0);
+}
+
 void	child_execve_process(t_minishell *ms_data, char **cmd)
 {
 	t_exec		exec_data;
@@ -59,8 +71,7 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 	if (get_envp(&exec_data, ms_data->var_head) != 0)
 	{
 		g_exit_code = 1;
-		free_on_exit(ms_data);
-		exit(g_exit_code);
+		free_and_exit_child(ms_data, &exec_data);
 	}
 	if (get_right_path(&exec_data, cmd[0]) != 0)
 	{
@@ -68,73 +79,16 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 			g_exit_code = 1;
 		free_and_exit_child(ms_data, &exec_data);
 	}
-	if (access(exec_data.path, F_OK) != 0)
-	{
-		announce_error(cmd[0], \
-							"No such file or directory", 127);
+	if (path_check(exec_data.path, cmd[0]) != 0)
 		free_and_exit_child(ms_data, &exec_data);
-	}
-	if (is_directory(exec_data.path))
-		free_and_exit_child(ms_data, &exec_data);
-	if (access(exec_data.path, X_OK) != 0)
-	{
-		announce_error(cmd[0], "command not executable", 126);
-		free_and_exit_child(ms_data, &exec_data);
-	}
 	execve(exec_data.path, cmd, exec_data.envp);
 	announce_error(cmd[0], strerror(errno), 1);
 	free_and_exit_child(ms_data, &exec_data);
 }
 
-// void	child_execve_process(t_minishell *ms_data, char **cmd)
-// {
-// 	struct stat	path_stat;
-// 	t_exec		exec_data;
-
-// 	exec_data.envp = NULL;
-// 	exec_data.path = NULL;
-// 	if (command_pre_check(cmd[0]) != 0)
-// 		exit(g_exit_code);
-// 	if (get_envp(&exec_data, ms_data->var_head) != 0)
-// 		exit(EXIT_FAILURE);
-// 	if (get_right_path(&exec_data, cmd[0]) != 0)
-// 	{
-// 		error_printer(cmd[0], NULL, "malloc fail");
-// 		free_execve(ms_data, &exec_data);
-// 		exit (1);
-// 	}
-// 	if (!exec_data.path)
-// 	{
-// 		error_printer(cmd[0], NULL, "command not found");
-// 		free_execve(ms_data, &exec_data);
-// 		exit (127);
-// 	}
-// 	if (stat(exec_data.path, &path_stat) == -1)
-// 	{
-// 		internal_error_printer("STAT(1)");
-// 		free_execve(ms_data, &exec_data);
-// 		exit (127);
-// 	}
-// 	if (S_ISDIR(path_stat.st_mode))
-// 	{
-// 		error_printer(cmd[0], NULL, "is a directory");
-// 		free_execve(ms_data, &exec_data);
-// 		exit (126);
-// 	}
-// 	if (access(exec_data.path, X_OK) != 0)
-// 	{
-// 		error_printer(cmd[0], NULL, "command not executable");
-// 		free_execve(ms_data, &exec_data);
-// 		exit (126);
-// 	}
-// 	execve(exec_data.path, cmd, exec_data.envp);
-// 	error_printer(cmd[0], NULL, strerror(errno));
-// 	free_execve(ms_data, &exec_data);
-// 	exit (-1);
-// }
-
 void	child_with_pipes(t_minishell *ms_data, t_piper *piper)
 {
+	set_termios(0);
 	if (piper->fd_in_out[0] < 0 || piper->fd_in_out[0] < 0 || g_exit_code != 0)
 	{
 		close_used_pipes_and_fds(piper);

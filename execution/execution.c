@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:11 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/25 23:04:51 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:05:36 by eunskim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ static t_exec_exit_code	one_fork(t_minishell *ms_data, char **cmd)
 {
 	int				pid;
 
+	set_signals_child();
 	pid = fork();
 	if (pid == -1)
 		return (internal_error_printer("Fork error"), FORK_ERROR);
 	if (pid == 0)
+	{
+		set_termios(0);
 		child_execve_process(ms_data, cmd);
+	}
 	ft_waiting(&pid, 1);
+	set_signals();
 	if (g_exit_code != 0)
 		return (EXEC_FAIL);
 	return (EXEC_SUCCESS);
@@ -78,14 +83,15 @@ static t_exec_exit_code	single_node(t_minishell *ms_data, \
 	return (EXEC_SUCCESS);
 }
 
-t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data)
+t_exec_exit_code	executor(t_minishell *ms_data)
 {	
-	if (parser_data->ast_root != NULL)
+	if (ms_data->parser_data.ast_root != NULL)
 	{
-		if (parser_data->ast_root->content != NULL)
-			return (single_node(ms_data, parser_data->ast_root->content));
+		if (ms_data->parser_data.ast_root->content != NULL)
+			return \
+			(single_node(ms_data, ms_data->parser_data.ast_root->content));
 		else
-			return (piper(ms_data, parser_data));
+			return (piper(ms_data, &ms_data->parser_data));
 	}
 	return (EXEC_SUCCESS);
 }

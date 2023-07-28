@@ -6,7 +6,7 @@
 #    By: eunskim <eunskim@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:19:23 by eunskim           #+#    #+#              #
-#    Updated: 2023/07/27 18:10:13 by eunskim          ###   ########.fr        #
+#    Updated: 2023/07/28 15:06:18 by eunskim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SRCS	:= \
 	src/main.c \
 	src/signals.c \
 	src/minishell_data_init.c \
-	src/minishell_utils.c \
 
 EXPANDER_SRCS := \
 	expander/expander.c \

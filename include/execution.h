@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:31:40 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 15:52:55 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 22:19:08 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_wait
 }	t_wait;
 
 // execution.c
-t_exec_exit_code	executor(t_minishell *ms_data, t_parser *parser_data);
+t_exec_exit_code	executor(t_minishell *ms_data);
 
 // assignments.c
 t_exec_exit_code	add_assignments(t_var_list *var_list, t_assignment *assign);
@@ -84,7 +84,7 @@ int					run_builtin(t_minishell *ms_data, char **cmd);
 
 //init_piper_data.c
 int					init_piper_data(t_parser *parser_data, t_piper *piper);
-int					update_child(t_parser *parser_data, t_piper *piper, int i);
+void				update_child(t_parser *parser_data, t_piper *piper, int i);
 
 // piper.c
 t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data);

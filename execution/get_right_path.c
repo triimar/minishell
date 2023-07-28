@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 15:47:22 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/26 17:27:31 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/27 21:56:46 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,29 +83,6 @@ static int	path_find_loop(char **path, char *cmd, char **all_paths)
 	}
 	return (0);
 }
-
-// t_exec_exit_code	get_right_path(t_exec *exec_data, char *command)
-// {
-// 	char	**all_paths;
-
-// 	all_paths = NULL;
-// 	if (command[0] == '.' || ft_strchr(command, '/'))
-// 	{
-// 		exec_data->path = ft_strdup(command);
-// 		if (exec_data->path == NULL)
-// 			return (internal_error_printer("Malloc failed"), EXEC_MALLOC_ERROR);
-// 		return (EXEC_SUCCESS);
-// 	}
-// 	if (get_all_paths(&all_paths, exec_data->envp) != 0)
-// 		return (internal_error_printer("Malloc failed"), EXEC_MALLOC_ERROR);
-// 	if (path_find_loop(&exec_data->path, command, all_paths) != 0)
-// 	{
-// 		ft_free_pp(all_paths);
-// 		return (internal_error_printer("Malloc failed"), EXEC_MALLOC_ERROR);
-// 	}
-// 	ft_free_pp(all_paths);
-// 	return (EXEC_SUCCESS);
-// }
 
 int	get_right_path(t_exec *exec_data, char *command)
 {
