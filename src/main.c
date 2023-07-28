@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:03:31 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 22:07:14 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:17:14 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	get_exec_data(t_minishell *data)
 
 void	set_up_minishell(t_minishell *ms_data)
 {
-	// set_termios(1);
-	// set_signals();
+	set_termios(1);
+	set_signals();
 	ms_data->var_head = NULL;
 	ms_data->p_input = NULL;
 	ms_data->prev_exit = 0;

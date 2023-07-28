@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:41:50 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 22:35:06 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:34:38 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 		(make_pipes(piper.pipe1, piper.pipe2, (i + 1)) != 0))
 			return (free(piper.pids), PIPE_ERROR);
 		update_child(parser_data, &piper, i + 1);
-		// set_signals_child();
+		set_signals_child();
 		piper.pids[i] = fork();
 		if (piper.pids[i] == -1)
 			return (free(piper.pids), FORK_ERROR);
@@ -96,7 +96,7 @@ t_exec_exit_code	piper(t_minishell *ms_data, t_parser *parser_data)
 		close_used_pipes_and_fds(&piper);
 	}
 	ft_waiting(piper.pids, piper.fork_count);
-	// set_signals();
+	set_signals();
 	if (g_exit_code != 0)
 		return (free(piper.pids), EXEC_FAIL);
 	return (free(piper.pids), EXEC_SUCCESS);

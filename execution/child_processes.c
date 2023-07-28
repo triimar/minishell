@@ -6,7 +6,7 @@
 /*   By: tmarts <tmarts@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 19:32:12 by tmarts            #+#    #+#             */
-/*   Updated: 2023/07/27 22:47:37 by tmarts           ###   ########.fr       */
+/*   Updated: 2023/07/28 15:39:36 by tmarts           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ void	child_execve_process(t_minishell *ms_data, char **cmd)
 
 void	child_with_pipes(t_minishell *ms_data, t_piper *piper)
 {
-	// set_termios(0);
+	set_termios(0);
+	if (g_exit_code == 130)
+	{
+		close_used_pipes_and_fds(piper);
+		free_on_exit(ms_data);
+		exit(g_exit_code);
+	}
 	if (piper->fd_in_out[0] < 0 || piper->fd_in_out[0] < 0 || g_exit_code != 0)
 	{
 		close_used_pipes_and_fds(piper);
