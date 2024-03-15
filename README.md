@@ -7,10 +7,10 @@ It does not interpret unclosed quotes or special characters like backslash or se
 Implemented are:
 - `<` input redirection
 - `>` output redirection
-- '<<` heredoc
+- `<<` heredoc
 - `>>` output redirection in append mode
 - `|` pipes
-- `$` followed by a sequence of characters - expands to the value of the requested environmental variable.
+- `$` followed by a sequence of characters - expands to the value of the requested environmental variable
 - `?$` exit status of the most recently executed foreground pipeline
 - `ctrl-C`, `ctrl-D` and `ctrl-\` behavour like bash  
 <br>
