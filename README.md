@@ -1,5 +1,5 @@
 # minishell - imitating bash
-Written in co-operation with [Eunsol Kim](https://github.com/euns-kim).
+Project realized in co-operation with [Eunsol Kim](https://github.com/euns-kim).
 ### Overview
 Minishell is about creating a simple shell. It displays a prompt when waiting a new command, has a working history and launches the right executable based on the PATH variable using a relative or an absolute path.
 It does not interpret unclosed quotes or special characters like backslash or semicolon.\
